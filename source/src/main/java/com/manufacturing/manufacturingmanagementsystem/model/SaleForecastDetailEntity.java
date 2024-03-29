@@ -27,10 +27,6 @@ public class SaleForecastDetailEntity extends Auditable<String> {
     @MapsId("productId")
     private ProductsEntity productId;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "accountants_id")
-    private AccountantsEntity accountants;
-
     @Column(name = "quantity")
     private Integer quantity;
 

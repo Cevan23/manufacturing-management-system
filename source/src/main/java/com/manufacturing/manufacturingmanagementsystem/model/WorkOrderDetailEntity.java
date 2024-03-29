@@ -33,15 +33,15 @@ public class WorkOrderDetailEntity extends Auditable<String> {
     @Column(name = "note")
     private String note;
 
-    @Column(name = "finished_product")
-    private Integer finishedProduct;
+    @Column(name = "finished_goods")
+    private Integer finishedGoods;
 
-    @Column(name = "defective_product")
-    private Integer defectiveProduct;
+    @Column(name = "faulty_products")
+    private Integer faultyProducts;
 
-    @Column(name = "finished_product_price")
-    private Double finishedProductPrice;
+    @Column(name = "finished_goods_price")
+    private Double finishedGoodsPrice;
 
-    @Column(name = "defective_product_price")
-    private Double defectiveProductPrice;
+    @Column(name = "faulty_products_price")
+    private Double faultyProductPrice;
 }

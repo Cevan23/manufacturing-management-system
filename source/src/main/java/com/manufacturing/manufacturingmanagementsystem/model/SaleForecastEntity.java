@@ -19,6 +19,10 @@ public class SaleForecastEntity extends Auditable<String> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "accountants_id")
+    private AccountantsEntity accountants;
+
     @Column(name = "date_start")
     private Date dateStart;
 
