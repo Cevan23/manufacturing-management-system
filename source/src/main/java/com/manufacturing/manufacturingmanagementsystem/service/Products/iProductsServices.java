@@ -3,7 +3,7 @@ import com.manufacturing.manufacturingmanagementsystem.form.Products.CreateProdu
 
 import com.manufacturing.manufacturingmanagementsystem.model.ProductsEntity;
 
-public interface iProductsService {
+public interface iProductsServices {
     ProductsEntity findProductbyName(String name);
 
     ProductsEntity insertProduct(CreateProductForm product);

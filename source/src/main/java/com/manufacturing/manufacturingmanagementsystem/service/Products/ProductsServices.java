@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.manufacturing.manufacturingmanagementsystem.form.Products.CreateProductForm;
 @Service
 @AllArgsConstructor
-public class ProductsService implements iProductsService {
+public class ProductsServices implements iProductsServices {
 
     private final ProductsRepository productsRepository;
     @Override

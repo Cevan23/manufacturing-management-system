@@ -2,7 +2,7 @@ package com.manufacturing.manufacturingmanagementsystem.controller;
 
 import com.manufacturing.manufacturingmanagementsystem.form.Products.CreateProductForm;
 import com.manufacturing.manufacturingmanagementsystem.responses.ResponseObject;
-import com.manufacturing.manufacturingmanagementsystem.service.Products.iProductsService;
+import com.manufacturing.manufacturingmanagementsystem.service.Products.iProductsServices;
 import com.manufacturing.manufacturingmanagementsystem.model.ProductsEntity;
 import com.manufacturing.manufacturingmanagementsystem.responses.Products.ProductResponses;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/products")
 @RequiredArgsConstructor
 public class ProductsController {
-    private final iProductsService productsService;
+    private final iProductsServices productsService;
 
     @PostMapping("/insert")
     public ResponseEntity<?> insertProduct(
