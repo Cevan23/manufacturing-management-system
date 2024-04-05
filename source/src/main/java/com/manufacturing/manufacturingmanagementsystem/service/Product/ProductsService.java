@@ -32,7 +32,7 @@ public class ProductsService implements iProductsService {
         productEntity.setUnit(productForm.getUnitProduct());
         productEntity.setPrice(productForm.getPriceProduct());
         productEntity.setVolume(productForm.getVolumeProduct());
-        productEntity.setKind(productForm.getKindProduct());
+
 
         return productsRepository.save(productEntity);
     }

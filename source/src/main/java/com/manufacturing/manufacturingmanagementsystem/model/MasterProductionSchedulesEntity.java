@@ -14,7 +14,7 @@ import java.sql.Date;
 @AllArgsConstructor
 @Getter
 @Setter
-public class MasterProductionScheduleEntity extends Auditable<String> {
+public class MasterProductionSchedulesEntity extends Auditable<String> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

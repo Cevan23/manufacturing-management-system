@@ -14,14 +14,14 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @AllArgsConstructor
 @Getter
 @Setter
-public class SaleForecastDetailEntity extends Auditable<String> {
+public class SaleForecastDetailsEntity extends Auditable<String> {
 
     @EmbeddedId
     private SaleForecastDetailEntityId id;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @MapsId("saleForecastId")
-    private SaleForecastEntity saleForecastId;
+    private SaleForecastsEntity saleForecastId;
 
     @OneToOne(cascade = CascadeType.PERSIST)
     @MapsId("productId")

@@ -14,7 +14,7 @@ import java.sql.Date;
 @AllArgsConstructor
 @Getter
 @Setter
-public class BOMEntity extends Auditable<String> {
+public class BOMsEntity extends Auditable<String> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

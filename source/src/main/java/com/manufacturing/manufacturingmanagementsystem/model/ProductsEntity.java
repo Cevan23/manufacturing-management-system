@@ -17,6 +17,10 @@ public class ProductsEntity extends Auditable<String> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "category_id")
+    private CategoriesEntity category;
+
     @Column(name = "name")
     private String name;
 
@@ -29,6 +33,4 @@ public class ProductsEntity extends Auditable<String> {
     @Column(name = "volume")
     private Double volume;
 
-    @Column(name = "kind" )
-    private String kind;
 }

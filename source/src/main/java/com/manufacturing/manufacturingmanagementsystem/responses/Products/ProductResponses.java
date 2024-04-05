@@ -36,7 +36,6 @@ public class ProductResponses {
                 .unit(productEntity.getUnit())
                 .price(productEntity.getPrice())
                 .volume(productEntity.getVolume())
-                .kind(productEntity.getKind())
                 .build();
     }
 }

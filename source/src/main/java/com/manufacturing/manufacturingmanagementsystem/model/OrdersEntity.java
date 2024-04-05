@@ -3,7 +3,7 @@ import com.manufacturing.manufacturingmanagementsystem.model.audit.Auditable;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import jakarta.persistence.*;
-import com.manufacturing.manufacturingmanagementsystem.model.CustomersEntity;
+
 import java.sql.Date;
 
 @Entity
@@ -14,7 +14,7 @@ import java.sql.Date;
 @AllArgsConstructor
 @Getter
 @Setter
-public class OrderEntity extends Auditable<String> {
+public class OrdersEntity extends Auditable<String> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
