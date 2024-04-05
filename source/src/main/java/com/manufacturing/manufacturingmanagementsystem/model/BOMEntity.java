@@ -20,7 +20,8 @@ public class BOMEntity extends Auditable<String> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.PERSIST) ProductManagerEntity ownerPM;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    UsersEntity productManager;
 
     @Column(name = "name")
     private String name;

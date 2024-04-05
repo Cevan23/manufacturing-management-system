@@ -1,27 +1,34 @@
 package com.manufacturing.manufacturingmanagementsystem.model;
 import com.manufacturing.manufacturingmanagementsystem.model.audit.Auditable;
-import jakarta.persistence.Column;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.sql.Date;
 
-@Getter
-@Setter
+@Entity
+@Table(name = TablePrefix.PREFIX_TABLE + "users")
+@EntityListeners(AuditingEntityListener.class)
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@MappedSuperclass
-public abstract class UserEntity extends Auditable<String> {
+@Getter
+@Setter
+public class UsersEntity extends Auditable<String> {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "role_id")
+    private RolesEntity role;
 
     @Column(name = "email", unique = true)
     private String email;
 
     @Column(name = "password")
     private String password;
-
-    @Column(name = "role", columnDefinition = "varchar(255) check (role in ('Student', 'University', 'CommunityLeader', 'Administrator'))")
-    private String role;
 
     @Column(name = "full_name")
     private String fullName;

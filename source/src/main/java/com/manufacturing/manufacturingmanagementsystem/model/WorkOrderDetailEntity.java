@@ -39,6 +39,9 @@ public class WorkOrderDetailEntity extends Auditable<String> {
     @Column(name = "faulty_products")
     private Integer faultyProducts;
 
+    @Column(name = "actual_production_quantity")
+    private Integer actualProductionQuantity;
+
     @Column(name = "finished_goods_price")
     private Double finishedGoodsPrice;
 

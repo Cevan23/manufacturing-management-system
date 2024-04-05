@@ -22,7 +22,7 @@ public class WorkOrderEntity extends Auditable<String> {
 
     @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "product_manager_id")
-    private ProductManagerEntity productManager;
+    private UsersEntity productManager;
 
     @Column(name = "date_start")
     private Date dateStart;

@@ -22,6 +22,9 @@ public class MasterProductionScheduleEntity extends Auditable<String> {
     @OneToOne(cascade = CascadeType.PERSIST)
     private ProductsEntity products;
 
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    UsersEntity productManager;
+
     @Column(name = "date_start")
     private Date dateStart;
 

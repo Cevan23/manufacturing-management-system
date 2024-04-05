@@ -21,7 +21,7 @@ public class SaleForecastEntity extends Auditable<String> {
 
     @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "accountants_id")
-    private AccountantsEntity accountants;
+    private UsersEntity accountant;
 
     @Column(name = "date_start")
     private Date dateStart;

@@ -27,8 +27,8 @@ public class BOMDetailEntity extends Auditable<String>{
     private BOMEntity BOMId;
 
     @OneToOne(cascade = CascadeType.PERSIST)
-    @MapsId("productId")
-    private ProductsEntity productId;
+    @MapsId("materialId")
+    private MaterialEntity materialId;
 
     @Column(name = "quantity")
     private Integer quantity;
