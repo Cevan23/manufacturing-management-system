@@ -7,7 +7,7 @@ import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
-@Table(name = TablePrefix.PREFIX_TABLE + "BOM_detail")
+@Table(name = TablePrefix.PREFIX_TABLE + "BOM_details")
 @EntityListeners(AuditingEntityListener.class)
 @Builder
 @NoArgsConstructor

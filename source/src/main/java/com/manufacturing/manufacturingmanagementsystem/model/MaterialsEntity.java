@@ -6,7 +6,7 @@ import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
-@Table(name = TablePrefix.PREFIX_TABLE + "material")
+@Table(name = TablePrefix.PREFIX_TABLE + "materials")
 @EntityListeners(AuditingEntityListener.class)
 @Builder
 @NoArgsConstructor
@@ -31,6 +31,4 @@ public class MaterialsEntity extends Auditable<String>  {
     @Column(name = "volume")
     private Double volume;
 
-    @Column(name = "kind" )
-    private String kind;
 }

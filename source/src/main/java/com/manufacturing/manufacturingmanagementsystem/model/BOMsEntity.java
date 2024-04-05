@@ -7,7 +7,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.sql.Date;
 
 @Entity
-@Table(name = TablePrefix.PREFIX_TABLE + "BOM")
+@Table(name = TablePrefix.PREFIX_TABLE + "BOMs")
 @EntityListeners(AuditingEntityListener.class)
 @Builder
 @NoArgsConstructor

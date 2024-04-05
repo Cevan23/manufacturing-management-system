@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 import java.sql.Date;
 
 @Entity
-@Table(name = TablePrefix.PREFIX_TABLE + "order")
+@Table(name = TablePrefix.PREFIX_TABLE + "orders")
 @EntityListeners(AuditingEntityListener.class)
 @Builder
 @NoArgsConstructor

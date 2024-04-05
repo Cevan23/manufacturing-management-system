@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 import java.sql.Date;
 
 @Entity
-@Table(name = TablePrefix.PREFIX_TABLE + "master_production_schedule")
+@Table(name = TablePrefix.PREFIX_TABLE + "master_production_schedules")
 @EntityListeners(AuditingEntityListener.class)
 @Builder
 @NoArgsConstructor

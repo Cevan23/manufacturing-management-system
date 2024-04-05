@@ -7,7 +7,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = TablePrefix.PREFIX_TABLE + "order_detail")
+@Table(name = TablePrefix.PREFIX_TABLE + "order_details")
 @EntityListeners(AuditingEntityListener.class)
 @Builder
 @NoArgsConstructor
