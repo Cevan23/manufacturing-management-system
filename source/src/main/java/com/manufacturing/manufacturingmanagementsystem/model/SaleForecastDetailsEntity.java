@@ -1,7 +1,7 @@
 package com.manufacturing.manufacturingmanagementsystem.model;
 
 import com.manufacturing.manufacturingmanagementsystem.model.audit.Auditable;
-import com.manufacturing.manufacturingmanagementsystem.repository.ID.SaleForecastDetailEntityId;
+import com.manufacturing.manufacturingmanagementsystem.repositories.ID.SaleForecastDetailEntityId;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;

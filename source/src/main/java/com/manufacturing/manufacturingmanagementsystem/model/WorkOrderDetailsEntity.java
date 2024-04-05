@@ -1,6 +1,6 @@
 package com.manufacturing.manufacturingmanagementsystem.model;
 import com.manufacturing.manufacturingmanagementsystem.model.audit.Auditable;
-import com.manufacturing.manufacturingmanagementsystem.repository.ID.WorkOrderDetailEntityId;
+import com.manufacturing.manufacturingmanagementsystem.repositories.ID.WorkOrderDetailEntityId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.*;

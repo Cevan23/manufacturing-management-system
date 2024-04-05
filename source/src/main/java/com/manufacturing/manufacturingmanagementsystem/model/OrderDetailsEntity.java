@@ -1,7 +1,7 @@
 package com.manufacturing.manufacturingmanagementsystem.model;
 
 import com.manufacturing.manufacturingmanagementsystem.model.audit.Auditable;
-import com.manufacturing.manufacturingmanagementsystem.repository.ID.OrderDetailEntityId;
+import com.manufacturing.manufacturingmanagementsystem.repositories.ID.OrderDetailEntityId;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import jakarta.persistence.*;

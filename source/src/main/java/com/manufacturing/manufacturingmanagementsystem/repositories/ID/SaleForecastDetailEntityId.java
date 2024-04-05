@@ -1,4 +1,4 @@
-package com.manufacturing.manufacturingmanagementsystem.repository.ID;
+package com.manufacturing.manufacturingmanagementsystem.repositories.ID;
 
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
@@ -11,7 +11,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Embeddable
-public class BOMDetailEntityId implements Serializable {
-    private Long materialId;
-    private Long BOMId;
+public class SaleForecastDetailEntityId implements Serializable {
+    private Long productId;
+    private Long saleForecastId;
 }

@@ -1,5 +1,4 @@
-package com.manufacturing.manufacturingmanagementsystem.repository.ID;
-
+package com.manufacturing.manufacturingmanagementsystem.repositories.ID;
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,7 +10,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Embeddable
-public class SaleForecastDetailEntityId implements Serializable {
-    private Long productId;
-    private Long saleForecastId;
+public class InventoryMaterialDetailEntityId implements Serializable {
+    private Long inventoryId;
+    private Long materialId;
 }

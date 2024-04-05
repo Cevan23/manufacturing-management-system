@@ -1,4 +1,4 @@
-package com.manufacturing.manufacturingmanagementsystem.repository.ID;
+package com.manufacturing.manufacturingmanagementsystem.repositories.ID;
 
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;

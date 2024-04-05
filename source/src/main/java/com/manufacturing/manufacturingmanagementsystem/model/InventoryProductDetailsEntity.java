@@ -1,7 +1,7 @@
 package com.manufacturing.manufacturingmanagementsystem.model;
 
 import com.manufacturing.manufacturingmanagementsystem.model.audit.Auditable;
-import com.manufacturing.manufacturingmanagementsystem.repository.ID.InventoryProductDetailEntityId;
+import com.manufacturing.manufacturingmanagementsystem.repositories.ID.InventoryProductDetailEntityId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.*;

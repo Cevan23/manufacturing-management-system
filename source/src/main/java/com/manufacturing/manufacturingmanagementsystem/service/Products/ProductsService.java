@@ -1,11 +1,10 @@
-package com.manufacturing.manufacturingmanagementsystem.service.Product;
+package com.manufacturing.manufacturingmanagementsystem.service.Products;
 
 import com.manufacturing.manufacturingmanagementsystem.model.ProductsEntity;
-import com.manufacturing.manufacturingmanagementsystem.repository.ProductsRepository;
+import com.manufacturing.manufacturingmanagementsystem.repositories.ProductsRepository;
 import io.micrometer.common.util.StringUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import com.manufacturing.manufacturingmanagementsystem.dto.ProductsDTO;
 import com.manufacturing.manufacturingmanagementsystem.form.Products.CreateProductForm;
 @Service
 @AllArgsConstructor

@@ -1,4 +1,4 @@
-package com.manufacturing.manufacturingmanagementsystem.service.Product;
+package com.manufacturing.manufacturingmanagementsystem.service.Products;
 import com.manufacturing.manufacturingmanagementsystem.form.Products.CreateProductForm;
 
 import com.manufacturing.manufacturingmanagementsystem.model.ProductsEntity;
