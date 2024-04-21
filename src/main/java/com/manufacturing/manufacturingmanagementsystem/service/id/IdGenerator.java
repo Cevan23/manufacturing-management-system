@@ -1,6 +1,6 @@
 package com.manufacturing.manufacturingmanagementsystem.service.id;
 
-import com.manufacturing.manufacturingmanagementsystem.model.audit.ReuseId;
+import com.manufacturing.manufacturingmanagementsystem.models.audit.ReuseId;
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.id.IdentifierGenerator;

@@ -1,6 +1,6 @@
 package com.manufacturing.manufacturingmanagementsystem;
 
-import com.manufacturing.manufacturingmanagementsystem.model.audit.AuditorAwareImpl;
+import com.manufacturing.manufacturingmanagementsystem.models.audit.AuditorAwareImpl;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;

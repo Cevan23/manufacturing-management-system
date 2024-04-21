@@ -1,6 +1,6 @@
 package com.manufacturing.manufacturingmanagementsystem.repositories;
 
-import com.manufacturing.manufacturingmanagementsystem.model.MasterProductionSchedulesEntity;
+import com.manufacturing.manufacturingmanagementsystem.models.MasterProductionSchedulesEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

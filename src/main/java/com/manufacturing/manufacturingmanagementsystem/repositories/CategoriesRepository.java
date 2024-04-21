@@ -1,6 +1,6 @@
 package com.manufacturing.manufacturingmanagementsystem.repositories;
 
-import com.manufacturing.manufacturingmanagementsystem.model.CategoriesEntity;
+import com.manufacturing.manufacturingmanagementsystem.models.CategoriesEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

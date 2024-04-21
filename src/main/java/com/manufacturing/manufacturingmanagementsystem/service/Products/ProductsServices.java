@@ -1,11 +1,12 @@
 package com.manufacturing.manufacturingmanagementsystem.service.Products;
 
-import com.manufacturing.manufacturingmanagementsystem.model.ProductsEntity;
+import com.manufacturing.manufacturingmanagementsystem.dtos.requests.CreateProductForm;
+import com.manufacturing.manufacturingmanagementsystem.models.ProductsEntity;
 import com.manufacturing.manufacturingmanagementsystem.repositories.ProductsRepository;
 import io.micrometer.common.util.StringUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import com.manufacturing.manufacturingmanagementsystem.form.Products.CreateProductForm;
+
 @Service
 @AllArgsConstructor
 public class ProductsServices implements iProductsServices {

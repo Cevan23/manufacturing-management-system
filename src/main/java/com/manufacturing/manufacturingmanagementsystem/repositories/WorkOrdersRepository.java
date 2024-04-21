@@ -1,6 +1,6 @@
 package com.manufacturing.manufacturingmanagementsystem.repositories;
 
-import com.manufacturing.manufacturingmanagementsystem.model.WorkOrdersEntity;
+import com.manufacturing.manufacturingmanagementsystem.models.WorkOrdersEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

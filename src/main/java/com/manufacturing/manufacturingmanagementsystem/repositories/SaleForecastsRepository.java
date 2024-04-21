@@ -1,6 +1,6 @@
 package com.manufacturing.manufacturingmanagementsystem.repositories;
 
-import com.manufacturing.manufacturingmanagementsystem.model.SaleForecastsEntity;
+import com.manufacturing.manufacturingmanagementsystem.models.SaleForecastsEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
