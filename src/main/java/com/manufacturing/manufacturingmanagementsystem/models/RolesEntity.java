@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.util.Set;
+
 @Entity
 @Table(name = TablePrefix.PREFIX_TABLE + "roles")
 @EntityListeners(AuditingEntityListener.class)
@@ -21,4 +23,5 @@ public class RolesEntity extends Auditable<String> {
 
     @Column(name = "role_name")
     private String roleName;
+
 }
