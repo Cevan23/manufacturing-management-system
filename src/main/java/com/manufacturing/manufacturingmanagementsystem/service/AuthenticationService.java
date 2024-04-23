@@ -9,6 +9,7 @@ import com.manufacturing.manufacturingmanagementsystem.models.UsersEntity;
 import com.manufacturing.manufacturingmanagementsystem.repositories.UsersRepository;
 import lombok.AllArgsConstructor;
 import com.manufacturing.manufacturingmanagementsystem.dtos.responses.AuthResponse;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -49,7 +50,7 @@ public class AuthenticationService {
         }
         return loginResponse;
     }
-
+//    @PreAuthorize("hasRole('chairman')")
     public IntrospectResponse introspect(IntrospectRequest request) throws AppException {
         var token = request.getToken();
 

@@ -26,12 +26,12 @@ public class JwtService {
     public String generateToken(UsersEntity User) {
 
         JWSHeader header = new JWSHeader(JWSAlgorithm.HS256);
-
+        System.out.println("User Id: " + User.getId());
         JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder()
                 .jwtID(UUID.randomUUID().toString())
                 .subject(User.getEmail())
                 .issueTime(new Date())
-                .claim("role",rolesServices.getRoleNameById(User.getId()))
+                .claim("role",User.getRole().getRoleName())
                 .claim("userId", User.getId())
                 .expirationTime(new Date(new Date().getTime() + 5 * 60 * 1000))
                 .build();

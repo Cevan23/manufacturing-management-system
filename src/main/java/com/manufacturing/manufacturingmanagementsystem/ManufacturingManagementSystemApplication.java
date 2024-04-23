@@ -1,9 +1,9 @@
 package com.manufacturing.manufacturingmanagementsystem;
-
 import com.manufacturing.manufacturingmanagementsystem.models.audit.AuditorAwareImpl;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 

@@ -24,4 +24,9 @@ public class RolesEntity extends Auditable<String> {
     @Column(name = "role_name")
     private String roleName;
 
+    @Column(name = "role_description")
+    private String description;
+
+    @ManyToMany
+    Set<Permissions> permissions;
 }

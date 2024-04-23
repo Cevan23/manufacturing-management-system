@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class AuthenticationController {
+
     @Autowired
     private AuthenticationService authenticationService;
+
     @PostMapping("/login")
     public ResponseEntity<ApiResponse> login(@RequestBody LoginRequest loginRequest) throws Exception {
         AuthResponse loginResponse = authenticationService.login(loginRequest);
