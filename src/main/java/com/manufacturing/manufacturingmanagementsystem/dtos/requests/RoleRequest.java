@@ -8,7 +8,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-//@FieldDefaults(level = AccessLevel.PRIVATE)
 public class RoleRequest {
     String roleName;
     String description;

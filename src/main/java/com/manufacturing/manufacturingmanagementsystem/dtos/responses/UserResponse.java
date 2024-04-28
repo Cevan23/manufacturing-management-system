@@ -10,9 +10,7 @@ import java.util.Date;
 @Builder
 public class UserResponse {
 
-    private  Long userid;
-
-    private Long roleId;
+    private RoleResponse role;
 
     private String email;
 

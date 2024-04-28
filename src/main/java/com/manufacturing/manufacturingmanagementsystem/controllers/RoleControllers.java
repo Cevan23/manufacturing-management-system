@@ -13,16 +13,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/roles")
-//@RequiredArgsConstructor
-//@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
+@RequestMapping("/api/roles")
 @Slf4j
 public class RoleControllers {
-
+    @Autowired
     RolesServices roleService;
 
-    @PostMapping
+    @PostMapping("/create")
     ApiResponse<RoleResponse> create(@RequestBody RoleRequest request){
+        System.out.println("request: " + request.toString());
         return ApiResponse.<RoleResponse>builder()
                 .result(roleService.create(request))
                 .build();

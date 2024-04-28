@@ -5,18 +5,11 @@ import com.manufacturing.manufacturingmanagementsystem.dtos.responses.Permission
 import com.manufacturing.manufacturingmanagementsystem.mapper.PermissionMapper;
 import com.manufacturing.manufacturingmanagementsystem.models.Permissions;
 import com.manufacturing.manufacturingmanagementsystem.repositories.PermissionRepository;
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-//@RequiredArgsConstructor
-@Slf4j
-//@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class PermissionService {
     PermissionRepository permissionRepository;
     PermissionMapper permissionMapper;

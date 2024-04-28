@@ -8,8 +8,6 @@ import java.util.Date;
 @NoArgsConstructor
 public class UsersDTO {
 
-    private Long roleId;
-
     private String email;
 
     private String password;
@@ -21,4 +19,6 @@ public class UsersDTO {
     private Date dateOfBirth;
 
     private String address;
+
+    private String roleName;
 }

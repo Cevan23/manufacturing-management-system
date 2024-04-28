@@ -12,17 +12,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 @RestController
-@RequestMapping("/permissions")
-//@RequiredArgsConstructor
-//@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-@Slf4j
-
+@RequestMapping("/api/permissions")
 public class PermissionControllers {
-//    @Autowired
-    private PermissionService permissionService;
 
-    @PostMapping
+    PermissionService permissionService;
+
+    @PostMapping("/create")
     ApiResponse<PermissionResponse> create(@RequestBody PermissionRequest request){
+        System.out.println("request: " + request.toString());
         return ApiResponse.<PermissionResponse>builder()
                 .result(permissionService.create(request))
                 .build();
