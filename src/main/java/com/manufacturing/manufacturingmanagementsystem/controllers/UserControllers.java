@@ -2,17 +2,20 @@ package com.manufacturing.manufacturingmanagementsystem.controllers;
 
 import com.manufacturing.manufacturingmanagementsystem.dtos.UsersDTO;
 import com.manufacturing.manufacturingmanagementsystem.dtos.responses.ApiResponse;
-import com.manufacturing.manufacturingmanagementsystem.dtos.responses.RoleResponse;
+import com.manufacturing.manufacturingmanagementsystem.dtos.responses.ResponseObject;
+import com.manufacturing.manufacturingmanagementsystem.dtos.responses.Role.RoleResponse;
 import com.manufacturing.manufacturingmanagementsystem.dtos.responses.UserResponse;
 import com.manufacturing.manufacturingmanagementsystem.mapper.RoleMapper;
 import com.manufacturing.manufacturingmanagementsystem.models.UsersEntity;
 import com.manufacturing.manufacturingmanagementsystem.service.Users.UsersServices;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/users")
@@ -45,33 +48,39 @@ public class UserControllers {
     }
 
     @PostMapping("/create")
-    public UserResponse insertUser(@RequestBody UsersDTO userDto) {
+    public ResponseEntity<?> insertUser(@Valid @RequestBody UsersDTO userDto) {
         try {
-            // Log thông tin đầu vào
-            System.out.println("Received user DTO: " + userDto.toString());
-            UsersEntity newUser = userService.insertUser(userDto);
-            RoleResponse role = roleMapper.toRoleResponse(newUser.getRole());
-            // Tạo một đối tượng UserResponse từ thông tin của người dùng mới
-            UserResponse userResponse = UserResponse.builder()
-                    .role(role)
-                    .email(newUser.getEmail())
-                    .password(newUser.getPassword())
-                    .build();
+            Map<String, Object> newUser = userService.insertUser(userDto);
 
-            // Trả về phản hồi thành công (status code 200) kèm theo đối tượng UserResponse
-            System.out.println("Received user response: " + userResponse.toString());
-            return userResponse;
+            return ResponseEntity.ok(
+                    ResponseObject.builder()
+                            .data(newUser)
+                            .message("Add user successfully")
+                            .status(HttpStatus.OK)
+                            .build());
+
         } catch (Exception e) {
             // Xử lý lỗi và trả về phản hồi lỗi (status code 500)
-            String errorMessage = "Failed to create new user: " + e.getMessage();
-            return null;
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
     @PutMapping("/{id}")
-    public UsersEntity updateUser(@PathVariable Long id, @RequestBody UsersDTO userDto) {
+    public ResponseEntity<?> updateUser(@PathVariable Long id,
+                                        @Valid @RequestBody UsersDTO userDto) {
+        try {
+            Map<String, Object> user = userService.updateUser(id,userDto);
 
-        return userService.updateUser(userDto);
+            return ResponseEntity.ok(
+                    ResponseObject.builder()
+                            .data(user)
+                            .message("Update user successfully")
+                            .status(HttpStatus.OK)
+                            .build());
+        }catch (Exception e) {
+            // Xử lý lỗi và trả về phản hồi lỗi (status code 500)
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @DeleteMapping("/{id}")

@@ -1,12 +1,16 @@
 package com.manufacturing.manufacturingmanagementsystem.dtos.responses;
 
+import com.manufacturing.manufacturingmanagementsystem.dtos.responses.Role.RoleResponse;
+import com.manufacturing.manufacturingmanagementsystem.models.UsersEntity;
 import lombok.*;
 
 import java.util.Date;
 
 @Data
-@NoArgsConstructor
+@Getter
+@Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class UserResponse {
 
@@ -23,4 +27,16 @@ public class UserResponse {
     private Date dateOfBirth;
 
     private String address;
+
+    public static UserResponse fromUser(UsersEntity user) {
+        return UserResponse
+                .builder()
+                .role(RoleResponse.fromRole(user.getRole()))
+                .email(user.getEmail())
+                .fullName(user.getFullName())
+                .phoneNumber(user.getPhoneNumber())
+                .dateOfBirth(user.getDateOfBirth())
+                .address(user.getAddress())
+                .build();
+    }
 }

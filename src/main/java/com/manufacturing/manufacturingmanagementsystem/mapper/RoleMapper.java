@@ -1,7 +1,7 @@
 package com.manufacturing.manufacturingmanagementsystem.mapper;
 
 import com.manufacturing.manufacturingmanagementsystem.dtos.requests.RoleRequest;
-import com.manufacturing.manufacturingmanagementsystem.dtos.responses.RoleResponse;
+import com.manufacturing.manufacturingmanagementsystem.dtos.responses.Role.RoleResponse;
 import com.manufacturing.manufacturingmanagementsystem.models.RolesEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

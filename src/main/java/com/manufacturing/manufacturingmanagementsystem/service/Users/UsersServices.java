@@ -1,8 +1,7 @@
 package com.manufacturing.manufacturingmanagementsystem.service.Users;
 
-import com.manufacturing.manufacturingmanagementsystem.dtos.RolesDTO;
 import com.manufacturing.manufacturingmanagementsystem.dtos.UsersDTO;
-import com.manufacturing.manufacturingmanagementsystem.dtos.responses.RoleResponse;
+import com.manufacturing.manufacturingmanagementsystem.dtos.responses.Role.RoleResponse;
 import com.manufacturing.manufacturingmanagementsystem.dtos.responses.UserResponse;
 import com.manufacturing.manufacturingmanagementsystem.exceptions.AppException;
 import com.manufacturing.manufacturingmanagementsystem.exceptions.ErrorCode;
@@ -11,23 +10,33 @@ import com.manufacturing.manufacturingmanagementsystem.models.RolesEntity;
 import com.manufacturing.manufacturingmanagementsystem.models.UsersEntity;
 import com.manufacturing.manufacturingmanagementsystem.repositories.UsersRepository;
 import com.manufacturing.manufacturingmanagementsystem.service.Roles.RolesServices;
-import lombok.AllArgsConstructor;
-import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
 //@AllArgsConstructor
 public class UsersServices implements IUsersServices {
 
-    private  UsersRepository usersRepository;
-    private  RolesServices rolesServices;
-    PasswordEncoder passwordEncoder;
-    RoleMapper roleMapper;
+    private final UsersRepository usersRepository;
+    private final RolesServices rolesServices;
+    private final BCryptPasswordEncoder passwordEncoder;
+    private RoleMapper roleMapper;
+
+    public UsersServices(UsersRepository usersRepository, RolesServices rolesServices, BCryptPasswordEncoder passwordEncoder) {
+        this.usersRepository = usersRepository;
+        this.rolesServices = rolesServices;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     public List<UsersEntity> getAllUsers() {
@@ -40,20 +49,34 @@ public class UsersServices implements IUsersServices {
     }
 
     @Override
-    public UsersEntity insertUser(UsersDTO userDto) {
+    public Map<String, Object> insertUser(UsersDTO userDto) {
         try {
+            PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
             UsersEntity userEntity = new UsersEntity();
-//            if (usersRepository.findByEmail(userDto.getEmail()).isPresent()) {
-//                throw new RuntimeException("Email already exists");
-//            }
-
-                userEntity.setEmail(userDto.getEmail());
-//                userEntity.setPassword(passwordEncoder.encode(userDto.getPassword()));
-                userEntity.setPassword(userDto.getPassword());
-                userEntity.setRole(rolesServices.getRoleByRoleName(userDto.getRoleName()));
-                return usersRepository.save(userEntity);
-
-
+            if (usersRepository.findByEmail(userDto.getEmail()).isPresent()) {
+                throw new RuntimeException("Email already exists");
+            }
+            userEntity.setEmail(userDto.getEmail());
+            userEntity.setPassword(passwordEncoder.encode(userDto.getPassword()));
+            userEntity.setFullName(userDto.getFullName());
+            userEntity.setPhoneNumber(userDto.getPhoneNumber());
+            userEntity.setAddress(userDto.getAddress());
+            userEntity.setDateOfBirth(userDto.getDateOfBirth());
+            userEntity.setRole(rolesServices.getRoleByRoleName(userDto.getRoleName()));
+            userEntity.setStatus(1);
+            userEntity.setCreatedDate(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
+            userEntity.setModifiedDate(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
+            userEntity.setCreatedBy("admin@gmail.com");
+            userEntity.setModifiedBy("admin@gmail.com");
+            usersRepository.save(userEntity);
+            Map<String, Object> userMap = new HashMap<>();
+            userMap.put("role", userEntity.getRole());
+            userMap.put("email", userEntity.getEmail());
+            userMap.put("fullName", userEntity.getFullName());
+            userMap.put("phoneNumber", userEntity.getPhoneNumber());
+            userMap.put("dateOfBirth", userEntity.getDateOfBirth());
+            userMap.put("address", userEntity.getAddress());
+            return userMap;
         } catch (Exception e) {
             // Xử lý lỗi và ném ra ngoại lệ mới hoặc trả về null (tùy thuộc vào yêu cầu)
             throw new RuntimeException("Failed to insert user: " + e.getMessage());
@@ -62,18 +85,52 @@ public class UsersServices implements IUsersServices {
 
 
     @Override
-    public UsersEntity updateUser(UsersDTO userDto) {
-        UsersEntity userEntity = usersRepository.findByEmail(userDto.getEmail()).orElse(null);
-        if (userEntity != null) {
-            // Update the properties of the userEntity based on the userDto
-            userEntity.setEmail(userDto.getEmail());
-            userEntity.setPassword(userDto.getPassword());
-
-
-            return usersRepository.save(userEntity);
-        } else {
-            // Handle the case where no user with the given ID exists
-            throw new RuntimeException("User not found with id : " + userDto.getFullName());
+    public Map<String, Object> updateUser(long id,UsersDTO userDto) {
+        try {
+            Optional<UsersEntity> userEntityOptional  = usersRepository.findById(id);
+            if (userEntityOptional.isPresent()) {
+                UsersEntity userEntity = userEntityOptional.get();
+                PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
+                if (userDto.getEmail() != null) {
+                    userEntity.setEmail(userDto.getEmail());
+                }
+                if (userDto.getPassword() != null) {
+                    userEntity.setPassword(passwordEncoder.encode(userDto.getPassword()));
+                }
+                if (userDto.getFullName() != null) {
+                    userEntity.setFullName(userDto.getFullName());
+                }
+                if (userDto.getPhoneNumber() != null) {
+                    userEntity.setPhoneNumber(userDto.getPhoneNumber());
+                }
+                if (userDto.getAddress() != null) {
+                    userEntity.setAddress(userDto.getAddress());
+                }
+                if (userDto.getDateOfBirth() != null) {
+                    userEntity.setDateOfBirth(userDto.getDateOfBirth());
+                }
+                if (userDto.getRoleName() != null) {
+                    userEntity.setRole(rolesServices.getRoleByRoleName(userDto.getRoleName()));
+                };
+                userEntity.setStatus(1);
+                userEntity.setModifiedDate(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
+                userEntity.setModifiedBy("admin@gmail.com");
+                usersRepository.save(userEntity);
+                Map<String, Object> userMap = new HashMap<>();
+                userMap.put("role", userEntity.getRole());
+                userMap.put("email", userEntity.getEmail());
+                userMap.put("fullName", userEntity.getFullName());
+                userMap.put("phoneNumber", userEntity.getPhoneNumber());
+                userMap.put("dateOfBirth", userEntity.getDateOfBirth());
+                userMap.put("address", userEntity.getAddress());
+                return userMap;
+            } else {
+                // Handle the case where no user with the given ID exists
+                throw new RuntimeException("User not found with email : " + userDto.getEmail());
+            }
+        } catch (Exception e) {
+            // Xử lý lỗi và ném ra ngoại lệ mới hoặc trả về null (tùy thuộc vào yêu cầu)
+            throw new RuntimeException("Failed to update user: " + e.getMessage());
         }
     }
 

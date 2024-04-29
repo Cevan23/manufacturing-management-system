@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -28,5 +29,5 @@ public class RolesEntity extends Auditable<String> {
     private String description;
 
     @ManyToMany
-    Set<Permissions> permissions;
+    List<Permissions> permissions;
 }
