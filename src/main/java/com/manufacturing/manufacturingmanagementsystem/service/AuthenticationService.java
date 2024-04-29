@@ -14,12 +14,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+
 @Service
 @AllArgsConstructor
 public class AuthenticationService {
     private final BCryptPasswordEncoder passwordEncoder;
     private final UsersRepository usersRepository;
     private final JwtService jwtService;
+
 
     public AuthResponse login(LoginRequest loginRequest) throws AppException, Exception {
         AuthResponse loginResponse = null;
@@ -32,7 +34,7 @@ public class AuthenticationService {
             Optional<UsersEntity> UserOptional = usersRepository.findByEmail(loginRequest.getEmail());
             if (UserOptional.isPresent()) {
                 UsersEntity User = UserOptional.get();
-//                if (passwordEncoder.matches(loginRequest.getPassword(), User.getPassword())) {
+                if (passwordEncoder.matches(loginRequest.getPassword(), User.getPassword())) {
                     String jwtToken = "";
                     jwtToken = jwtService.generateToken(User);
                     loginResponse = AuthResponse.builder()
@@ -40,7 +42,7 @@ public class AuthenticationService {
                             .token(jwtToken)
                             .authenticated(true)
                             .build();
-//                }
+                }
             }
         } catch (Exception e) {
             throw new Exception(e);
@@ -50,7 +52,8 @@ public class AuthenticationService {
         }
         return loginResponse;
     }
-//    @PreAuthorize("hasRole('chairman')")
+
+    //    @PreAuthorize("hasRole('chairman')")
     public IntrospectResponse introspect(IntrospectRequest request) throws AppException {
         var token = request.getToken();
 

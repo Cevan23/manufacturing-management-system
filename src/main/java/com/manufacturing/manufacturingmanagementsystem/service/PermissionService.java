@@ -1,7 +1,7 @@
 package com.manufacturing.manufacturingmanagementsystem.service;
 
 import com.manufacturing.manufacturingmanagementsystem.dtos.requests.PermissionRequest;
-import com.manufacturing.manufacturingmanagementsystem.dtos.responses.PermissionResponse;
+import com.manufacturing.manufacturingmanagementsystem.dtos.responses.Permission.PermissionResponse;
 import com.manufacturing.manufacturingmanagementsystem.mapper.PermissionMapper;
 import com.manufacturing.manufacturingmanagementsystem.models.Permissions;
 import com.manufacturing.manufacturingmanagementsystem.repositories.PermissionRepository;
