@@ -34,4 +34,8 @@ public class InventoryMaterialDetailsEntity extends Auditable<String>  {
 
     @Column(name = "safety_stock_amount")
     private Integer safetyStockAmount;
+
+    @Column(name = "total_unit_price")
+    private Float totalUnitPrice;
+
 }

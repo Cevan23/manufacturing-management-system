@@ -30,6 +30,6 @@ public class OrderDetailsEntity extends Auditable<String> {
     @Column(name = "quantity")
     private Integer quantity;
 
-    @Column(name = "total_price")
-    private Float totalPrice;
+    @Column(name = "total_unit_price")
+    private Float totalUnitPrice;
 }
