@@ -33,7 +33,7 @@ public class OrderDetailsServices implements IOrderDetailsServices {
                 detailEntry.put("volume",product.getVolume());
                 detailEntry.put("kind",product.getCategory().getCategoryName());
                 detailEntry.put("quantity",orderDetailsEntity.getQuantity());
-                detailEntry.put("total_price",orderDetailsEntity.getTotalPrice());
+                detailEntry.put("total_price",orderDetailsEntity.getTotalUnitPrice());
                 detailMap.add(detailEntry);
             }
             return detailMap;

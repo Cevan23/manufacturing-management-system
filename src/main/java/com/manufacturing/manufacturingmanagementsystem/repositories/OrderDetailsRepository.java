@@ -17,6 +17,6 @@ public interface OrderDetailsRepository extends JpaRepository<OrderDetailsEntity
             "WHERE p.id = o.id.productId AND o.id.orderId = :oid")
     List<ProductsEntity> findByOrderId(@Param("oid") long oid);
 
-    @Query("SELECT od FROM OrderDetailsEntity od WHERE od.orderId = :oid AND od.productId = :pid")
+    @Query("SELECT od FROM OrderDetailsEntity od WHERE od.id.orderId = :oid AND od.id.productId = :pid")
     OrderDetailsEntity findByOrderId_ProductId(@Param("oid") long oid,@Param("pid") long pid);
 }
