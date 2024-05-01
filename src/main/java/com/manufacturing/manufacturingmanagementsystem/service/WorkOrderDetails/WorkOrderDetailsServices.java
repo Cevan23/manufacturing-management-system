@@ -10,5 +10,5 @@ public class WorkOrderDetailsServices implements IWorkOrderDetailsServices {
 
     private final WorkOrderDetailsRepository workOrderDetailsRepository;
 
-    // Các phương thức service khác cần thiết
+
 }
