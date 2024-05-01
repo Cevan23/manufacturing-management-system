@@ -8,6 +8,8 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Getter
+@Setter
 public class RoleRequest {
     String roleName;
     String description;

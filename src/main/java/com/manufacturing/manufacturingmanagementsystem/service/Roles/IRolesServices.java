@@ -10,5 +10,6 @@ public interface IRolesServices {
     RolesEntity getRoleByRoleName(String roleName);
 
     RolesEntity getRoleById(Long id);
+
 }
 

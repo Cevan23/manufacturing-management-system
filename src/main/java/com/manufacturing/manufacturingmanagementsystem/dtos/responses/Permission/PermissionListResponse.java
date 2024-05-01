@@ -1,6 +1,6 @@
 package com.manufacturing.manufacturingmanagementsystem.dtos.responses.Permission;
 
-import com.manufacturing.manufacturingmanagementsystem.models.Permissions;
+import com.manufacturing.manufacturingmanagementsystem.models.PermissionsEntity;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ public class PermissionListResponse {
         this.permissions = permissions;
     }
 
-    public static PermissionListResponse fromPermissionList(List<Permissions> permissionEntities) {
+    public static PermissionListResponse fromPermissionList(List<PermissionsEntity> permissionEntities) {
         List<PermissionResponse> permissionResponses = permissionEntities.stream()
                 .map(PermissionResponse::fromPermission)
                 .toList();

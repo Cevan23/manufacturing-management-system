@@ -4,6 +4,7 @@ import com.manufacturing.manufacturingmanagementsystem.dtos.responses.Introspect
 import com.manufacturing.manufacturingmanagementsystem.exceptions.AppException;
 import com.manufacturing.manufacturingmanagementsystem.models.UsersEntity;
 import com.manufacturing.manufacturingmanagementsystem.repositories.InvalidatedTokenRepository;
+import com.manufacturing.manufacturingmanagementsystem.repositories.UsersRepository;
 import com.manufacturing.manufacturingmanagementsystem.service.Roles.RolesServices;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
@@ -12,14 +13,16 @@ import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
+import java.util.StringJoiner;
 import java.util.Date;
 import java.util.UUID;
+import org.springframework.util.CollectionUtils;
 
 @Service
 @AllArgsConstructor
 public class JwtService {
 
+    UsersRepository usersRepository;
     private final String SIGNER_KEY = "Cf3X07omDRzLIp2hYuvrBmZ5vGlIcge12VEllyTdD1Q";
     private final InvalidatedTokenRepository invalidatedTokenRepository;
     private final RolesServices rolesServices;
@@ -33,6 +36,7 @@ public class JwtService {
                 .issueTime(new Date())
                 .claim("role",User.getRole().getRoleName())
                 .claim("userId", User.getId())
+                .claim("scope", buildScope(User))
                 .expirationTime(new Date(new Date().getTime() + 5 * 60 * 1000))
                 .build();
 
@@ -80,5 +84,21 @@ public class JwtService {
             throw new Exception();
 
         return signedJWT;
+    }
+
+    private String buildScope(UsersEntity user) {
+        StringJoiner stringJoiner = new StringJoiner(" ");
+
+        if (user != null && user.getRole() != null) {
+            // Thêm tên vai trò của người dùng vào scope
+            stringJoiner.add("SCOPE_" + user.getRole().getRoleName());
+
+            // Lấy danh sách quyền từ vai trò của người dùng và thêm vào scope
+            if (user.getRole().getPermissions() != null && !user.getRole().getPermissions().isEmpty()) {
+                user.getRole().getPermissions().forEach(permission -> stringJoiner.add(permission.getName()));
+            }
+        }
+
+        return stringJoiner.toString();
     }
 }

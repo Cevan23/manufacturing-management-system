@@ -26,4 +26,5 @@ public interface UsersRepository extends JpaRepository<UsersEntity, Long> {
     UsersEntity findByRole(@Param("roleName") String roleName);
 
 
+
 }

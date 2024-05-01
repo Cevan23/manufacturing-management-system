@@ -1,5 +1,5 @@
 package com.manufacturing.manufacturingmanagementsystem.dtos;
-import com.manufacturing.manufacturingmanagementsystem.models.Permissions;
+import com.manufacturing.manufacturingmanagementsystem.models.PermissionsEntity;
 import lombok.*;
 
 import java.util.Set;
@@ -13,5 +13,5 @@ public class RolesDTO {
 
     private String description;
 
-    Set<Permissions> permissions;
+    Set<PermissionsEntity> permissions;
 }

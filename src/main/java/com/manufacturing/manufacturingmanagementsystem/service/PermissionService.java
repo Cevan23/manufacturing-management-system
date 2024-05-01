@@ -3,7 +3,7 @@ package com.manufacturing.manufacturingmanagementsystem.service;
 import com.manufacturing.manufacturingmanagementsystem.dtos.requests.PermissionRequest;
 import com.manufacturing.manufacturingmanagementsystem.dtos.responses.Permission.PermissionResponse;
 import com.manufacturing.manufacturingmanagementsystem.mapper.PermissionMapper;
-import com.manufacturing.manufacturingmanagementsystem.models.Permissions;
+import com.manufacturing.manufacturingmanagementsystem.models.PermissionsEntity;
 import com.manufacturing.manufacturingmanagementsystem.repositories.PermissionRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,7 @@ public class PermissionService {
     PermissionMapper permissionMapper;
 
     public PermissionResponse create(PermissionRequest request){
-        Permissions permission = new Permissions();
+        PermissionsEntity permission = new PermissionsEntity();
         permission.setName(request.getName());
         permission = permissionRepository.save(permission);
         return permissionMapper.toPermissionResponse(permission);

@@ -24,16 +24,19 @@ public class InventoryProductDetailsEntity extends Auditable<String> {
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @MapsId("inventoryId")
-    private InventoriesEntity inventoryId;
+    private InventoriesEntity inventory;
 
     @OneToOne(cascade = CascadeType.PERSIST)
     @MapsId("productId")
-    private ProductsEntity productId;
+    private ProductsEntity product;
 
     @Column(name = "quantity")
     private Integer quantity;
 
     @Column(name = "safety_stock_amount")
     private Integer safetyStockAmount;
+
+    @Column(name = "total_unit_price")
+    private Float totalUnitPrice;
 
 }

@@ -10,6 +10,7 @@ import com.manufacturing.manufacturingmanagementsystem.models.RolesEntity;
 import com.manufacturing.manufacturingmanagementsystem.models.UsersEntity;
 import com.manufacturing.manufacturingmanagementsystem.repositories.UsersRepository;
 import com.manufacturing.manufacturingmanagementsystem.service.Roles.RolesServices;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -62,6 +63,7 @@ public class UsersServices implements IUsersServices {
             userEntity.setPhoneNumber(userDto.getPhoneNumber());
             userEntity.setAddress(userDto.getAddress());
             userEntity.setDateOfBirth(userDto.getDateOfBirth());
+            System.out.println("Role find: " + rolesServices.getRoleByRoleName(userDto.getRoleName()));
             userEntity.setRole(rolesServices.getRoleByRoleName(userDto.getRoleName()));
             userEntity.setStatus(1);
             userEntity.setCreatedDate(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
@@ -70,6 +72,7 @@ public class UsersServices implements IUsersServices {
             userEntity.setModifiedBy("admin@gmail.com");
             usersRepository.save(userEntity);
             Map<String, Object> userMap = new HashMap<>();
+            System.out.println("Role map: " + userEntity.getRole());
             userMap.put("role", userEntity.getRole());
             userMap.put("email", userEntity.getEmail());
             userMap.put("fullName", userEntity.getFullName());
