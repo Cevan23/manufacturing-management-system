@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/roles")
+@RequestMapping("/api/BOMs")
 public class BOMControllers {
 
     @Autowired
