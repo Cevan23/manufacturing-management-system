@@ -22,14 +22,14 @@ public class RoleControllers {
     ApiResponse<RoleResponse> create(@RequestBody RoleRequest request){
         System.out.println("request: " + request.toString());
         return ApiResponse.<RoleResponse>builder()
-                .result(roleService.create(request))
+//                .result(roleService.create(request))
                 .build();
     }
 
     @GetMapping("/getAll")
     ApiResponse<List<RoleResponse>> getAll(){
         return ApiResponse.<List<RoleResponse>>builder()
-                .result(roleService.getAll())
+//                .result(roleService.getAll())
                 .build();
     }
 

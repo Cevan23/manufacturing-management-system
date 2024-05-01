@@ -1,20 +1,19 @@
 package com.manufacturing.manufacturingmanagementsystem.service.Roles;
 
 import com.manufacturing.manufacturingmanagementsystem.dtos.requests.RoleRequest;
+import com.manufacturing.manufacturingmanagementsystem.dtos.responses.Permission.PermissionListResponse;
 import com.manufacturing.manufacturingmanagementsystem.dtos.responses.Permission.PermissionResponse;
 import com.manufacturing.manufacturingmanagementsystem.dtos.responses.Role.RoleResponse;
 import com.manufacturing.manufacturingmanagementsystem.mapper.RoleMapper;
+import com.manufacturing.manufacturingmanagementsystem.models.PermissionsEntity;
 import com.manufacturing.manufacturingmanagementsystem.models.RolesEntity;
 import com.manufacturing.manufacturingmanagementsystem.repositories.PermissionRepository;
 import com.manufacturing.manufacturingmanagementsystem.repositories.RolesRepository;
-import lombok.AccessLevel;
-import lombok.experimental.FieldDefaults;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.ArrayList;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,43 +23,53 @@ public class RolesServices implements IRolesServices {
 
     PermissionRepository permissionRepository;
 
-    RoleMapper roleMapper;
-
-
     public RolesServices(RolesRepository rolesRepository, PermissionRepository permissionRepository) {
         this.rolesRepository = rolesRepository;
         this.permissionRepository = permissionRepository;
     }
 
-    public RoleResponse create(RoleRequest request){
-        var role = roleMapper.toRole(request);
-
-        var permissions = permissionRepository.findAllById(request.getPermissions());
-        role.setPermissions(permissions);
-
-        role = rolesRepository.save(role);
-        return roleMapper.toRoleResponse(role);
-
-    }
-
     public RoleResponse update(RoleRequest request){
         System.out.println("request: " + request.toString());
-        var role = roleMapper.toRole(request);
+
+        // Create a new RolesEntity and manually set the fields from the request
+        var role = new RolesEntity();
+        role = rolesRepository.findRoleByRoleName(request.getRoleName());
         System.out.println("role: " + role.toString());
-        var permissions = permissionRepository.findAllById(request.getPermissions());
-        System.out.println("permissions: " + permissions.toString());
-        role.setPermissions(permissions);
+
+        if (request.getPermissions() == null) {
+            System.out.println("request.getPermissions() is null");
+        } else {
+            var permissions = new HashSet<PermissionsEntity>();
+            for (String permissionName : request.getPermissions()) {
+                PermissionsEntity permission = permissionRepository.findByName(permissionName);
+                if (permission == null) {
+                    System.out.println("No permission found for the given name, creating new one");
+                    permission = new PermissionsEntity();
+                    permission.setName(permissionName);
+                    permission.setDescription("This is used for " + permissionName);
+                    permission = permissionRepository.save(permission);
+                }
+                permissions.add(permission);
+            }
+            List<PermissionsEntity> permissionsList = new ArrayList<>(permissions);
+            role.setPermissions(permissionsList);
+        }
 
         role = rolesRepository.save(role);
-        return roleMapper.toRoleResponse(role);
 
-    }
+        // Manually create a RoleResponse from the saved RolesEntity
+        var response = new RoleResponse();
+        response.setName(role.getRoleName());
+        response.setDescription(role.getDescription());
+        // Convert each PermissionsEntity in the list to a PermissionResponse
+        var permissionResponses = role.getPermissions().stream()
+                .map(PermissionResponse::fromPermission)
+                .collect(Collectors.toList());
+        System.out.println("permissionResponses: " + permissionResponses.toString());
+        response.setPermissions(new PermissionListResponse(permissionResponses));
 
-    public List<RoleResponse> getAll(){
-        return rolesRepository.findAll()
-                .stream()
-                .map(roleMapper::toRoleResponse)
-                .toList();
+        return response;
+
     }
 
     public void delete(String role){

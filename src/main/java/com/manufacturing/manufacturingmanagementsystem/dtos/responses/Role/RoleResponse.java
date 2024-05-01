@@ -10,7 +10,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-//@FieldDefaults(level = AccessLevel.PRIVATE)
 public class RoleResponse {
     private String name;
     private String description;
