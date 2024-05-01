@@ -27,7 +27,7 @@ public class RolesServices implements IRolesServices {
     RoleMapper roleMapper;
 
 
-    public RolesServices(RolesRepository rolesRepository, PermissionRepository permissionRepository, RoleMapper roleMapper) {
+    public RolesServices(RolesRepository rolesRepository, PermissionRepository permissionRepository) {
         this.rolesRepository = rolesRepository;
         this.permissionRepository = permissionRepository;
     }
