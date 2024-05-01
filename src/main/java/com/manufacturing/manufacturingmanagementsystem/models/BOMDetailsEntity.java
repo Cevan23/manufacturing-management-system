@@ -21,11 +21,11 @@ public class BOMDetailsEntity extends Auditable<String>{
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @MapsId("BOMId")
-    private BOMsEntity BOMId;
+    private BOMsEntity BOM;
 
     @OneToOne(cascade = CascadeType.PERSIST)
     @MapsId("materialId")
-    private MaterialsEntity materialId;
+    private MaterialsEntity material;
 
     @Column(name = "quantity")
     private Integer quantity;

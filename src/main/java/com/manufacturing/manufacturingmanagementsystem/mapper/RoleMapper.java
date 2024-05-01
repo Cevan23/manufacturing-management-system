@@ -5,9 +5,13 @@ import com.manufacturing.manufacturingmanagementsystem.dtos.responses.Role.RoleR
 import com.manufacturing.manufacturingmanagementsystem.models.RolesEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface RoleMapper {
+
+    RoleMapper INSTANCE = Mappers.getMapper(RoleMapper.class);
+
 
     @Mapping(target = "permissions", ignore = true)
     @Mapping(target = "id", ignore = true)

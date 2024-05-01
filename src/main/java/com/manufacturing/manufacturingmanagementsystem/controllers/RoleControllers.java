@@ -5,6 +5,8 @@ import com.manufacturing.manufacturingmanagementsystem.dtos.responses.Role.RoleR
 import com.manufacturing.manufacturingmanagementsystem.service.Roles.RolesServices;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,7 +26,7 @@ public class RoleControllers {
                 .build();
     }
 
-    @GetMapping
+    @GetMapping("/getAll")
     ApiResponse<List<RoleResponse>> getAll(){
         return ApiResponse.<List<RoleResponse>>builder()
                 .result(roleService.getAll())
@@ -35,5 +37,17 @@ public class RoleControllers {
     ApiResponse<Void> delete(@PathVariable String role){
         roleService.delete(role);
         return ApiResponse.<Void>builder().build();
+    }
+
+    @PostMapping("/update")
+    ApiResponse<RoleResponse> update(@RequestBody RoleRequest request){
+        if (!roleService.isRoleNameExists(request.getRoleName())) {
+            return ApiResponse.<RoleResponse>builder()
+                    .message("Role name don't exists")
+                    .build();
+        }
+        return ApiResponse.<RoleResponse>builder()
+                .result(roleService.update(request))
+                .build();
     }
 }

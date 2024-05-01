@@ -23,11 +23,11 @@ public class InventoryMaterialDetailsEntity extends Auditable<String>  {
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @MapsId("inventoryId")
-    private InventoriesEntity inventoryId;
+    private InventoriesEntity inventory;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @MapsId("materialId")
-    private MaterialsEntity materialId;
+    private MaterialsEntity material;
 
     @Column(name = "quantity")
     private Integer quantity;

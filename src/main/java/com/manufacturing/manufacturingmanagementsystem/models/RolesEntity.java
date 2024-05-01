@@ -6,7 +6,6 @@ import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = TablePrefix.PREFIX_TABLE + "roles")
@@ -29,5 +28,5 @@ public class RolesEntity extends Auditable<String> {
     private String description;
 
     @ManyToMany
-    List<Permissions> permissions;
+    List<PermissionsEntity> permissions;
 }

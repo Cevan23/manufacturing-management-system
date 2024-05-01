@@ -23,7 +23,7 @@ public class WorkOrderDetailsEntity extends Auditable<String> {
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @MapsId("workOrderId")
-    private WorkOrdersEntity workOrderId;
+    private WorkOrdersEntity workOrder;
 
     @OneToOne(cascade = CascadeType.PERSIST)
     @MapsId("masterProductionScheduleId")

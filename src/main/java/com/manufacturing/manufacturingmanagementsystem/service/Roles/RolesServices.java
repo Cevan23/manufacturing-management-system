@@ -7,6 +7,9 @@ import com.manufacturing.manufacturingmanagementsystem.mapper.RoleMapper;
 import com.manufacturing.manufacturingmanagementsystem.models.RolesEntity;
 import com.manufacturing.manufacturingmanagementsystem.repositories.PermissionRepository;
 import com.manufacturing.manufacturingmanagementsystem.repositories.RolesRepository;
+import lombok.AccessLevel;
+import lombok.experimental.FieldDefaults;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -17,14 +20,14 @@ import java.util.stream.Collectors;
 @Service
 public class RolesServices implements IRolesServices {
 
-
     RolesRepository rolesRepository;
 
     PermissionRepository permissionRepository;
 
     RoleMapper roleMapper;
 
-    public RolesServices(RolesRepository rolesRepository, PermissionRepository permissionRepository) {
+
+    public RolesServices(RolesRepository rolesRepository, PermissionRepository permissionRepository, RoleMapper roleMapper) {
         this.rolesRepository = rolesRepository;
         this.permissionRepository = permissionRepository;
     }
@@ -37,14 +40,19 @@ public class RolesServices implements IRolesServices {
 
         role = rolesRepository.save(role);
         return roleMapper.toRoleResponse(role);
-//        var role = new RolesEntity();
-//        role.setRoleName(request.getRoleName());
-//        role.setDescription(request.getDescription());
-//
-//        var permissions = permissionRepository.findAllById(request.getPermissions());
-//        role.setPermissions(new HashSet<>(permissions));
-//        role = rolesRepository.save(role);
-//        return toRoleResponse(role);
+
+    }
+
+    public RoleResponse update(RoleRequest request){
+        System.out.println("request: " + request.toString());
+        var role = roleMapper.toRole(request);
+        System.out.println("role: " + role.toString());
+        var permissions = permissionRepository.findAllById(request.getPermissions());
+        System.out.println("permissions: " + permissions.toString());
+        role.setPermissions(permissions);
+
+        role = rolesRepository.save(role);
+        return roleMapper.toRoleResponse(role);
 
     }
 
@@ -54,31 +62,6 @@ public class RolesServices implements IRolesServices {
                 .map(roleMapper::toRoleResponse)
                 .toList();
     }
-
-//    public List<RoleResponse> getAll(){
-//        return rolesRepository.findAll()
-//                .stream()
-//                .map(role -> {
-//                    RoleResponse response = new RoleResponse();
-//                    response.setName(role.getRoleName());
-//                    response.setDescription(role.getDescription());
-//
-//                    Set<PermissionResponse> permissionResponses = role.getPermissions().stream()
-//                            .map(permission -> {
-//                                PermissionResponse permissionResponse = new PermissionResponse();
-//                                // Assuming PermissionResponse has a field 'name'
-//                                permissionResponse.setName(permission.getName());
-//                                // Map other fields if exist
-//                                return permissionResponse;
-//                            })
-//                            .collect(Collectors.toSet());
-//
-//                    response.setPermissions(permissionResponses);
-//
-//                    return response;
-//                })
-//                .collect(Collectors.toList());
-//    }
 
     public void delete(String role){
         var roleId = rolesRepository.findIdByRoleName(role);
@@ -124,5 +107,11 @@ public class RolesServices implements IRolesServices {
             throw new IllegalArgumentException("No role found with the given ID");
         }
     }
+
+    public boolean isRoleNameExists(String roleName) {
+        return rolesRepository.findRoleByRoleName(roleName) != null;
+
+    }
+
 }
 

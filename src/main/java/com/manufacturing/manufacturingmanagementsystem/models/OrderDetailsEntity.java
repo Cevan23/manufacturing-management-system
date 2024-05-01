@@ -21,11 +21,11 @@ public class OrderDetailsEntity extends Auditable<String> {
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @MapsId("orderId")
-    private OrdersEntity orderId;
+    private OrdersEntity order;
 
     @OneToOne(cascade = CascadeType.PERSIST)
     @MapsId("productId")
-    private ProductsEntity productId;
+    private ProductsEntity product;
 
     @Column(name = "quantity")
     private Integer quantity;
