@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BOMDetailsRepository extends JpaRepository<BOMDetailsEntity, BOMDetailEntityId> {
-    // Add custom query methods if needed
+
 }

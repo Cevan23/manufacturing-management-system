@@ -1,9 +1,14 @@
 package com.manufacturing.manufacturingmanagementsystem.dtos.requests.BOM;
 
 import com.manufacturing.manufacturingmanagementsystem.dtos.requests.Material.MaterialRequest;
+import lombok.*;
 
-import javax.persistence.criteria.CriteriaBuilder;
-
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Getter
+@Setter
 public class BOMDetailRequest {
 
     private MaterialRequest material;

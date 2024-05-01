@@ -1,5 +1,6 @@
 package com.manufacturing.manufacturingmanagementsystem.dtos.requests.BOM;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.manufacturing.manufacturingmanagementsystem.dtos.requests.Material.MaterialRequest;
 import com.manufacturing.manufacturingmanagementsystem.models.ProductsEntity;
 import lombok.*;
@@ -16,8 +17,10 @@ public class BOMRequest {
 
     private Long productManagerId;
 
+    @JsonProperty("BOMName")
     private String BOMName;
 
+    @JsonProperty("BOMStatus")
     private String BOMStatus;
 
     private Float timeProduction;

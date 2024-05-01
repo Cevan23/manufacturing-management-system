@@ -10,11 +10,11 @@ import lombok.*;
 @Setter
 public class MaterialRequest {
 
-    private String nameMaterial;
+    private String materialName;
 
-    private String unitMaterial;
+    private String materialUnit;
 
-    private Double priceMaterial;
+    private Double materialPrice;
 
-    private Double volumeMaterial;
+    private Double materialVolume;
 }

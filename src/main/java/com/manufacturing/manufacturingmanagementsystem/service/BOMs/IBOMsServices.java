@@ -1,10 +1,12 @@
 package com.manufacturing.manufacturingmanagementsystem.service.BOMs;
 
 import com.manufacturing.manufacturingmanagementsystem.dtos.BOMsDTO;
+import com.manufacturing.manufacturingmanagementsystem.models.BOMsEntity;
 
 public interface IBOMsServices {
 
-    BOMsDTO createBOM(BOMsDTO bomRequest);
+    BOMsEntity createBOM(BOMsDTO bomRequest);
 
+    BOMsEntity findBOMByName(String name);
 }
 
