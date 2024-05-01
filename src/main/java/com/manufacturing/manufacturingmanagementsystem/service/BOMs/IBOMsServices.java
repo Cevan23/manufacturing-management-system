@@ -1,6 +1,10 @@
 package com.manufacturing.manufacturingmanagementsystem.service.BOMs;
 
+import com.manufacturing.manufacturingmanagementsystem.dtos.BOMsDTO;
+
 public interface IBOMsServices {
-    // Khai báo các phương thức service cần thiết
+
+    BOMsDTO createBOM(BOMsDTO bomRequest);
+
 }
 

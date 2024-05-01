@@ -27,6 +27,17 @@ public class RolesServices implements IRolesServices {
         this.rolesRepository = rolesRepository;
         this.permissionRepository = permissionRepository;
     }
+    private PermissionsEntity getOrCreatePermission(String permissionName) {
+        PermissionsEntity permission = permissionRepository.findByName(permissionName);
+        if (permission == null) {
+            System.out.println("No permission found for the given name, creating new one");
+            permission = new PermissionsEntity();
+            permission.setName(permissionName);
+            permission.setDescription("This is used for " + permissionName);
+            permission = permissionRepository.save(permission);
+        }
+        return permission;
+    }
 
     public RoleResponse update(RoleRequest request){
         System.out.println("request: " + request.toString());
@@ -41,14 +52,7 @@ public class RolesServices implements IRolesServices {
         } else {
             var permissions = new HashSet<PermissionsEntity>();
             for (String permissionName : request.getPermissions()) {
-                PermissionsEntity permission = permissionRepository.findByName(permissionName);
-                if (permission == null) {
-                    System.out.println("No permission found for the given name, creating new one");
-                    permission = new PermissionsEntity();
-                    permission.setName(permissionName);
-                    permission.setDescription("This is used for " + permissionName);
-                    permission = permissionRepository.save(permission);
-                }
+                PermissionsEntity permission = getOrCreatePermission(permissionName);
                 permissions.add(permission);
             }
             List<PermissionsEntity> permissionsList = new ArrayList<>(permissions);
@@ -70,6 +74,34 @@ public class RolesServices implements IRolesServices {
 
         return response;
 
+    }
+
+    public RoleResponse addPermission(RoleRequest request){
+        RolesEntity role = rolesRepository.findRoleByRoleName(request.getRoleName());
+
+        if (request.getPermissions() != null) {
+            HashSet<PermissionsEntity> permissions = new HashSet<>(rolesRepository.findPermissionsByRoleId(role.getId()));
+
+            for (String permissionName : request.getPermissions()) {
+                PermissionsEntity permission = getOrCreatePermission(permissionName);
+                permissions.add(permission);
+            }
+            role.getPermissions().clear();
+            role.getPermissions().addAll(permissions);
+        }
+
+        role = rolesRepository.save(role);
+
+        RoleResponse response = new RoleResponse();
+        response.setName(role.getRoleName());
+        response.setDescription(role.getDescription());
+        List<PermissionResponse> permissionResponses = role.getPermissions().stream()
+                .map(PermissionResponse::fromPermission)
+                .collect(Collectors.toList());
+        System.out.println("permissionResponses: " + permissionResponses.toString());
+        response.setPermissions(new PermissionListResponse(permissionResponses));
+
+        return response;
     }
 
     public void delete(String role){

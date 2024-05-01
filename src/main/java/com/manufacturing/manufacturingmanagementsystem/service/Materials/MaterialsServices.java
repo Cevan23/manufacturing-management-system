@@ -1,5 +1,6 @@
 package com.manufacturing.manufacturingmanagementsystem.service.Materials;
 
+import com.manufacturing.manufacturingmanagementsystem.dtos.MaterialsDTO;
 import com.manufacturing.manufacturingmanagementsystem.repositories.MaterialsRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,9 @@ public class MaterialsServices implements IMaterialsServices {
 
     private final MaterialsRepository materialsRepository;
 
-    // Các phương thức service khác cần thiết
+    @Override
+    public MaterialsDTO createMaterial(MaterialsDTO material){
+        return null;
+    }
 }
 
