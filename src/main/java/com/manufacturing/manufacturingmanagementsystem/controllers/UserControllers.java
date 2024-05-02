@@ -35,9 +35,22 @@ public class UserControllers {
         return userService.getAllUsers();
     }
 
-    @GetMapping("/getUserInformationById")
-    public UsersEntity getUserById(Long id) {
-        return userService.getUserById(id);
+    @GetMapping("/getUserInformationById/{id}")
+    public ResponseEntity<?> getUserById(@PathVariable Long id) {
+        try {
+            UsersEntity user = userService.getUserById(id);
+
+            return ResponseEntity.ok(
+                    ResponseObject.builder()
+                            .data(UserResponse.fromUser(user))
+                            .message("Get user successfully")
+                            .status(HttpStatus.OK)
+                            .build());
+
+        } catch (Exception e) {
+            // Xử lý lỗi và trả về phản hồi lỗi (status code 500)
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @GetMapping("/getUserInformationByEmail")
