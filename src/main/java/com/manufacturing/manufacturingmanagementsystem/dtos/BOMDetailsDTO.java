@@ -14,4 +14,6 @@ public class BOMDetailsDTO {
     private Long materialId;
 
     private Integer quantity;
+
+    private Float totalUnitPrice;
 }

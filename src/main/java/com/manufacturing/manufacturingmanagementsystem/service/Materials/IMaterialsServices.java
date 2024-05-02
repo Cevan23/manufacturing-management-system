@@ -1,6 +1,14 @@
 package com.manufacturing.manufacturingmanagementsystem.service.Materials;
 
+import com.manufacturing.manufacturingmanagementsystem.dtos.MaterialsDTO;
+import com.manufacturing.manufacturingmanagementsystem.models.MaterialsEntity;
+
 public interface IMaterialsServices {
-    // Khai báo các phương thức service cần thiết
+
+    MaterialsEntity createMaterial(MaterialsDTO material);
+
+    MaterialsEntity findMaterialByName(String name);
+
+    MaterialsDTO findMaterialById(Long id);
 }
 
