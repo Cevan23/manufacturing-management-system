@@ -30,6 +30,7 @@ public class JwtService {
 
         JWSHeader header = new JWSHeader(JWSAlgorithm.HS256);
         System.out.println("User Id: " + User.getId());
+        System.out.println("Role: " + User.getRole().getRoleName());
         JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder()
                 .jwtID(UUID.randomUUID().toString())
                 .subject(User.getEmail())
