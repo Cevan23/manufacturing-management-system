@@ -65,11 +65,6 @@ public class UsersServices implements IUsersServices {
             userEntity.setDateOfBirth(userDto.getDateOfBirth());
             System.out.println("Role find: " + rolesServices.getRoleByRoleName(userDto.getRoleName()));
             userEntity.setRole(rolesServices.getRoleByRoleName(userDto.getRoleName()));
-            userEntity.setStatus(1);
-            userEntity.setCreatedDate(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
-            userEntity.setModifiedDate(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
-            userEntity.setCreatedBy("admin@gmail.com");
-            userEntity.setModifiedBy("admin@gmail.com");
             usersRepository.save(userEntity);
             Map<String, Object> userMap = new HashMap<>();
             System.out.println("Role map: " + userEntity.getRole());
@@ -115,9 +110,6 @@ public class UsersServices implements IUsersServices {
                 if (userDto.getRoleName() != null) {
                     userEntity.setRole(rolesServices.getRoleByRoleName(userDto.getRoleName()));
                 };
-                userEntity.setStatus(1);
-                userEntity.setModifiedDate(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
-                userEntity.setModifiedBy("admin@gmail.com");
                 usersRepository.save(userEntity);
                 Map<String, Object> userMap = new HashMap<>();
                 userMap.put("role", userEntity.getRole());
