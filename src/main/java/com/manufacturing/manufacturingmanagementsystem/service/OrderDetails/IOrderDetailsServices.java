@@ -6,6 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 public interface IOrderDetailsServices {
-    List<Map<String, Object>> findProductByOrderId(Long oid);
+//    List<Map<String, Object>> findProductByOrderId(Long oid);
 }
 

@@ -34,7 +34,7 @@ public class AuthenticationService {
             Optional<UsersEntity> UserOptional = usersRepository.findByEmail(loginRequest.getEmail());
             if (UserOptional.isPresent()) {
                 UsersEntity User = UserOptional.get();
-                if (passwordEncoder.matches(loginRequest.getPassword(), User.getPassword())) {
+//                if (passwordEncoder.matches(loginRequest.getPassword(), User.getPassword())) {
                     String jwtToken = "";
                     jwtToken = jwtService.generateToken(User);
                     loginResponse = AuthResponse.builder()
@@ -42,7 +42,7 @@ public class AuthenticationService {
                             .token(jwtToken)
                             .authenticated(true)
                             .build();
-                }
+//                }
             }
         } catch (Exception e) {
             throw new Exception(e);

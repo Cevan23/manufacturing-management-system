@@ -24,22 +24,22 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class OrderController {
 
-    private final OrdersServices ordersServices;
+//    private final OrdersServices ordersServices;
 
-    @GetMapping("")
-    public ResponseEntity<?> getAllOrder() {
-        try {
-            List<Map<String, Object>> ordersEntityList = ordersServices.getAllOrders();
-            return ResponseEntity.ok(
-                    ResponseObject.builder()
-                            .data(ordersEntityList)
-                            .message("Get all orders successfully")
-                            .status(HttpStatus.OK)
-                            .build());
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
+//    @GetMapping("")
+//    public ResponseEntity<?> getAllOrder() {
+//        try {
+//            List<Map<String, Object>> ordersEntityList = ordersServices.getAllOrders();
+//            return ResponseEntity.ok(
+//                    ResponseObject.builder()
+//                            .data(ordersEntityList)
+//                            .message("Get all orders successfully")
+//                            .status(HttpStatus.OK)
+//                            .build());
+//        } catch (Exception e) {
+//            return ResponseEntity.badRequest().body(e.getMessage());
+//        }
+//    }
 //
 //    @PostMapping("/create")
 //    public ResponseEntity<?> insertUser(@Valid @RequestBody UsersDTO userDto) {
