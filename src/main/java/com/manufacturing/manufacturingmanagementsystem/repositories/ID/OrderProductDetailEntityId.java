@@ -10,7 +10,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Embeddable
-public class OrderDetailEntityId implements Serializable {
+public class OrderProductDetailEntityId implements Serializable {
     private Long productId;
     private Long orderId;
 }

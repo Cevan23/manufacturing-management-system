@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 public interface IOrdersServices {
-    List<Map<String, Object>> getAllOrders();
-    OrdersEntity insertOrder(UsersDTO userForm);
-    OrdersEntity updateOrder(long id,UsersDTO userForm);
-    void deleteOrder(Long id);
+//    List<Map<String, Object>> getAllOrders();
+//    OrdersEntity insertOrder(UsersDTO userForm);
+//    OrdersEntity updateOrder(long id,UsersDTO userForm);
+//    void deleteOrder(Long id);
 }
 

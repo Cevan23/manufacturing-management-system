@@ -1,23 +1,23 @@
 package com.manufacturing.manufacturingmanagementsystem.models;
 
 import com.manufacturing.manufacturingmanagementsystem.models.audit.Auditable;
-import com.manufacturing.manufacturingmanagementsystem.repositories.ID.OrderDetailEntityId;
+import com.manufacturing.manufacturingmanagementsystem.repositories.ID.OrderProductDetailEntityId;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = TablePrefix.PREFIX_TABLE + "order_details")
+@Table(name = TablePrefix.PREFIX_TABLE + "order_product_details")
 @EntityListeners(AuditingEntityListener.class)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class OrderDetailsEntity extends Auditable<String> {
+public class OrderProductDetailsEntity extends Auditable<String> {
 
     @EmbeddedId
-    private OrderDetailEntityId id;
+    private OrderProductDetailEntityId id;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @MapsId("orderId")
