@@ -30,6 +30,9 @@ public class ProductsEntity extends Auditable<String> {
     @Column(name = "price")
     private Double price;
 
+    @Column(name = "sell_price")
+    private Double sellPrice;
+
     @Column(name = "volume")
     private Double volume;
 

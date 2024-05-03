@@ -8,5 +8,7 @@ public interface IBOMsServices {
     BOMsEntity createBOM(BOMsDTO bomRequest);
 
     BOMsEntity findBOMByName(String name);
+
+    Boolean deleteBOM(Long id);
 }
 
