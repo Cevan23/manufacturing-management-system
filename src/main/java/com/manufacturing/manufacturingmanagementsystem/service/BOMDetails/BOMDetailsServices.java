@@ -11,6 +11,8 @@ import com.manufacturing.manufacturingmanagementsystem.repositories.MaterialsRep
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class BOMDetailsServices implements IBOMDetailsServices {
@@ -47,6 +49,20 @@ public class BOMDetailsServices implements IBOMDetailsServices {
         savedDto.setTotalUnitPrice(savedEntity.getTotalUnitPrice());
 
         return savedDto;
+    }
+
+    @Override
+    public void deleteBOMDetailsByBOMId(Long bomId) {
+        try{
+            bomDetailsRepository.deleteByBOMId(bomId);
+        } catch (Exception e) {
+            throw new RuntimeException("Could not delete BOM details with BOM id " + bomId);
+        }
+    }
+
+    @Override
+    public List<BOMDetailsEntity> getBOMDetailsByBOMId(Long bomId) {
+        return bomDetailsRepository.findByBOMId(bomId);
     }
 
 

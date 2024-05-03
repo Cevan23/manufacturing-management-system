@@ -29,8 +29,8 @@ public class UserControllers {
     RoleMapper roleMapper;
 
     @GetMapping("/getAllRoles")
-//    @PreAuthorize("hasAnyAuthority('SCOPE_chairman', 'SCOPE_accountant')")
-    @PreAuthorize("hasAnyAuthority('MANAGER_BOM')")
+//    @PreAuthorize("hasAnyAuthority('SCOPE_CHAIRMAN', 'SCOPE_ACCOUNTANT', 'SCOPE_PRODUCT_MANAGER')")
+    @PreAuthorize("hasAnyAuthority('SCOPE_CHAIRMAN')")
     public List<UsersEntity> getAllUsers() {
         return userService.getAllUsers();
     }

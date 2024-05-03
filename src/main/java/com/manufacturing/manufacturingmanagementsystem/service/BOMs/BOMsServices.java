@@ -2,18 +2,21 @@ package com.manufacturing.manufacturingmanagementsystem.service.BOMs;
 
 import com.manufacturing.manufacturingmanagementsystem.dtos.BOMsDTO;
 import com.manufacturing.manufacturingmanagementsystem.models.BOMsEntity;
+import com.manufacturing.manufacturingmanagementsystem.repositories.BOMDetailsRepository;
 import com.manufacturing.manufacturingmanagementsystem.repositories.BOMsRepository;
 import com.manufacturing.manufacturingmanagementsystem.service.Users.UsersServices;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 public class BOMsServices implements IBOMsServices {
 
     private final BOMsRepository bomsRepository;
+    private final BOMDetailsRepository bomDetailsRepository;
     private UsersServices usersServices;
     @Override
     public BOMsEntity createBOM(BOMsDTO bomRequest) {
@@ -36,6 +39,22 @@ public class BOMsServices implements IBOMsServices {
         bomsEntity = bomsRepository.save(bomsEntity);
 
         return bomsEntity;
+    }
+
+    @Override
+    public Boolean deleteBOM(Long id) {
+        Optional<BOMsEntity> bomsEntity = bomsRepository.findById(id);
+
+        if (bomsEntity.isEmpty()) {
+            return false;
+        }
+        try {
+            bomDetailsRepository.deleteByBOMId(id);
+            bomsRepository.delete(bomsEntity.get());
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
     @Override

@@ -14,10 +14,7 @@ import com.manufacturing.manufacturingmanagementsystem.service.Materials.Materia
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -111,6 +108,23 @@ public class BOMControllers {
 
         return ResponseEntity.ok(response);
 
+    }
+
+    @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasAnyAuthority('MANAGER_BOM')")
+    public ResponseEntity<?> deleteBOM(@PathVariable Long id) {
+        if (id == null) {
+            String errorMessage = "BOM id is required.";
+            return ResponseEntity.badRequest().body(errorMessage);
+        }
+
+        Boolean isDeleted = bomsServices.deleteBOM(id);
+        if (!isDeleted) {
+            String errorMessage = "BOM with id '" + id + "' does not exist or could not be deleted.";
+            return ResponseEntity.badRequest().body(errorMessage);
+        }
+
+        return ResponseEntity.ok().build();
     }
 
     private ResponseEntity<?> checkBOMRequest(BOMRequest bomRequest) {
