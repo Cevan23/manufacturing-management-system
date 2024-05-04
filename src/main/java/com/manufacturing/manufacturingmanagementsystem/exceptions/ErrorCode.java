@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatusCode;
 
 @Getter
 public enum ErrorCode {
+    ACCESS_DENIED(8888, "Access denied, you don't have permission", HttpStatus.OK),
     UNCATEGORIZED_EXCEPTION(9999, "Uncategorized error", HttpStatus.INTERNAL_SERVER_ERROR),
     WRONG_EMAIL_OR_PASSWORD(4000, "Wrong email or password", HttpStatus.BAD_REQUEST),
     TOKEN_IS_REQUIRED(4001, "Token is required", HttpStatus.BAD_REQUEST),

@@ -4,6 +4,7 @@ import com.manufacturing.manufacturingmanagementsystem.dtos.BOMDetailsDTO;
 import com.manufacturing.manufacturingmanagementsystem.dtos.BOMsDTO;
 import com.manufacturing.manufacturingmanagementsystem.dtos.MaterialsDTO;
 import com.manufacturing.manufacturingmanagementsystem.dtos.requests.BOM.BOMRequest;
+import com.manufacturing.manufacturingmanagementsystem.dtos.requests.FillterRequest;
 import com.manufacturing.manufacturingmanagementsystem.dtos.responses.BOM.BOMresponse;
 import com.manufacturing.manufacturingmanagementsystem.dtos.responses.Material.MaterialResponse;
 import com.manufacturing.manufacturingmanagementsystem.dtos.responses.UserResponse;
@@ -18,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/BOMs")
@@ -38,10 +38,14 @@ public class BOMControllers {
     public ResponseEntity<?> createBOM(@RequestBody BOMRequest bomRequest) {
         System.out.println("BOM request 1 : " + bomRequest);
         ResponseEntity<?> errorResponse = checkBOMRequest(bomRequest);
+        String status = bomRequest.getBOMStatus();
         if (errorResponse != null) {
             return errorResponse;
         } else if (bomsServices.checkIfBOMExists(bomRequest.getBOMName())) {
             String errorMessage = "BOM with name '" + bomRequest.getBOMName() + "' already exists.";
+            return ResponseEntity.badRequest().body(errorMessage);
+        } else if (!(status.equals("PENDING") || status.equals("CHECK_PRICE") || status.equals("FINISH"))) {
+            String errorMessage = "BOM status must be either 'PENDING', 'CHECK_PRICE', or 'FINISH'.";
             return ResponseEntity.badRequest().body(errorMessage);
         }
 
@@ -69,16 +73,23 @@ public class BOMControllers {
     @PreAuthorize("hasAnyAuthority('MANAGER_BOM')")
     public ResponseEntity<?> updateBOM(@RequestBody BOMRequest bomRequest) {
         ResponseEntity<?> errorResponse = checkBOMRequest(bomRequest);
+        String status = bomRequest.getBOMStatus();
         if (errorResponse != null) {
             return errorResponse;
         } else if (bomRequest.getBomDetails() == null) {
             String errorMessage = "BOM details are required.";
             return ResponseEntity.badRequest().body(errorMessage);
+        }else if (!(status.equals("PENDING") || status.equals("CHECK_PRICE") || status.equals("FINISH"))) {
+            String errorMessage = "BOM status must be either 'PENDING', 'CHECK_PRICE', or 'FINISH'.";
+            return ResponseEntity.badRequest().body(errorMessage);
         }
 
 
         var bom = bomsServices.findBOMByName(bomRequest.getBOMName());
-
+        if (bom == null) {
+            String errorMessage = "BOM with name '" + bomRequest.getBOMName() + "' does not exist.";
+            return ResponseEntity.badRequest().body(errorMessage);
+        }
         var bomDetailsRequest = bomRequest.getBomDetails();
         List<BOMDetailsDTO> bomDetails = new ArrayList<>();
         for (var bomDetailRequest : bomDetailsRequest) {
@@ -125,6 +136,91 @@ public class BOMControllers {
         }
 
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/getAll")
+    @PreAuthorize("hasAnyAuthority('MANAGER_BOM')")
+    public ResponseEntity<?> getAllBOMs() {
+
+        List<BOMsEntity> boms = bomsServices.getAllBOMs();
+        List<BOMresponse> response = new ArrayList<>();
+        for (var bom : boms) {
+            List<BOMDetailsDTO> bomDetails = bomDetailsServices.getBOMDetailsByBOMId(bom.getId());
+            var bomResponse = createBOMResponse(bom, bomDetails);
+            response.add(bomResponse);
+        }
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/getAll/status")
+    @PreAuthorize("hasAnyAuthority('MANAGER_BOM')")
+    public ResponseEntity<?> getAllBOMsbyStatus(@RequestBody FillterRequest statusRequest) {
+       try {
+            if (statusRequest == null) {
+                String errorMessage = "Status request is required.";
+                return ResponseEntity.badRequest().body(errorMessage);
+            } else if (statusRequest.getStatus() == null) {
+                String errorMessage = "Status is required.";
+                return ResponseEntity.badRequest().body(errorMessage);
+            }
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error: " + e);
+       }
+        List<BOMsEntity> boms = bomsServices.getAllBOMsbyStatus(statusRequest.getStatus());
+        List<BOMresponse> response = new ArrayList<>();
+        for (var bom : boms) {
+            List<BOMDetailsDTO> bomDetails = bomDetailsServices.getBOMDetailsByBOMId(bom.getId());
+            var bomResponse = createBOMResponse(bom, bomDetails);
+            response.add(bomResponse);
+        }
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/getBOMsByName")
+    @PreAuthorize("hasAnyAuthority('MANAGER_BOM')")
+    public ResponseEntity<?> getBOMsByName(@RequestBody FillterRequest nameRequest) {
+        if (nameRequest == null) {
+            String errorMessage = "BOM request is required.";
+            return ResponseEntity.badRequest().body(errorMessage);
+        } else if (nameRequest.getName() == null) {
+            String errorMessage = "BOM name is required.";
+            return ResponseEntity.badRequest().body(errorMessage);
+        }
+
+        var bom = bomsServices.findBOMByName(nameRequest.getName());
+        if (bom == null) {
+            String errorMessage = "BOM with name '" + nameRequest.getName() + "' does not exist.";
+            return ResponseEntity.badRequest().body(errorMessage);
+        }
+
+        List<BOMDetailsDTO> bomDetails = bomDetailsServices.getBOMDetailsByBOMId(bom.getId());
+        var response = createBOMResponse(bom, bomDetails);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/getBOMsByLikeName")
+    @PreAuthorize("hasAnyAuthority('MANAGER_BOM')")
+    public ResponseEntity<?> getBOMsByLikeName(@RequestBody FillterRequest nameRequest) {
+        if (nameRequest == null) {
+            String errorMessage = "BOM request is required.";
+            return ResponseEntity.badRequest().body(errorMessage);
+        } else if (nameRequest.getName() == null) {
+            String errorMessage = "BOM name is required.";
+            return ResponseEntity.badRequest().body(errorMessage);
+        }
+
+        List<BOMsEntity> boms = bomsServices.getBOMsByLikeName(nameRequest.getName());
+        List<BOMresponse> response = new ArrayList<>();
+        for (var bom : boms) {
+            List<BOMDetailsDTO> bomDetails = bomDetailsServices.getBOMDetailsByBOMId(bom.getId());
+            var bomResponse = createBOMResponse(bom, bomDetails);
+            response.add(bomResponse);
+        }
+
+        return ResponseEntity.ok(response);
     }
 
     private ResponseEntity<?> checkBOMRequest(BOMRequest bomRequest) {

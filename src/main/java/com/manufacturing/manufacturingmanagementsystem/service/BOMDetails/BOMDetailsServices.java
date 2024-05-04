@@ -11,6 +11,7 @@ import com.manufacturing.manufacturingmanagementsystem.repositories.MaterialsRep
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -61,8 +62,22 @@ public class BOMDetailsServices implements IBOMDetailsServices {
     }
 
     @Override
-    public List<BOMDetailsEntity> getBOMDetailsByBOMId(Long bomId) {
-        return bomDetailsRepository.findByBOMId(bomId);
+    public List<BOMDetailsDTO> getBOMDetailsByBOMId(Long bomId) {
+        List<BOMDetailsEntity> bomDetailsEntities = bomDetailsRepository.findByBOMId(bomId);
+        List<BOMDetailsDTO> bomDetailsDTOs = new ArrayList<>();
+
+        for (BOMDetailsEntity bomDetailsEntity : bomDetailsEntities) {
+            BOMDetailsDTO bomDetailsDTO = new BOMDetailsDTO();
+
+            bomDetailsDTO.setBOMId(bomDetailsEntity.getBOM().getId());
+            bomDetailsDTO.setMaterialId(bomDetailsEntity.getMaterial().getId());
+            bomDetailsDTO.setQuantity(bomDetailsEntity.getQuantity());
+            bomDetailsDTO.setTotalUnitPrice(bomDetailsEntity.getTotalUnitPrice());
+
+            bomDetailsDTOs.add(bomDetailsDTO);
+        }
+
+        return bomDetailsDTOs;
     }
 
 

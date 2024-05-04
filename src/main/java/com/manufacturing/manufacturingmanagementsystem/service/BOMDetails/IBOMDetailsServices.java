@@ -11,7 +11,7 @@ public interface IBOMDetailsServices {
 
     void deleteBOMDetailsByBOMId(Long bomId);
 
-    List<BOMDetailsEntity> getBOMDetailsByBOMId(Long bomId);
+    List<BOMDetailsDTO> getBOMDetailsByBOMId(Long bomId);
 
 }
 

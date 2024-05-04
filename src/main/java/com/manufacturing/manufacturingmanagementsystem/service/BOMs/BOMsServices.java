@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -60,6 +61,30 @@ public class BOMsServices implements IBOMsServices {
     @Override
     public BOMsEntity findBOMByName(String name) {
         return bomsRepository.findByName(name);
+    }
+
+    @Override
+    public List<BOMsEntity> getBOMsByLikeName(String name) {
+        return bomsRepository.findByNameLike(name);
+    }
+
+    @Override
+    public List<BOMsEntity> getAllBOMs() {
+        try {
+            return bomsRepository.findAll();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public List<BOMsEntity> getAllBOMsbyStatus(String status) {
+        try {
+            return bomsRepository.findByBOMstatus(status);
+        } catch (Exception e) {
+            return null;
+
+        }
     }
 
     public boolean checkIfBOMExists(String name) {

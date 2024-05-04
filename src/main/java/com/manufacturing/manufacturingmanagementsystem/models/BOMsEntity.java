@@ -26,7 +26,7 @@ public class BOMsEntity extends Auditable<String> {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "BOM_status",columnDefinition = "varchar(255) check (BOM_status in ('pending', 'finish')) ")
+    @Column(name = "BOM_status",columnDefinition = "varchar(255) check (BOM_status in ('PENDING','CHECK_PRICE', 'FINISH')) ")
     private String BOMstatus;
 
     @Column(name = "date_creation")

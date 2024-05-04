@@ -8,8 +8,8 @@ import lombok.experimental.FieldDefaults;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@Setter
+@Getter
 public class ApiResponse <T> {
     @Builder.Default
     private int code = 1000;
