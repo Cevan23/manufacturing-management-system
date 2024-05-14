@@ -1,6 +1,8 @@
 package com.manufacturing.manufacturingmanagementsystem.service.MasterProductionSchedules;
 
+import com.manufacturing.manufacturingmanagementsystem.dtos.requests.MPS.MPSRequest;
+
 public interface IMasterProductionSchedulesServices {
-    // Khai báo các phương thức service cần thiết
+    void createMPS(MPSRequest mpsRequest);
 }
 
