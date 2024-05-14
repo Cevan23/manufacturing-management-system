@@ -12,7 +12,7 @@ import java.util.List;
 @Builder
 @Getter
 @Setter
-public class BOMresponse {
+public class BOMResponse {
 
     UserResponse productManager;
 

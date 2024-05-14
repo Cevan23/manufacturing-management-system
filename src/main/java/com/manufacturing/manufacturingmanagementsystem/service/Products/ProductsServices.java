@@ -1,21 +1,17 @@
 package com.manufacturing.manufacturingmanagementsystem.service.Products;
 
-import com.manufacturing.manufacturingmanagementsystem.dtos.requests.CreateProductForm;
+import com.manufacturing.manufacturingmanagementsystem.dtos.ProductsDTO;
+import com.manufacturing.manufacturingmanagementsystem.dtos.requests.Product.CreateProductRequest;
+import com.manufacturing.manufacturingmanagementsystem.models.BOMsEntity;
+import com.manufacturing.manufacturingmanagementsystem.models.CategoriesEntity;
 import com.manufacturing.manufacturingmanagementsystem.models.ProductsEntity;
-import com.manufacturing.manufacturingmanagementsystem.models.UsersEntity;
+import com.manufacturing.manufacturingmanagementsystem.repositories.BOMsRepository;
+import com.manufacturing.manufacturingmanagementsystem.repositories.CategoriesRepository;
 import com.manufacturing.manufacturingmanagementsystem.repositories.ProductsRepository;
 import io.micrometer.common.util.StringUtils;
 import lombok.AllArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -23,6 +19,8 @@ import java.util.Optional;
 public class ProductsServices implements iProductsServices {
 
     private final ProductsRepository productsRepository;
+    private final CategoriesRepository categoriesRepository;
+    private final BOMsRepository bomsRepository;
     @Override
     public ProductsEntity findProductbyName(String name) {
         if (StringUtils.isEmpty(name)) {
@@ -32,17 +30,19 @@ public class ProductsServices implements iProductsServices {
     }
 
     @Override
-    public ProductsEntity insertProduct(CreateProductForm productForm){
-
-        if (productForm == null) {
-            return null;
-        }
-
+    public void insertProduct(ProductsDTO productsDTO, Long bomID, Long categoryID) {
         ProductsEntity productEntity = new ProductsEntity();
-        productEntity.setName(productForm.getNameProduct());
-        productEntity.setUnit(productForm.getUnitProduct());
-        productEntity.setPrice(productForm.getPriceProduct());
-        productEntity.setVolume(productForm.getVolumeProduct());
-        return productsRepository.save(productEntity);
+        productEntity.setName(productsDTO.getName());
+        productEntity.setUnit(productsDTO.getUnit());
+        productEntity.setPrice(productsDTO.getPrice());
+        productEntity.setVolume(productsDTO.getVolume());
+        Optional<CategoriesEntity> categoryOptional = categoriesRepository.findById(categoryID);
+        Optional<BOMsEntity> bomOptional = bomsRepository.findById(bomID);
+
+        if (categoryOptional.isPresent() && bomOptional.isPresent()) {
+            productEntity.setCategory(categoryOptional.get());
+            productEntity.setBom(bomOptional.get());
+        }
+        productsRepository.save(productEntity);
     }
 }
