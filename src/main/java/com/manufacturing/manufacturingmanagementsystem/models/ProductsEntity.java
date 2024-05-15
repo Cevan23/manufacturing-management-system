@@ -21,10 +21,14 @@ public class ProductsEntity extends Auditable<String> {
     @JoinColumn(name = "category_id")
     private CategoriesEntity category;
 
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "bom_id")
+    private BOMsEntity bom;
+
     @Column(name = "name")
     private String name;
 
-    @Column(name = "unit", columnDefinition = "varchar(255) check (unit in ('g', 'kg', 'amount'))" )
+    @Column(name = "unit",columnDefinition = "varchar(255) check (unit in ('g', 'kg', 'amount','meter','liter'))")
     private String unit;
 
     @Column(name = "price")

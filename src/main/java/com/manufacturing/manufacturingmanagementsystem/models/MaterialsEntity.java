@@ -22,7 +22,7 @@ public class MaterialsEntity extends Auditable<String>  {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "unit", columnDefinition = "varchar(255) check (unit in ('g', 'kg', 'amount'))" )
+    @Column(name = "unit",columnDefinition = "varchar(255) check (unit in ('g', 'kg', 'amount','meter','liter'))")
     private String unit;
 
     @Column(name = "price")
