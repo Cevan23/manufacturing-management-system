@@ -12,11 +12,13 @@ import java.sql.Date;
 @Setter
 public class WorkOrderRequest {
 
-    private Long product_manager_ID;
+    private Long id;
+
+    private Long productManagerID;
 
     private Date dateStart;
 
     private Date dateEnd;
 
-    private Integer workOrderstatus;
+    private String workOrderstatus;
 }
