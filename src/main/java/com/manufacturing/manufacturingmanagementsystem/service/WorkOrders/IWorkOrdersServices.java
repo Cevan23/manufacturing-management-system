@@ -1,6 +1,11 @@
 package com.manufacturing.manufacturingmanagementsystem.service.WorkOrders;
 
 public interface IWorkOrdersServices {
-    // Khai báo các phương thức service cần thiết
+
+//    void createWorkOrder();
+//
+//    void updateWorkOrder();
+//
+//    void deleteWorkOrder();
 }
 

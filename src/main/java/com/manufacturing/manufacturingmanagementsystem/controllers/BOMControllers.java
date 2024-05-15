@@ -49,7 +49,7 @@ public class BOMControllers {
                         .build());
     }
 
-    @PatchMapping("/updateBOM")
+    @PutMapping("/updateBOM")
     @PreAuthorize("hasAnyAuthority('MANAGER_BOM')")
     public ResponseEntity<ApiResponse> updateBOM(@RequestBody BOMRequest bomRequest) {
         bomsServices.updateBOM(bomRequest);
