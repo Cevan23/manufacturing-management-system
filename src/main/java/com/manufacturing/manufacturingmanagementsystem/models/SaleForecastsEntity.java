@@ -4,7 +4,7 @@ import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import jakarta.persistence.*;
 
-import java.sql.Date;
+import java.util.Date;
 
 @Entity
 @Table(name = TablePrefix.PREFIX_TABLE + "sale_forecasts")
@@ -19,7 +19,7 @@ public class SaleForecastsEntity extends Auditable<String> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "accountants_id")
     private UsersEntity accountant;
 

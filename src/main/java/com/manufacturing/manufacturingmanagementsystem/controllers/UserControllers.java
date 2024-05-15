@@ -22,8 +22,6 @@ import java.util.Map;
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
 public class UserControllers {
-
-
     private final UsersServices userService;
 
     RoleMapper roleMapper;
@@ -39,14 +37,10 @@ public class UserControllers {
     public ResponseEntity<?> getUserById(@PathVariable Long id) {
         try {
             UsersEntity user = userService.getUserById(id);
-
-            return ResponseEntity.ok(
-                    ResponseObject.builder()
-                            .data(UserResponse.fromUser(user))
-                            .message("Get user successfully")
-                            .status(HttpStatus.OK)
-                            .build());
-
+            return ResponseEntity.ok().body(ApiResponse.builder()
+                    .message("Get user successfully")
+                    .result(UserResponse.fromUser(user))
+                    .build());
         } catch (Exception e) {
             // Xử lý lỗi và trả về phản hồi lỗi (status code 500)
             return ResponseEntity.badRequest().body(e.getMessage());

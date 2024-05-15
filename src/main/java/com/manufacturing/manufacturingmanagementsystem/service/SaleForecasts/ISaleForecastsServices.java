@@ -1,6 +1,14 @@
 package com.manufacturing.manufacturingmanagementsystem.service.SaleForecasts;
 
+import com.manufacturing.manufacturingmanagementsystem.models.SaleForecastsEntity;
+
+import java.util.List;
+import java.util.Map;
+
 public interface ISaleForecastsServices {
-    // Khai báo các phương thức service cần thiết
+    SaleForecastsEntity insertSaleForecast(Long id);
+    public void deleteSaleForecast(Long id);
+    SaleForecastsEntity findSaleForecastById(Long id);
+    public List<Map<String, Object>> getAllSaleForecast();
 }
 
