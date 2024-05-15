@@ -42,4 +42,7 @@ public class MasterProductionSchedulesEntity extends Auditable<String> {
 
     @Column(name = "effort_hour")
     private Float effortHour;
+
+    @Column(name = "in_progress")
+    private Float in_progress;
 }

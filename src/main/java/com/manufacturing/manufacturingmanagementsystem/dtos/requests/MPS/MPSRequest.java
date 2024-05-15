@@ -12,7 +12,7 @@ import java.sql.Date;
 @Setter
 public class MPSRequest {
 
-    private Long PMId;
+    private Long product_manager_ID;
 
     private Long productId;
 

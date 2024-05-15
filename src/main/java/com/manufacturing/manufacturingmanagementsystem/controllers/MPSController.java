@@ -24,6 +24,7 @@ public class MPSController {
 
     @PostMapping("/createMPS")
     public ResponseEntity<ApiResponse> createMPS(@RequestBody MPSRequest mpsRequest) {
+
         if (mpsRequest == null) {
             return ResponseEntity.badRequest()
                     .body(ApiResponse.builder()
@@ -32,7 +33,9 @@ public class MPSController {
                             .result(null)
                             .build());
         }
-        if (mpsRequest.getPMId() == null) {
+        System.out.println("request : " + mpsRequest);
+        if (mpsRequest.getProduct_manager_ID() == null) {
+            System.out.println("PMId is required : " + mpsRequest.getProduct_manager_ID());
             return ResponseEntity.badRequest()
                     .body(ApiResponse.builder()
                             .code(ErrorCode.BAD_REQUEST.getCode())

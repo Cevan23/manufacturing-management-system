@@ -19,7 +19,7 @@ public class MasterProductionSchedulesServices implements IMasterProductionSched
 
     @Override
     public void createMPS(MPSRequest mpsRequest) {
-        var productManager = usersRepository.findById(mpsRequest.getPMId()).orElseThrow();
+        var productManager = usersRepository.findById(mpsRequest.getProduct_manager_ID()).orElseThrow();
         var product = productsRepository.findById(mpsRequest.getProductId()).orElseThrow();
 
         MasterProductionSchedulesEntity mps = MasterProductionSchedulesEntity.builder()
