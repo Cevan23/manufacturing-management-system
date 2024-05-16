@@ -17,7 +17,8 @@ public enum ErrorCode {
     BOM_NOT_FOUND(4007, "BOM not found", HttpStatus.BAD_REQUEST),
     STATUS_INCORRECT(4008, "Status is incorrect", HttpStatus.BAD_REQUEST),
     BAD_REQUEST(4009, "Bad request", HttpStatus.BAD_REQUEST),
-    NOT_FOUND(5000,"not found",HttpStatus.BAD_REQUEST);
+    NOT_FOUND(5000,"not found",HttpStatus.BAD_REQUEST),
+    DATA_ALREADY_EXISTS(5001,"Data already exists",HttpStatus.BAD_REQUEST),;
 
 
 

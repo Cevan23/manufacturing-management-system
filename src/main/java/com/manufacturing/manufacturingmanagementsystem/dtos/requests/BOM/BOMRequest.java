@@ -1,8 +1,6 @@
 package com.manufacturing.manufacturingmanagementsystem.dtos.requests.BOM;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.manufacturing.manufacturingmanagementsystem.dtos.requests.Material.MaterialRequest;
-import com.manufacturing.manufacturingmanagementsystem.models.ProductsEntity;
 import lombok.*;
 
 import java.util.List;

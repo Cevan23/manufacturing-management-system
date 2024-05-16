@@ -1,13 +1,13 @@
 package com.manufacturing.manufacturingmanagementsystem.service.BOMDetails;
 
 import com.manufacturing.manufacturingmanagementsystem.dtos.BOMDetailsDTO;
-import com.manufacturing.manufacturingmanagementsystem.models.BOMDetailsEntity;
+import com.manufacturing.manufacturingmanagementsystem.dtos.requests.BOM.BOMDetailRequest;
 
 import java.util.List;
 
 public interface IBOMDetailsServices {
 
-    BOMDetailsDTO createBOMDetails(BOMDetailsDTO bomDetails);
+    void createBOMDetails(BOMDetailRequest bomDetails);
 
     void deleteBOMDetailsByBOMId(Long bomId);
 

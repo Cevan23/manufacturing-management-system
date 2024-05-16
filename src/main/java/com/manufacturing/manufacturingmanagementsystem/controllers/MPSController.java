@@ -31,9 +31,7 @@ public class MPSController {
                             .result(null)
                             .build());
         }
-        System.out.println("request : " + mpsRequest);
         if (mpsRequest.getProduct_manager_ID() == null) {
-            System.out.println("PMId is required : " + mpsRequest.getProduct_manager_ID());
             return ResponseEntity.badRequest()
                     .body(ApiResponse.builder()
                             .code(ErrorCode.BAD_REQUEST.getCode())
