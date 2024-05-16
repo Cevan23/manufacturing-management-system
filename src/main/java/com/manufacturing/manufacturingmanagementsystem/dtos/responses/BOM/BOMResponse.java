@@ -14,6 +14,8 @@ import java.util.List;
 @Setter
 public class BOMResponse {
 
+    private Long id;
+
     UserResponse productManager;
 
     private String BOMName;

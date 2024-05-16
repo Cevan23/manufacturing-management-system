@@ -71,7 +71,7 @@ public class BOMsServices implements IBOMsServices {
         }
         try {
             Optional<BOMsEntity> bom = bomsRepository.findById(id);
-            System.out.println("BOM update : " + bom);
+            System.out.println("BOM update Service : " + bom);
             if (bom.isEmpty()) {
                 throw new AppException(ErrorCode.BOM_NOT_FOUND);
             }

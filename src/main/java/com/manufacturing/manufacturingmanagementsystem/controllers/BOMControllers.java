@@ -86,7 +86,7 @@ public class BOMControllers {
         }
         try {
             try {
-                System.out.println("BOM update id : " + bomRequest + " id : " + id);
+                System.out.println("BOM update id controller : " + bomRequest + " id : " + id);
                 bomsServices.updateBOM(bomRequest, id);
             }catch (Exception e){
                 return ResponseEntity.badRequest()
@@ -307,6 +307,7 @@ public class BOMControllers {
     }
     private BOMResponse createBOMResponse(BOMsEntity bom, List<BOMDetailsDTO> bomDetails) {
         var response = new BOMResponse();
+        response.setId(bom.getId());
         response.setBOMName(bom.getName());
         response.setBOMStatus(bom.getBOMstatus());
         response.setTimeProduction(bom.getTimeProduction());
