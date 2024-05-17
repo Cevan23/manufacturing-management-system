@@ -54,9 +54,12 @@ public class BOMControllers {
         try{
             for (BOMRequest bomRequest : bomRequests) {
                 bomsServices.createBOM(bomRequest);
-                for (BOMDetailRequest bomDetailRequest : bomRequest.getBomDetails()) {
-                    bomDetailsServices.createBOMDetails(bomDetailRequest);
-                }
+//                var bom = bomsServices.findBOMByName(bomRequest.getBOMName());
+//                if(bom != null){
+//                    for (BOMDetailRequest bomDetailRequest : bomRequest.getBomDetails()) {
+//                        bomDetailsServices.createBOMDetails(bomDetailRequest);
+//                    }
+//                }
             }
 
             return ResponseEntity.ok()
@@ -98,22 +101,66 @@ public class BOMControllers {
             }
 
             try {
+                List<BOMDetailsDTO> oldBomDetails = bomDetailsServices.getBOMDetailsByBOMId(id);
                 for (BOMDetailRequest bomDetailRequest : bomRequest.getBomDetails()) {
                     bomDetailRequest.setBOMId(id);
-                    var material = materialsServices.findMaterialByName(bomDetailRequest.getMaterial().getMaterialName());
 
-                    if (material == null || material.getReuseId() == null) {
-                        materialsServices.createMaterial(MaterialsDTO.builder()
-                                .name(bomDetailRequest.getMaterial().getMaterialName())
-                                .price(bomDetailRequest.getMaterial().getMaterialPrice())
-                                .unit(bomDetailRequest.getMaterial().getMaterialUnit())
-                                .volume(bomDetailRequest.getMaterial().getMaterialVolume())
-                                .build());
-                        bomDetailsServices.createBOMDetails(bomDetailRequest);
+                    String newMaterialName = bomDetailRequest.getMaterial().getMaterialName();
+
+                    Optional<BOMDetailsDTO> oldBomDetailOpt = oldBomDetails.stream()
+                            .filter(b -> {
+                                MaterialsDTO oldMaterial = materialsServices.findMaterialById(b.getMaterialId());
+                                return oldMaterial != null && oldMaterial.getName().equals(newMaterialName);
+                            })
+                            .findFirst();
+                    if (oldBomDetailOpt.isPresent()) {
+                        // Nếu bomDetail cũ tồn tại, so sánh và cập nhật nếu cần
+                        BOMDetailsDTO oldBomDetail = oldBomDetailOpt.get();
+                        if (!oldBomDetail.getQuantity().equals(bomDetailRequest.getQuantity()) ||
+                                !oldBomDetail.getTotalUnitPrice().equals(bomDetailRequest.getTotalUnitPrice())) {
+                            // Cập nhật bomDetail nếu có sự khác biệt
+//                            bomDetailsServices.updateBOMDetails(bomDetailRequest);
+                            var material = materialsServices.findMaterialByName(bomDetailRequest.getMaterial().getMaterialName());
+
+                            if (material == null || material.getReuseId() == null) {
+                                materialsServices.createMaterial(MaterialsDTO.builder()
+                                        .name(bomDetailRequest.getMaterial().getMaterialName())
+                                        .price(bomDetailRequest.getMaterial().getMaterialPrice())
+                                        .unit(bomDetailRequest.getMaterial().getMaterialUnit())
+                                        .volume(bomDetailRequest.getMaterial().getMaterialVolume())
+                                        .build());
+                                bomDetailsServices.createBOMDetails(bomDetailRequest);
+                            } else {
+                                bomDetailsServices.createBOMDetails(bomDetailRequest);
+
+                            }
+                        }
                     } else {
-                        bomDetailsServices.createBOMDetails(bomDetailRequest);
+                        // Nếu bomDetail cũ không tồn tại, thêm newBomDetail vào cơ sở dữ liệu
+                        var material = materialsServices.findMaterialByName(bomDetailRequest.getMaterial().getMaterialName());
 
+                        if (material == null || material.getReuseId() == null) {
+                            materialsServices.createMaterial(MaterialsDTO.builder()
+                                    .name(bomDetailRequest.getMaterial().getMaterialName())
+                                    .price(bomDetailRequest.getMaterial().getMaterialPrice())
+                                    .unit(bomDetailRequest.getMaterial().getMaterialUnit())
+                                    .volume(bomDetailRequest.getMaterial().getMaterialVolume())
+                                    .build());
+                            bomDetailsServices.createBOMDetails(bomDetailRequest);
+                        } else {
+                            bomDetailsServices.createBOMDetails(bomDetailRequest);
+
+                        }
                     }
+
+                    for (BOMDetailsDTO oldBomDetail : oldBomDetails) {
+                        MaterialsDTO oldMaterial = materialsServices.findMaterialById(oldBomDetail.getMaterialId());
+                        if (oldMaterial != null && bomRequest.getBomDetails().stream().noneMatch(b -> b.getMaterial().getMaterialName().equals(oldMaterial.getName()))) {
+                            bomDetailsServices.deleteBOMDetail(id, oldBomDetail.getMaterialId());
+                        }
+                    }
+
+
                 }
             }catch (Exception e){
                 return ResponseEntity.badRequest()
@@ -305,6 +352,37 @@ public class BOMControllers {
                             .build());
         }
     }
+
+    @DeleteMapping("/deleteBOMDetail/{bomId}/{materialId}")
+    @PreAuthorize("hasAnyAuthority('MANAGER_BOM')")
+    public ResponseEntity<ApiResponse> deleteBOMDetail(@PathVariable Long bomId, @PathVariable Long materialId) {
+        if (bomId == null || materialId == null) {
+            return ResponseEntity.badRequest()
+                    .body(ApiResponse.builder()
+                            .message("BOM id and material id are required.")
+                            .result(null)
+                            .build());
+        }
+        try {
+            System.out.println("BOM id : " + bomId + " material id : " + materialId);
+            bomDetailsServices.deleteBOMDetail(bomId, materialId);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest()
+                    .body(ApiResponse.builder()
+                            .message("BOM detail with BOM id '" + bomId + "' and material id '" + materialId + "' does not exist or could not be deleted.")
+                            .result(null)
+                            .build());
+        }
+
+
+
+        return ResponseEntity.ok()
+                .body(ApiResponse.builder()
+                        .message("BOM detail deleted successfully")
+                        .result(null)
+                        .build());
+    }
+
     private BOMResponse createBOMResponse(BOMsEntity bom, List<BOMDetailsDTO> bomDetails) {
         var response = new BOMResponse();
         response.setId(bom.getId());
@@ -324,10 +402,12 @@ public class BOMControllers {
         for (var bomDetail : bomDetails) {
             var material = materialsServices.findMaterialById(bomDetail.getMaterialId());
             var materialResponse = new MaterialResponse();
+            materialResponse.setMaterialId(bomDetail.getMaterialId());
             materialResponse.setMaterialName(material.getName());
             materialResponse.setMaterialPrice(material.getPrice());
             materialResponse.setMaterialUnit(material.getUnit());
             materialResponse.setMaterialVolume(material.getVolume());
+            materialResponse.setMaterialQuantity(bomDetail.getQuantity());
             materials.add(materialResponse);
         }
         response.setMaterials(materials);

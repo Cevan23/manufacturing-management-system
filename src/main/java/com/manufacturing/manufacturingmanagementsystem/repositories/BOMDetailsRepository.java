@@ -18,5 +18,10 @@ public interface BOMDetailsRepository extends JpaRepository<BOMDetailsEntity, BO
         @Query("DELETE FROM BOMDetailsEntity b WHERE b.BOM.id = ?1")
         void deleteByBOMId(Long bomId);
 
+        @Modifying
+        @Transactional
+        @Query("DELETE FROM BOMDetailsEntity b WHERE b.BOM.id = ?1 AND b.material.id = ?2")
+        void deleteByBOMIdAndMaterialId(Long bomId, Long materialId);
+
         List<BOMDetailsEntity> findByBOMId(Long bomId);
 }

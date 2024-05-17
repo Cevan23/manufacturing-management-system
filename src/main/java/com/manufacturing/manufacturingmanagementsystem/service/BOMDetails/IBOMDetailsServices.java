@@ -13,5 +13,6 @@ public interface IBOMDetailsServices {
 
     List<BOMDetailsDTO> getBOMDetailsByBOMId(Long bomId);
 
+    void deleteBOMDetail(Long bomId, Long materialId);
 }
 

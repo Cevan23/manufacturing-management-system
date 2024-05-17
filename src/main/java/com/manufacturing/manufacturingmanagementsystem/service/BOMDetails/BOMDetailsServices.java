@@ -63,6 +63,16 @@ public class BOMDetailsServices implements IBOMDetailsServices {
     }
 
     @Override
+    public void deleteBOMDetail(Long bomId, Long materialId) {
+        try {
+            bomDetailsRepository.deleteByBOMIdAndMaterialId(bomId, materialId);
+        } catch (Exception e) {
+
+            throw new RuntimeException("Could not delete BOM detail with BOM id " + bomId + " and material id " + materialId);
+        }
+    }
+
+    @Override
     public List<BOMDetailsDTO> getBOMDetailsByBOMId(Long bomId) {
         List<BOMDetailsEntity> bomDetailsEntities = bomDetailsRepository.findByBOMId(bomId);
         List<BOMDetailsDTO> bomDetailsDTOs = new ArrayList<>();
