@@ -14,6 +14,8 @@ import java.util.Date;
 @Builder
 public class UserResponse {
 
+    private Long id;
+
     private RoleResponse role;
 
     private String email;
@@ -37,6 +39,7 @@ public class UserResponse {
                 .phoneNumber(user.getPhoneNumber())
                 .dateOfBirth(user.getDateOfBirth())
                 .address(user.getAddress())
+                .id(user.getId())
                 .build();
     }
 }

@@ -5,14 +5,15 @@ import com.manufacturing.manufacturingmanagementsystem.dtos.requests.Product.Cre
 import com.manufacturing.manufacturingmanagementsystem.models.BOMsEntity;
 import com.manufacturing.manufacturingmanagementsystem.models.CategoriesEntity;
 import com.manufacturing.manufacturingmanagementsystem.models.ProductsEntity;
-import com.manufacturing.manufacturingmanagementsystem.repositories.BOMsRepository;
-import com.manufacturing.manufacturingmanagementsystem.repositories.CategoriesRepository;
-import com.manufacturing.manufacturingmanagementsystem.repositories.ProductsRepository;
+import com.manufacturing.manufacturingmanagementsystem.models.SaleForecastDetailsEntity;
+import com.manufacturing.manufacturingmanagementsystem.repositories.*;
+import com.manufacturing.manufacturingmanagementsystem.service.SaleForecastDetails.SaleForecastDetailsServices;
 import io.micrometer.common.util.StringUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -21,6 +22,7 @@ public class ProductsServices implements iProductsServices {
     private final ProductsRepository productsRepository;
     private final CategoriesRepository categoriesRepository;
     private final BOMsRepository bomsRepository;
+    private final SaleForecastDetailsServices saleForecastDetailsServices;
     @Override
     public ProductsEntity findProductbyName(String name) {
         if (StringUtils.isEmpty(name)) {
@@ -44,5 +46,31 @@ public class ProductsServices implements iProductsServices {
             productEntity.setBom(bomOptional.get());
         }
         productsRepository.save(productEntity);
+    }
+
+    @Override
+    public List<Map<String, Object>> getProductForSaleForecastById(Long id) {
+        List<ProductsEntity> productsEntityList = productsRepository.findAll();
+        List<Map<String, Object>> listSaleDetail= saleForecastDetailsServices.findSaleForecastDetailById(id);
+
+        Set<Long> saleDetailProductIds = listSaleDetail.stream()
+                .map(detail -> (Long) detail.get("product_id"))
+                .collect(Collectors.toSet());
+
+        // Prepare the list of products not in sale forecast details
+        List<Map<String, Object>> productMap = new ArrayList<>();
+
+        for (ProductsEntity product : productsEntityList) {
+            if (!saleDetailProductIds.contains(product.getId())) {
+                Map<String, Object> productInfo = new HashMap<>();
+                productInfo.put("id", product.getId());
+                productInfo.put("name", product.getName());
+                productInfo.put("price", product.getPrice());
+                productInfo.put("sellPrice", product.getSellPrice());
+                productInfo.put("sellPrice", product.getCategory().getCategoryName());
+                productMap.add(productInfo);
+            }
+        }
+        return productMap;
     }
 }

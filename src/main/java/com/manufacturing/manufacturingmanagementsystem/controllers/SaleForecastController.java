@@ -1,5 +1,8 @@
 package com.manufacturing.manufacturingmanagementsystem.controllers;
 
+import com.manufacturing.manufacturingmanagementsystem.dtos.UsersDTO;
+import com.manufacturing.manufacturingmanagementsystem.dtos.requests.SaleForecast.SaleForecastRequestUpdate;
+import com.manufacturing.manufacturingmanagementsystem.dtos.requests.SaleForecastDetail.SaleForecastDetailUpdateRequest;
 import com.manufacturing.manufacturingmanagementsystem.dtos.responses.ApiResponse;
 import com.manufacturing.manufacturingmanagementsystem.dtos.responses.ResponseObject;
 import com.manufacturing.manufacturingmanagementsystem.models.SaleForecastsEntity;
@@ -22,13 +25,10 @@ public class SaleForecastController {
     public ResponseEntity<?> insertSaleForecast(@Valid @RequestParam("ac_id") Long ac_id) {
         try {
             SaleForecastsEntity saleForecast = saleForecastsServices.insertSaleForecast(ac_id);
-
-            return ResponseEntity.ok(
-                    ResponseObject.builder()
-                            .data(saleForecast)
-                            .message("Add sale forecast successfully")
-                            .status(HttpStatus.OK)
-                            .build());
+            return ResponseEntity.ok().body(ApiResponse.builder()
+                    .message("Add sale forecast successfully")
+                    .result(saleForecast)
+                    .build());
 
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -40,7 +40,9 @@ public class SaleForecastController {
 
         try {
             saleForecastsServices.deleteSaleForecast(id);
-            return ResponseEntity.ok().body("Successfully delete sale forecast");
+            return ResponseEntity.ok().body(ApiResponse.builder()
+                    .message("Successfully delete sale forecast")
+                    .build());
         }catch (Exception e) {
             // Xử lý lỗi và trả về phản hồi lỗi (status code 500)
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -53,6 +55,20 @@ public class SaleForecastController {
             return ResponseEntity.ok().body(ApiResponse.builder()
                     .message("Get all sale forecast successfully")
                     .result(listSaleForecast)
+                    .build());
+        }catch (Exception e) {
+            // Xử lý lỗi và trả về phản hồi lỗi (status code 500)
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateSaleForecast(@PathVariable Long id,
+                                                @Valid @RequestBody SaleForecastRequestUpdate saleForecastRequestUpdate) {
+        try {
+            Map<String, Object> saleForecast = saleForecastsServices.updateSaleForecast(id,saleForecastRequestUpdate.getDateStart(),saleForecastRequestUpdate.getDateEnd());
+            return ResponseEntity.ok().body(ApiResponse.builder()
+                    .message("Update successfully")
+                    .result(saleForecast)
                     .build());
         }catch (Exception e) {
             // Xử lý lỗi và trả về phản hồi lỗi (status code 500)

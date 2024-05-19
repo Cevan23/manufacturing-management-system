@@ -83,11 +83,21 @@ public class SaleForecastDetailsServices implements ISaleForecastDetailsServices
     }
 
     @Override
-    public List<SaleForecastDetailsEntity> findSaleForecastDetailById(Long id) {
+    public List<Map<String, Object>> findSaleForecastDetailById(Long id) {
         try {
+            List<Map<String, Object>> saleForecastDetailsList = new ArrayList<>();
             List<SaleForecastDetailsEntity> saleForecastDetailsEntityList = saleForecastDetailsRepository.findListById(id);
             if (!saleForecastDetailsEntityList.isEmpty()) {
-                return saleForecastDetailsEntityList;
+                for (SaleForecastDetailsEntity saleForecastDetailsEntity : saleForecastDetailsEntityList) {
+                    Map<String, Object> saleForecastDetailsMap = new HashMap<>();
+                    saleForecastDetailsMap.put("product_id", saleForecastDetailsEntity.getProduct().getId());
+                    saleForecastDetailsMap.put("name", saleForecastDetailsEntity.getProduct().getName());
+                    saleForecastDetailsMap.put("quantity", saleForecastDetailsEntity.getQuantity());
+                    saleForecastDetailsMap.put("totalPrice", saleForecastDetailsEntity.getTotalPrice());
+                    saleForecastDetailsMap.put("totalSalePrice", saleForecastDetailsEntity.getTotalSalePrice());
+                    saleForecastDetailsList.add(saleForecastDetailsMap);
+                }
+                return saleForecastDetailsList;
             } else {
                 throw new RuntimeException("Sale forecast detail list not found");
             }
@@ -98,27 +108,14 @@ public class SaleForecastDetailsServices implements ISaleForecastDetailsServices
 
 
     @Override
-    public Map<String, Object> updateSaleForecastDetail(Long sale_id, Long pid, Integer quantity,float totalPrice,float totalSaleprice,Long change_pid) {
+    public Map<String, Object> updateSaleForecastDetail(Long sale_id, Long pid, Integer quantity,float totalPrice,float totalSaleprice) {
         try {
-            SaleForecastsEntity saleForecast = saleForecastsRepository.findById(sale_id)
-                    .orElseThrow(() -> new RuntimeException("Sale forecast not found with id: " + sale_id));
             Map<String, Object> saleForecastDetailsMap = new HashMap<>();
-
             Optional<ProductsEntity> product = productsRepository.findById(pid);
-            if (!product.isPresent()) {
+            if (product.isEmpty()) {
                 throw new RuntimeException("Product not found with id: " + pid);
             }
-            SaleForecastDetailsEntity saleForecastDetailsEntity = new SaleForecastDetailsEntity();
-            SaleForecastDetailEntityId composedId = new SaleForecastDetailEntityId(pid, sale_id);
-            Optional<ProductsEntity> product_changed = productsRepository.findById(change_pid);
-            if (!Long.toString(change_pid).isEmpty()){
-                if (!product_changed.isPresent()) {
-                    throw new RuntimeException("Product changed not found with id: " + change_pid);
-                }
-                saleForecastDetailsEntity.setProduct(product_changed.get());
-            }else{
-                saleForecastDetailsEntity.setProduct(product.get());
-            }
+            SaleForecastDetailsEntity saleForecastDetailsEntity = findSaleForecastDetailByPid_SaleID(pid,sale_id);
             if(quantity!=null){
                 saleForecastDetailsEntity.setQuantity(quantity);
             }
@@ -126,25 +123,19 @@ public class SaleForecastDetailsServices implements ISaleForecastDetailsServices
                 saleForecastDetailsEntity.setTotalPrice(totalPrice);
             }
             if (!Float.toString(totalSaleprice).isEmpty()) {
-                saleForecastDetailsEntity.setTotalPrice(totalSaleprice);
+                saleForecastDetailsEntity.setTotalSalePrice(totalSaleprice);
             }
-
-            saleForecastDetailsEntity.setId(composedId);
-            saleForecastDetailsEntity.setSaleForecast(saleForecast);
-            saleForecastDetailsEntity.setTotalPrice(totalPrice);
-            saleForecastDetailsEntity.setTotalSalePrice(totalSaleprice);
-            saleForecastDetailsMap.put("date_start", saleForecastDetailsEntity.getSaleForecast().getDateStart());
-            saleForecastDetailsMap.put("date_end", saleForecastDetailsEntity.getSaleForecast().getDateEnd());
+            saleForecastDetailsRepository.save(saleForecastDetailsEntity);
+            saleForecastDetailsMap.put("product_id", saleForecastDetailsEntity.getProduct().getId());
             saleForecastDetailsMap.put("name", saleForecastDetailsEntity.getProduct().getName());
             saleForecastDetailsMap.put("quantity", saleForecastDetailsEntity.getQuantity());
             saleForecastDetailsMap.put("totalPrice", saleForecastDetailsEntity.getTotalPrice());
             saleForecastDetailsMap.put("totalSalePrice", saleForecastDetailsEntity.getTotalSalePrice());
-            saleForecastDetailsRepository.save(saleForecastDetailsEntity);
             return saleForecastDetailsMap;
 
         } catch (
                 Exception e) {
-            throw new RuntimeException("Failed to insert sale forecast detail: " + e.getMessage());
+            throw new RuntimeException("Failed to update sale forecast detail: " + e.getMessage());
         }
     }
 
