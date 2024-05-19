@@ -10,6 +10,7 @@ import com.manufacturing.manufacturingmanagementsystem.dtos.responses.UserRespon
 import com.manufacturing.manufacturingmanagementsystem.exceptions.AppException;
 import com.manufacturing.manufacturingmanagementsystem.exceptions.ErrorCode;
 import com.manufacturing.manufacturingmanagementsystem.models.BOMsEntity;
+import com.manufacturing.manufacturingmanagementsystem.models.UsersEntity;
 import com.manufacturing.manufacturingmanagementsystem.repositories.BOMDetailsRepository;
 import com.manufacturing.manufacturingmanagementsystem.repositories.BOMsRepository;
 import com.manufacturing.manufacturingmanagementsystem.service.Materials.MaterialsServices;
@@ -18,9 +19,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.beans.Transient;
-import java.util.ArrayList;
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,40 +43,56 @@ public class BOMsServices implements IBOMsServices {
         }
 
         BOMsEntity bom = new BOMsEntity();
-        bom.setName(bomRequest.getBOMName());
-        bom.setBOMstatus(bomRequest.getBOMStatus());
-        bom.setTimeProduction(bomRequest.getTimeProduction());
-        bom.setUnit(bomRequest.getUnit());
-        bom.setTotalPrice(bomRequest.getTotalPrice());
-        bom.setSellPrice(bomRequest.getSellPrice());
-        bom.setProductManager(usersServices.getUserById(bomRequest.getProductManagerId()));
-        bomsRepository.save(bom);
+
+        try {
+            bom.setName(bomRequest.getBOMName());
+            bom.setBOMstatus(bomRequest.getBOMStatus());
+            bom.setTimeProduction(bomRequest.getTimeProduction());
+            bom.setUnit(bomRequest.getUnit());
+            bom.setTotalPrice(bomRequest.getTotalPrice());
+            bom.setSellPrice(bomRequest.getSellPrice());
+            bom.setProductManager(usersServices.getUserById(bomRequest.getProductManagerId()));
+            bom.setDateCreation(new Date(System.currentTimeMillis()) );
+            bomsRepository.save(bom);
+        } catch (Exception e) {
+
+            throw new AppException(ErrorCode.BAD_REQUEST);
+        }
+
 
     }
 
     @Override
     @Transactional
-    public void updateBOM(BOMRequest bomRequest) {
+    public void updateBOM(BOMRequest bomRequest, Long id) {
         String status = bomRequest.getBOMStatus();
-        if (checkIfBOMExists(bomRequest.getBOMName())) {
-            throw new AppException(ErrorCode.BOM_NOT_FOUND);
-        } else if (!(status.equals("PENDING") || status.equals("CHECK_PRICE") || status.equals("FINISH"))) {
+        if (!(status.equals("PENDING") || status.equals("CHECK_PRICE") || status.equals("FINISH"))) {
             throw new AppException(ErrorCode.STATUS_INCORRECT);
         }
-
-        Optional<BOMsEntity> bom = Optional.ofNullable(bomsRepository.findByName(bomRequest.getBOMName()));
-        if (bom.isEmpty()) {
-            throw new AppException(ErrorCode.WRONG_EMAIL_OR_PASSWORD);
+        try {
+            Optional<BOMsEntity> bom = bomsRepository.findById(id);
+            System.out.println("BOM update Service : " + bom);
+            if (bom.isEmpty()) {
+                throw new AppException(ErrorCode.BOM_NOT_FOUND);
+            }
+            Optional<UsersEntity> user = Optional.ofNullable(usersServices.getUserById(bomRequest.getProductManagerId()));
+            if (user.isEmpty()) {
+                throw new AppException(ErrorCode.USER_NOT_FOUND);
+            }
+            bom.get().setName(bomRequest.getBOMName());
+            bom.get().setBOMstatus(bomRequest.getBOMStatus());
+            bom.get().setTimeProduction(bomRequest.getTimeProduction());
+            bom.get().setUnit(bomRequest.getUnit());
+            bom.get().setTotalPrice(bomRequest.getTotalPrice());
+            bom.get().setSellPrice(bomRequest.getSellPrice());
+            bom.get().setProductManager(user.get());
+            bomsRepository.save(bom.get());
+        } catch (Exception e) {
+            System.out.println("BOM not found" + e);
+            throw new AppException(ErrorCode.BOM_NOT_FOUND);
         }
 
-        bom.get().setName(bomRequest.getBOMName());
-        bom.get().setBOMstatus(bomRequest.getBOMStatus());
-        bom.get().setTimeProduction(bomRequest.getTimeProduction());
-        bom.get().setUnit(bomRequest.getUnit());
-        bom.get().setTotalPrice(bomRequest.getTotalPrice());
-        bom.get().setSellPrice(bomRequest.getSellPrice());
-        bom.get().setProductManager(usersServices.getUserById(bomRequest.getProductManagerId()));
-        bomsRepository.save(bom.get());
+
     }
 
     @Override
@@ -96,6 +111,16 @@ public class BOMsServices implements IBOMsServices {
                 .sellPrice(bom.get().getSellPrice())
                 .build();
     }
+
+    @Override
+    public BOMsEntity findBOMById(Long id) {
+        Optional<BOMsEntity> bom = bomsRepository.findById(id);
+        if (bom.isEmpty()) {
+            throw new AppException(ErrorCode.BOM_NOT_FOUND);
+        }
+        return bom.get();
+    }
+
     @Override
     public Boolean deleteBOM(Long id) {
         Optional<BOMsEntity> bomsEntity = bomsRepository.findById(id);
@@ -114,7 +139,12 @@ public class BOMsServices implements IBOMsServices {
 
     @Override
     public BOMsEntity findBOMByName(String name) {
-        return bomsRepository.findByName(name);
+
+        Optional<BOMsEntity> bom = bomsRepository.findByName(name);
+        if (bom.isEmpty()) {
+            throw new AppException(ErrorCode.BOM_NOT_FOUND);
+        }
+        return bom.get();
     }
 
     @Override
@@ -142,7 +172,9 @@ public class BOMsServices implements IBOMsServices {
     }
 
     public boolean checkIfBOMExists(String name) {
-        return bomsRepository.findByName(name) != null;
+        Optional<BOMsEntity> bom = bomsRepository.findByName(name);
+        System.out.println("check : " + bom.isPresent() + bom);
+        return bom.isPresent();
     }
 
 }

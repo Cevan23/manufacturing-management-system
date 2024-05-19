@@ -31,5 +31,5 @@ public class WorkOrdersEntity extends Auditable<String> {
     private Date dateEnd;
 
     @Column(name = "work_order_status",  columnDefinition = "varchar(255) check (work_order_status in ('pending', 'processing', 'PMcheck','ACcheck'))")
-    private Integer workOrderstatus;
+    private String workOrderStatus;
 }

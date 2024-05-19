@@ -24,6 +24,8 @@ public interface IBOMsServices {
 
     List<BOMsEntity> getBOMsByLikeName(String name);
 
-    void updateBOM(BOMRequest bomRequest);
+    void updateBOM(BOMRequest bomRequest, Long id);
+
+    BOMsEntity findBOMById(Long id);
 }
 

@@ -10,6 +10,8 @@ import lombok.*;
 @Setter
 public class MaterialResponse {
 
+        private Long materialId;
+
         private String materialName;
 
         private String materialUnit;
@@ -17,4 +19,7 @@ public class MaterialResponse {
         private Double materialPrice;
 
         private Double materialVolume;
+
+        private Integer materialQuantity;
+
 }

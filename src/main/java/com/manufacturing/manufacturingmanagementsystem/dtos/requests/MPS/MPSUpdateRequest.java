@@ -10,11 +10,13 @@ import java.sql.Date;
 @Builder
 @Getter
 @Setter
-public class MPSRequest {
+public class MPSUpdateRequest {
 
-    private Long product_manager_ID;
+    private Long mpsID;
 
     private Long productId;
+
+    private Long product_manager_ID;
 
     private Date dateStart;
 

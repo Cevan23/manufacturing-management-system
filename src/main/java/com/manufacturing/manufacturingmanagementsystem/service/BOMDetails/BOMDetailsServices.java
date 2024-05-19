@@ -1,6 +1,9 @@
 package com.manufacturing.manufacturingmanagementsystem.service.BOMDetails;
 
 import com.manufacturing.manufacturingmanagementsystem.dtos.BOMDetailsDTO;
+import com.manufacturing.manufacturingmanagementsystem.dtos.requests.BOM.BOMDetailRequest;
+import com.manufacturing.manufacturingmanagementsystem.exceptions.AppException;
+import com.manufacturing.manufacturingmanagementsystem.exceptions.ErrorCode;
 import com.manufacturing.manufacturingmanagementsystem.models.BOMDetailsEntity;
 import com.manufacturing.manufacturingmanagementsystem.models.BOMsEntity;
 import com.manufacturing.manufacturingmanagementsystem.models.MaterialsEntity;
@@ -13,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -23,33 +27,30 @@ public class BOMDetailsServices implements IBOMDetailsServices {
     private final MaterialsRepository materialsRepository;
 
     @Override
-    public BOMDetailsDTO createBOMDetails(BOMDetailsDTO bomDetails){
-
-        // Fetch the BOMsEntity and MaterialsEntity from the database
+    public void createBOMDetails(BOMDetailRequest bomDetails) {
+        if(bomDetails.getBOMId() == null || bomDetails.getMaterial() == null) {
+            return;
+        }
+        System.out.println("BOM detail : " + bomDetails);
         BOMsEntity bom = bomsRepository.findById(bomDetails.getBOMId())
                 .orElseThrow(() -> new RuntimeException("BOM not found with id " + bomDetails.getBOMId()));
-        MaterialsEntity material = materialsRepository.findById(bomDetails.getMaterialId())
-                .orElseThrow(() -> new RuntimeException("Material not found with id " + bomDetails.getMaterialId()));
+        MaterialsEntity material = materialsRepository.findByName(bomDetails.getMaterial().getMaterialName())
+                .orElseThrow(() -> new RuntimeException("Material not found with id " + bomDetails.getMaterial().getMaterialName()));
 
-        // Create the BOMDetailsEntity
-        BOMDetailsEntity bomDetailsEntity = new BOMDetailsEntity();
-        bomDetailsEntity.setId(new BOMDetailEntityId(bomDetails.getBOMId(), bomDetails.getMaterialId()));
-        bomDetailsEntity.setBOM(bom);
-        bomDetailsEntity.setMaterial(material);
-        bomDetailsEntity.setQuantity(bomDetails.getQuantity());
-        bomDetailsEntity.setTotalUnitPrice(bomDetails.getTotalUnitPrice());
+        try {
+            BOMDetailsEntity bomDetailsEntity = BOMDetailsEntity.builder()
+                    .id(new BOMDetailEntityId(bomDetails.getBOMId(), material.getId()))
+                    .BOM(bom)
+                    .material(material)
+                    .quantity(bomDetails.getQuantity())
+                    .totalUnitPrice(bomDetails.getTotalUnitPrice())
+                    .build();
 
-        // Save the entity in the database
-        BOMDetailsEntity savedEntity = bomDetailsRepository.save(bomDetailsEntity);
+            bomDetailsRepository.save(bomDetailsEntity);
+        } catch (Exception e) {
+            throw new AppException(ErrorCode.BAD_REQUEST);
+        }
 
-        // Convert the saved entity back to a DTO
-        BOMDetailsDTO savedDto = new BOMDetailsDTO();
-        savedDto.setBOMId(savedEntity.getBOM().getId());
-        savedDto.setMaterialId(savedEntity.getMaterial().getId());
-        savedDto.setQuantity(savedEntity.getQuantity());
-        savedDto.setTotalUnitPrice(savedEntity.getTotalUnitPrice());
-
-        return savedDto;
     }
 
     @Override
@@ -58,6 +59,16 @@ public class BOMDetailsServices implements IBOMDetailsServices {
             bomDetailsRepository.deleteByBOMId(bomId);
         } catch (Exception e) {
             throw new RuntimeException("Could not delete BOM details with BOM id " + bomId);
+        }
+    }
+
+    @Override
+    public void deleteBOMDetail(Long bomId, Long materialId) {
+        try {
+            bomDetailsRepository.deleteByBOMIdAndMaterialId(bomId, materialId);
+        } catch (Exception e) {
+
+            throw new RuntimeException("Could not delete BOM detail with BOM id " + bomId + " and material id " + materialId);
         }
     }
 

@@ -11,6 +11,8 @@ import lombok.*;
 @Setter
 public class BOMDetailRequest {
 
+    private Long BOMId;
+
     private MaterialRequest material;
 
     private Integer quantity;
