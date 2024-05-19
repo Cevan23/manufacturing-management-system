@@ -93,6 +93,21 @@ public class UserControllers {
         }
     }
 
+    @PutMapping("/reset/{id}")
+    public ResponseEntity<?> resetPassword(@PathVariable Long id, @Valid @RequestBody UsersDTO userDto) {
+        try {
+            UsersEntity user = userService.resetPassword(id, userDto);
+
+            return ResponseEntity.ok(ResponseObject.builder()
+                                .data(user)
+                                .message("Update password successfully")
+                                .status(HttpStatus.OK)
+                                .build());
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);

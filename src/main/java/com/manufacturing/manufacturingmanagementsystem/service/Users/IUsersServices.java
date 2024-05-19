@@ -12,6 +12,7 @@ public interface IUsersServices {
     UsersEntity getUserById(Long id);
     Map<String, Object> insertUser(UsersDTO userForm);
     Map<String, Object> updateUser(long id,UsersDTO userForm);
+    UsersEntity resetPassword(long id, UsersDTO userDto);
     void deleteUser(Long id);
     UsersEntity findUserbyRole(String roleName);
 }
