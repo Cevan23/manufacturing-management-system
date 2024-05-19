@@ -81,7 +81,6 @@ public class UsersServices implements IUsersServices {
         }
     }
 
-
     @Override
     public Map<String, Object> updateUser(long id,UsersDTO userDto) {
         try {
@@ -120,11 +119,29 @@ public class UsersServices implements IUsersServices {
                 userMap.put("address", userEntity.getAddress());
                 return userMap;
             } else {
-                // Handle the case where no user with the given ID exists
                 throw new RuntimeException("User not found with email : " + userDto.getEmail());
             }
         } catch (Exception e) {
-            // Xử lý lỗi và ném ra ngoại lệ mới hoặc trả về null (tùy thuộc vào yêu cầu)
+            throw new RuntimeException("Failed to update user: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public UsersEntity resetPassword(long id, UsersDTO userDto) {
+        try {
+            Optional<UsersEntity> userEntityOptional = usersRepository.findById(id);
+            if (userEntityOptional.isPresent()) {
+                UsersEntity userEntity = userEntityOptional.get();
+                PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
+                if (userDto.getPassword() != null) {
+                    userEntity.setPassword(passwordEncoder.encode(userDto.getPassword()));
+                }
+                usersRepository.save(userEntity);
+                return userEntity;
+            } else {
+                throw new RuntimeException("User not found with id : " + id);
+            }
+        } catch (Exception e) {
             throw new RuntimeException("Failed to update user: " + e.getMessage());
         }
     }
