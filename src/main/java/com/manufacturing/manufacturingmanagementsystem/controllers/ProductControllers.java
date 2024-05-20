@@ -46,6 +46,7 @@ public class ProductControllers {
             product.setUnit(bom.getUnit());
             product.setPrice(bom.getSellPrice());
             product.setVolume(bom.getTotalPrice());
+            product.setSellPrice(bom.getSellPrice());
             productsService.insertProduct(product, bomID, categoryID);
 
             return ResponseEntity.ok()

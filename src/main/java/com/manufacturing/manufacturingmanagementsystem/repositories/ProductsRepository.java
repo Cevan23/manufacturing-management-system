@@ -11,4 +11,7 @@ import java.util.List;
 @Repository
 public interface ProductsRepository extends JpaRepository<ProductsEntity, Long> {
     ProductsEntity findFirstByName(String name);
+
+    @Query("SELECT p FROM ProductsEntity p WHERE p.bom.id = :bomId")
+    List<ProductsEntity> findByBomId(@Param("bomId") Long bomId);
 }

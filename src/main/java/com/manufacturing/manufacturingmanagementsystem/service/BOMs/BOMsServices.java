@@ -10,9 +10,11 @@ import com.manufacturing.manufacturingmanagementsystem.dtos.responses.UserRespon
 import com.manufacturing.manufacturingmanagementsystem.exceptions.AppException;
 import com.manufacturing.manufacturingmanagementsystem.exceptions.ErrorCode;
 import com.manufacturing.manufacturingmanagementsystem.models.BOMsEntity;
+import com.manufacturing.manufacturingmanagementsystem.models.ProductsEntity;
 import com.manufacturing.manufacturingmanagementsystem.models.UsersEntity;
 import com.manufacturing.manufacturingmanagementsystem.repositories.BOMDetailsRepository;
 import com.manufacturing.manufacturingmanagementsystem.repositories.BOMsRepository;
+import com.manufacturing.manufacturingmanagementsystem.repositories.ProductsRepository;
 import com.manufacturing.manufacturingmanagementsystem.service.Materials.MaterialsServices;
 import com.manufacturing.manufacturingmanagementsystem.service.Users.UsersServices;
 import lombok.AllArgsConstructor;
@@ -31,6 +33,7 @@ public class BOMsServices implements IBOMsServices {
     private final BOMDetailsRepository bomDetailsRepository;
     private UsersServices usersServices;
     private final MaterialsServices materialsServices;
+    private final ProductsRepository productRepository;
 
     @Override
     public void createBOM(BOMRequest bomRequest) {
@@ -129,9 +132,19 @@ public class BOMsServices implements IBOMsServices {
             return false;
         }
         try {
+            // Tìm tất cả sản phẩm tham chiếu đến BOM
+            List<ProductsEntity> products = productRepository.findByBomId(id);
+
+            // Set giá trị NULL cho khóa ngoại
+            for (ProductsEntity product : products) {
+                product.setBom(null);
+                productRepository.save(product);
+            }
+
             bomDetailsRepository.deleteByBOMId(id);
             bomsRepository.delete(bomsEntity.get());
         } catch (Exception e) {
+            System.out.println("Error delete BOM : " + e);
             return false;
         }
         return true;
