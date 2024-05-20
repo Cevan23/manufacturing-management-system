@@ -1,9 +1,6 @@
 package com.manufacturing.manufacturingmanagementsystem.dtos.requests.SaleForecastDetail;
 
-import jakarta.persistence.Column;
 import lombok.*;
-
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -17,5 +14,4 @@ public class SaleForecastDetailUpdateRequest {
     private Integer quantity;
     private Float totalPrice;
     private Float totalSalePrice;
-    private Long change_pid;
 }

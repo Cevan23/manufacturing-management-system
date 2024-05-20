@@ -2,7 +2,9 @@ package com.manufacturing.manufacturingmanagementsystem.controllers;
 
 import com.manufacturing.manufacturingmanagementsystem.dtos.requests.SaleForecastDetail.SaleForecastDetailInsertRequest;
 import com.manufacturing.manufacturingmanagementsystem.dtos.requests.SaleForecastDetail.SaleForecastDetailUpdateRequest;
+import com.manufacturing.manufacturingmanagementsystem.dtos.responses.ApiResponse;
 import com.manufacturing.manufacturingmanagementsystem.dtos.responses.ResponseObject;
+import com.manufacturing.manufacturingmanagementsystem.repositories.ID.SaleForecastDetailEntityId;
 import com.manufacturing.manufacturingmanagementsystem.service.SaleForecastDetails.SaleForecastDetailsServices;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,13 +25,10 @@ public class SaleForecastDetailController {
         try {
 
             List<Map<String, Object>> list_sale_forecast_detail = saleForecastDetailsServices.insertSaleForecastDetail(saleForecastDetailInsertRequest.getSid(),saleForecastDetailInsertRequest.getPids(),saleForecastDetailInsertRequest.getQuantities());
-
-            return ResponseEntity.ok(
-                    ResponseObject.builder()
-                            .data(list_sale_forecast_detail)
-                            .message("Add sale forecast detail successfully")
-                            .status(HttpStatus.OK)
-                            .build());
+            return ResponseEntity.ok().body(ApiResponse.builder()
+                    .message("Add successfully")
+                    .result(list_sale_forecast_detail)
+                    .build());
 
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -39,14 +38,38 @@ public class SaleForecastDetailController {
     public ResponseEntity<?> updateSaleForecastDetail(@Valid @RequestBody SaleForecastDetailUpdateRequest saleForecastDetailUpdateRequest) {
         try {
 
-            Map<String, Object> sale_forecast_detail = saleForecastDetailsServices.updateSaleForecastDetail(saleForecastDetailUpdateRequest.getSid(),saleForecastDetailUpdateRequest.getPid(),saleForecastDetailUpdateRequest.getQuantity(),saleForecastDetailUpdateRequest.getTotalPrice(),saleForecastDetailUpdateRequest.getTotalSalePrice(),saleForecastDetailUpdateRequest.getChange_pid());
+            Map<String, Object> sale_forecast_detail = saleForecastDetailsServices.updateSaleForecastDetail(saleForecastDetailUpdateRequest.getSid(),saleForecastDetailUpdateRequest.getPid(),saleForecastDetailUpdateRequest.getQuantity(),saleForecastDetailUpdateRequest.getTotalPrice(),saleForecastDetailUpdateRequest.getTotalSalePrice());
+            return ResponseEntity.ok().body(ApiResponse.builder()
+                    .message("Update successfully")
+                    .result(sale_forecast_detail)
+                    .build());
 
-            return ResponseEntity.ok(
-                    ResponseObject.builder()
-                            .data(sale_forecast_detail)
-                            .message("Update sale forecast detail successfully")
-                            .status(HttpStatus.OK)
-                            .build());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getSaleForecastDetailById(@PathVariable Long id) {
+        try {
+            List<Map<String, Object>> sale_forecast_detail_list = saleForecastDetailsServices.findSaleForecastDetailById(id);
+            return ResponseEntity.ok().body(ApiResponse.builder()
+                    .message("Get successfully")
+                    .result(sale_forecast_detail_list)
+                    .build());
+
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/{sid}")
+    public ResponseEntity<?> DeleteSaleForecastDetail(@PathVariable Long sid,
+                                                      @Valid @RequestParam("pid") Long pid) {
+        try {
+            saleForecastDetailsServices.deleteSaleForecastDetail(pid,sid);
+            return ResponseEntity.ok().body(ApiResponse.builder()
+                    .message("Successfully delete sale forecast detail")
+                    .build());
 
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());

@@ -24,5 +24,4 @@ public class ManufacturingManagementSystemApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ManufacturingManagementSystemApplication.class, args);
 	}
-
 }

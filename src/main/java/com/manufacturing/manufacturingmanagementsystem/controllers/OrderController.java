@@ -1,6 +1,7 @@
 package com.manufacturing.manufacturingmanagementsystem.controllers;
 
 import com.manufacturing.manufacturingmanagementsystem.dtos.UsersDTO;
+import com.manufacturing.manufacturingmanagementsystem.dtos.requests.Order.OrderRequest;
 import com.manufacturing.manufacturingmanagementsystem.dtos.responses.ApiResponse;
 import com.manufacturing.manufacturingmanagementsystem.dtos.responses.Order.OrderListResponse;
 import com.manufacturing.manufacturingmanagementsystem.dtos.responses.ResponseObject;
@@ -24,7 +25,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class OrderController {
 
-//    private final OrdersServices ordersServices;
+    private final OrdersServices ordersServices;
 
 //    @GetMapping("")
 //    public ResponseEntity<?> getAllOrder() {
@@ -41,23 +42,23 @@ public class OrderController {
 //        }
 //    }
 //
-//    @PostMapping("/create")
-//    public ResponseEntity<?> insertUser(@Valid @RequestBody UsersDTO userDto) {
-//        try {
-//            Map<String, Object> newUser = userService.insertUser(userDto);
-//
-//            return ResponseEntity.ok(
-//                    ResponseObject.builder()
-//                            .data(newUser)
-//                            .message("Add user successfully")
-//                            .status(HttpStatus.OK)
-//                            .build());
-//
-//        } catch (Exception e) {
-//            // Xử lý lỗi và trả về phản hồi lỗi (status code 500)
-//            return ResponseEntity.badRequest().body(e.getMessage());
-//        }
-//    }
+    @PostMapping("/create")
+    public ResponseEntity<?> insertOrder(@Valid @RequestBody OrderRequest orderRequest) {
+        try {
+            OrdersEntity ordersEntity = ordersServices.insertOrder(orderRequest);
+
+            return ResponseEntity.ok(
+                    ResponseObject.builder()
+                            .data(ordersEntity)
+                            .message("Add order successfully")
+                            .status(HttpStatus.OK)
+                            .build());
+
+        } catch (Exception e) {
+            // Xử lý lỗi và trả về phản hồi lỗi (status code 500)
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 //
 //    @PutMapping("/{id}")
 //    public ResponseEntity<?> updateUser(@PathVariable Long id,

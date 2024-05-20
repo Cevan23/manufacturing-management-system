@@ -1,6 +1,8 @@
 package com.manufacturing.manufacturingmanagementsystem.service.Customers;
 
+import com.manufacturing.manufacturingmanagementsystem.models.CustomersEntity;
+
 public interface ICustomersServices {
-    // Khai báo các phương thức service cần thiết
+    CustomersEntity insertCustomerForOrder(String name, String contact);
 }
 
