@@ -23,6 +23,7 @@ public class ProductsServices implements iProductsServices {
     private final CategoriesRepository categoriesRepository;
     private final BOMsRepository bomsRepository;
     private final SaleForecastDetailsServices saleForecastDetailsServices;
+
     @Override
     public ProductsEntity findProductbyName(String name) {
         if (StringUtils.isEmpty(name)) {
@@ -51,24 +52,30 @@ public class ProductsServices implements iProductsServices {
     @Override
     public List<Map<String, Object>> getProductForSaleForecastById(Long id) {
         List<ProductsEntity> productsEntityList = productsRepository.findAll();
-        List<Map<String, Object>> listSaleDetail= saleForecastDetailsServices.findSaleForecastDetailById(id);
-
-        Set<Long> saleDetailProductIds = listSaleDetail.stream()
-                .map(detail -> (Long) detail.get("product_id"))
-                .collect(Collectors.toSet());
-
-        // Prepare the list of products not in sale forecast details
+        List<Map<String, Object>> listSaleDetail = saleForecastDetailsServices.findSaleForecastDetailById(id);
         List<Map<String, Object>> productMap = new ArrayList<>();
-
-        for (ProductsEntity product : productsEntityList) {
-            if (!saleDetailProductIds.contains(product.getId())) {
+        if (listSaleDetail.isEmpty()) {
+            for (ProductsEntity product : productsEntityList) {
                 Map<String, Object> productInfo = new HashMap<>();
                 productInfo.put("id", product.getId());
                 productInfo.put("name", product.getName());
                 productInfo.put("price", product.getPrice());
                 productInfo.put("sellPrice", product.getSellPrice());
-                productInfo.put("sellPrice", product.getCategory().getCategoryName());
                 productMap.add(productInfo);
+            }
+        } else {
+            Set<Long> saleDetailProductIds = listSaleDetail.stream()
+                    .map(detail -> (Long) detail.get("product_id"))
+                    .collect(Collectors.toSet());
+            for (ProductsEntity product : productsEntityList) {
+                if (!saleDetailProductIds.contains(product.getId())) {
+                    Map<String, Object> productInfo = new HashMap<>();
+                    productInfo.put("id", product.getId());
+                    productInfo.put("name", product.getName());
+                    productInfo.put("price", product.getPrice());
+                    productInfo.put("sellPrice", product.getSellPrice());
+                    productMap.add(productInfo);
+                }
             }
         }
         return productMap;

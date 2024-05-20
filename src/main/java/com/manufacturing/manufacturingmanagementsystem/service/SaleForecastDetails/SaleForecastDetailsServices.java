@@ -97,10 +97,8 @@ public class SaleForecastDetailsServices implements ISaleForecastDetailsServices
                     saleForecastDetailsMap.put("totalSalePrice", saleForecastDetailsEntity.getTotalSalePrice());
                     saleForecastDetailsList.add(saleForecastDetailsMap);
                 }
-                return saleForecastDetailsList;
-            } else {
-                throw new RuntimeException("Sale forecast detail list not found");
             }
+            return saleForecastDetailsList;
         } catch (Exception e) {
             throw new RuntimeException("Failed to find list sale forecast detail: " + e.getMessage());
         }
