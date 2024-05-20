@@ -1,9 +1,11 @@
 package com.manufacturing.manufacturingmanagementsystem.controllers;
 import com.manufacturing.manufacturingmanagementsystem.dtos.requests.IntrospectRequest;
 import com.manufacturing.manufacturingmanagementsystem.dtos.requests.LoginRequest;
+import com.manufacturing.manufacturingmanagementsystem.dtos.requests.RecoverPasswordRequest;
 import com.manufacturing.manufacturingmanagementsystem.dtos.responses.*;
 import com.manufacturing.manufacturingmanagementsystem.models.UsersEntity;
 import com.manufacturing.manufacturingmanagementsystem.service.AuthenticationService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,5 +47,20 @@ public class AuthenticationController {
                 .message("Introspect successfully")
                 .result(introspectResponse)
                 .build());
+    }
+
+    @PutMapping("/recover-password")
+    public ResponseEntity<?> resetPassword(@RequestBody RecoverPasswordRequest recoverPasswordRequest) {
+        try {
+            UsersEntity user = authenticationService.recoverPassword(recoverPasswordRequest);
+
+            return ResponseEntity.ok(ResponseObject.builder()
+                    .data(user)
+                    .message("Recover password successfully")
+                    .status(HttpStatus.OK)
+                    .build());
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }
