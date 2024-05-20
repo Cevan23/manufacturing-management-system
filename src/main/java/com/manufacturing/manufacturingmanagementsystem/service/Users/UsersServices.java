@@ -27,7 +27,6 @@ import java.util.Optional;
 @Service
 //@AllArgsConstructor
 public class UsersServices implements IUsersServices {
-
     private final UsersRepository usersRepository;
     private final RolesServices rolesServices;
     private final BCryptPasswordEncoder passwordEncoder;

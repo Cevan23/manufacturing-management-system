@@ -2,6 +2,7 @@ package com.manufacturing.manufacturingmanagementsystem.service;
 
 import com.manufacturing.manufacturingmanagementsystem.dtos.requests.IntrospectRequest;
 import com.manufacturing.manufacturingmanagementsystem.dtos.requests.LoginRequest;
+import com.manufacturing.manufacturingmanagementsystem.dtos.requests.RecoverPasswordRequest;
 import com.manufacturing.manufacturingmanagementsystem.dtos.responses.IntrospectResponse;
 import com.manufacturing.manufacturingmanagementsystem.exceptions.AppException;
 import com.manufacturing.manufacturingmanagementsystem.exceptions.ErrorCode;
@@ -9,10 +10,15 @@ import com.manufacturing.manufacturingmanagementsystem.models.UsersEntity;
 import com.manufacturing.manufacturingmanagementsystem.repositories.UsersRepository;
 import lombok.AllArgsConstructor;
 import com.manufacturing.manufacturingmanagementsystem.dtos.responses.AuthResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.SecureRandom;
 import java.util.Optional;
 
 @Service
@@ -22,6 +28,8 @@ public class AuthenticationService {
     private final UsersRepository usersRepository;
     private final JwtService jwtService;
 
+    @Autowired
+    private JavaMailSender javaMailSender;
 
     public AuthResponse login(LoginRequest loginRequest) throws AppException, Exception {
         AuthResponse loginResponse = null;
@@ -62,5 +70,56 @@ public class AuthenticationService {
         }
 
         return jwtService.introspect(token);
+    }
+
+    public UsersEntity recoverPassword(RecoverPasswordRequest recoverPasswordRequest) {
+        try {
+            Optional<UsersEntity> userEntityOptional = usersRepository.findByEmail(recoverPasswordRequest.getEmail());
+            if (userEntityOptional.isPresent()) {
+                UsersEntity userEntity = userEntityOptional.get();
+                PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
+
+                // Generate a random password
+                String randomPassword = generateRandomPassword(12);
+
+                // Encode the random password
+                String encodedPassword = passwordEncoder.encode(randomPassword);
+                userEntity.setPassword(encodedPassword);
+                usersRepository.save(userEntity);
+                sendEmail(recoverPasswordRequest.getEmail(), randomPassword);
+
+                return userEntity;
+            } else {
+                throw new RuntimeException("User not found with email: " + recoverPasswordRequest.getEmail());
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to update user: " + e.getMessage());
+        }
+    }
+
+    private String generateRandomPassword(int length) {
+        final String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()";
+        SecureRandom random = new SecureRandom();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            int randomIndex = random.nextInt(chars.length());
+            sb.append(chars.charAt(randomIndex));
+        }
+        return sb.toString();
+    }
+
+    private void sendEmail(String to, String newPassword) {
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(to);
+            message.setSubject("Recover your password");
+            message.setText("You have forgotten your password? Don't worry. Here is your recovery password: " + newPassword + "\n\n" +
+                    "You can use this password to access the services at Manufactorio." + "\n\n" +
+                    "If you have any questions about our production or services, please feel free to contact us at any time.\n\n" +
+                    "Sincerely,\nManufactorio");
+            javaMailSender.send(message);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to send email: " + e.getMessage());
+        }
     }
 }
