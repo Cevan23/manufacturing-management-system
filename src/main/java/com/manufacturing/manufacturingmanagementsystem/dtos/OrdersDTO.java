@@ -18,9 +18,9 @@ public class OrdersDTO {
 
     private Date dateEnd;
 
-    private Integer kindOrder;
+    private String kindOrder;
 
     private Float totalPrice;
 
-    private Integer orderStatus;
+    private String orderStatus;
 }

@@ -40,6 +40,7 @@ public class UserResponse {
                 .phoneNumber(user.getPhoneNumber())
                 .dateOfBirth(user.getDateOfBirth())
                 .address(user.getAddress())
+                .id(user.getId())
                 .build();
     }
 }

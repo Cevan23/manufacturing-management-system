@@ -78,5 +78,28 @@ public class SaleForecastsServices implements ISaleForecastsServices {
             throw new RuntimeException("Failed to get all sale forecast: " + e.getMessage());
         }
     }
+
+    @Override
+    public Map<String, Object> updateSaleForecast(Long id,Date dateStart,Date dateEnd) {
+        try {
+            Map<String, Object> saleForecastMap = new HashMap<>();
+            Optional<SaleForecastsEntity> optionalSaleForecastsEntity = saleForecastsRepository.findById(id);
+            if(optionalSaleForecastsEntity.isPresent()){
+                if(!dateStart.toString().isEmpty()){
+                    optionalSaleForecastsEntity.get().setDateStart(dateStart);
+                }
+                if(!dateStart.toString().isEmpty()){
+                    optionalSaleForecastsEntity.get().setDateEnd(dateEnd);
+                }
+                saleForecastsRepository.save(optionalSaleForecastsEntity.get());
+                saleForecastMap.put("id", optionalSaleForecastsEntity.get().getId());
+                saleForecastMap.put("dateStart", optionalSaleForecastsEntity.get().getDateStart());
+                saleForecastMap.put("dateEnd", optionalSaleForecastsEntity.get().getDateEnd());
+            }
+            return saleForecastMap;
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to update sale forecast: " + e.getMessage());
+        }
+    }
 }
 
