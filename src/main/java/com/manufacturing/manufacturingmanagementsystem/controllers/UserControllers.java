@@ -57,24 +57,6 @@ public class UserControllers {
         return userService.findUserbyRole(roleName);
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<?> insertUser(@Valid @RequestBody UsersDTO userDto) {
-        try {
-            Map<String, Object> newUser = userService.insertUser(userDto);
-
-            return ResponseEntity.ok(
-                    ResponseObject.builder()
-                            .data(newUser)
-                            .message("Add user successfully")
-                            .status(HttpStatus.OK)
-                            .build());
-
-        } catch (Exception e) {
-            // Xử lý lỗi và trả về phản hồi lỗi (status code 500)
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<?> updateUser(@PathVariable Long id,
                                         @Valid @RequestBody UsersDTO userDto) {
@@ -124,4 +106,30 @@ public class UserControllers {
                         .build());
     }
 
+    @GetMapping("/getSignUpRequest/{roleID}")
+    public ResponseEntity<?> getSignUpRequest(@PathVariable Long roleID) {
+        try {
+            List<UsersEntity> usersEntityList = userService.findAllSignUpRequest(roleID);
+            return ResponseEntity.ok(ResponseObject.builder()
+                    .data(usersEntityList)
+                    .message("Update password successfully")
+                    .status(HttpStatus.OK)
+                    .build());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/updateRoleId/{email}")
+    public ResponseEntity<?> updateRoleId(@PathVariable String email,  @Valid @RequestBody UsersDTO userDto) {
+        try {
+            UsersEntity userEntity = userService.updateRoleId(email, userDto);
+            return ResponseEntity.ok().body(ApiResponse.builder()
+                    .message("Accept new signup successfully")
+                    .result(userEntity)
+                    .build());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }

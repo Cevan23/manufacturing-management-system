@@ -15,5 +15,7 @@ public interface IUsersServices {
     UsersEntity resetPassword(long id, UsersDTO userDto);
     void deleteUser(Long id);
     UsersEntity findUserbyRole(String roleName);
+    List<UsersEntity> findAllSignUpRequest(long id);
+    UsersEntity updateRoleId(String email, UsersDTO usersDto);
 }
 
