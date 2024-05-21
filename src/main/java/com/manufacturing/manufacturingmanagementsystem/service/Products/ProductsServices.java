@@ -113,6 +113,7 @@ public class ProductsServices implements iProductsServices {
             }
         }
         return productMap;
+    }
 
     @Override
     public List<ProductsEntity> getAllProducts() {
@@ -122,6 +123,5 @@ public class ProductsServices implements iProductsServices {
             System.out.println("Error get All product: " + e.getMessage());
             return null;
         }
-
     }
 }
