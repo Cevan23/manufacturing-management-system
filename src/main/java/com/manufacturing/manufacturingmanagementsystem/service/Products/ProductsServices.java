@@ -80,4 +80,15 @@ public class ProductsServices implements iProductsServices {
         }
         return productMap;
     }
+
+    @Override
+    public List<ProductsEntity> getAllProducts() {
+        try {
+            return productsRepository.findAll();
+        } catch (Exception e) {
+            System.out.println("Error get All product: " + e.getMessage());
+            return null;
+        }
+
+    }
 }

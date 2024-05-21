@@ -3,8 +3,10 @@ package com.manufacturing.manufacturingmanagementsystem.service.MasterProduction
 import com.manufacturing.manufacturingmanagementsystem.dtos.MasterProductionSchedulesDTO;
 import com.manufacturing.manufacturingmanagementsystem.dtos.requests.MPS.MPSRequest;
 import com.manufacturing.manufacturingmanagementsystem.dtos.requests.MPS.MPSUpdateRequest;
+import com.manufacturing.manufacturingmanagementsystem.dtos.responses.MPS.MPSSuggestionMonthlyResponse;
 import com.manufacturing.manufacturingmanagementsystem.models.MasterProductionSchedulesEntity;
 
+import java.sql.Date;
 import java.util.List;
 
 public interface IMasterProductionSchedulesServices {
@@ -17,5 +19,7 @@ public interface IMasterProductionSchedulesServices {
     List<MasterProductionSchedulesEntity> getALl();
 
     void deleteMPS(Long id);
+
+    MPSSuggestionMonthlyResponse suggestMPSMonthly(Long productId, Date month);
 }
 
