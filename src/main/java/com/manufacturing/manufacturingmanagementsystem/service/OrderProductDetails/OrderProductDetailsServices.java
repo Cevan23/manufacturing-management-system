@@ -45,6 +45,8 @@ public class OrderProductDetailsServices implements IOrderProductDetailsServices
                 orderProductDetailsEntity.setTotalUnitPrice(((float) (quantity * product.get().getSellPrice())));
 
                 orderProductDetailsEntities.add(orderProductDetailsEntity);
+                ordersEntity.setTotalPrice(ordersEntity.getTotalPrice()+orderProductDetailsEntity.getTotalUnitPrice());
+                ordersRepository.save(ordersEntity);
 
                 orderProductDetailsEntry.put("name", orderProductDetailsEntity.getProduct().getName());
                 orderProductDetailsEntry.put("quantity", orderProductDetailsEntity.getQuantity());
@@ -112,12 +114,16 @@ public class OrderProductDetailsServices implements IOrderProductDetailsServices
             }
 
             orderProductDetailsRepository.save(orderProductDetailsEntity);
+            OrdersEntity ordersEntity = ordersRepository.findById(oid)
+                    .orElseThrow(() -> new RuntimeException("Order not found with id: " + oid));
+            ordersEntity.setTotalPrice(ordersEntity.getTotalPrice()+orderProductDetailsEntity.getTotalUnitPrice());
+            ordersRepository.save(ordersEntity);
+
             orderProductMap.put("product_id", orderProductDetailsEntity.getProduct().getId());
             orderProductMap.put("name", orderProductDetailsEntity.getProduct().getName());
             orderProductMap.put("quantity", orderProductDetailsEntity.getQuantity());
             orderProductMap.put("totalUnitPrice", orderProductDetailsEntity.getTotalUnitPrice());
             return orderProductMap;
-
         } catch (
                 Exception e) {
             throw new RuntimeException("Failed to update product order detail: " + e.getMessage());
@@ -128,6 +134,12 @@ public class OrderProductDetailsServices implements IOrderProductDetailsServices
     public void deleteOrderProductDetail(Long pid, Long oid) {
         try {
             OrderProductDetailEntityId compositeId = new OrderProductDetailEntityId(pid, oid);
+            Optional<OrderProductDetailsEntity> orderProductDetailsEntity = orderProductDetailsRepository.findById(compositeId);
+
+            OrdersEntity ordersEntity = ordersRepository.findById(oid)
+                    .orElseThrow(() -> new RuntimeException("Order not found with id: " + oid));
+            ordersEntity.setTotalPrice(ordersEntity.getTotalPrice()-orderProductDetailsEntity.get().getTotalUnitPrice());
+            ordersRepository.save(ordersEntity);
             orderProductDetailsRepository.deleteById(compositeId);
         } catch (Exception e) {
             throw new RuntimeException("Failed to delete product order detail: " + e.getMessage());
