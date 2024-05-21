@@ -183,9 +183,9 @@ public class UsersServices implements IUsersServices {
     }
 
     @Override
-    public List<UsersEntity> findAllSignUpRequest(long roleID) {
+    public List<UsersEntity> findAllSignUpRequest(long id) {
         try {
-            Optional<UsersEntity> userEntityOptional = usersRepository.findByRoleId(roleID);
+            Optional<UsersEntity> userEntityOptional = usersRepository.findById(id);
             if (userEntityOptional.isPresent()){
                 return usersRepository.findNullRoleId();
             }
@@ -193,7 +193,7 @@ public class UsersServices implements IUsersServices {
                 throw new RuntimeException("Only chairman can accept signup request");
             }
         } catch (Exception e) {
-            throw new RuntimeException("Failed to update user: " + e.getMessage());
+            throw new RuntimeException("Failed to accept signup request: " + e.getMessage());
         }
     }
 
@@ -215,6 +215,21 @@ public class UsersServices implements IUsersServices {
             }
         } catch (Exception e) {
             throw new RuntimeException("Failed to update role for signup: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public List<UsersEntity> findAllEmployee(long id) {
+        try {
+            Optional<UsersEntity> userEntityOptional = usersRepository.findById(id);
+            if (userEntityOptional.isPresent()){
+                return usersRepository.findNotNullRoleId();
+            }
+            else {
+                throw new RuntimeException("Only chairman can view list of employee");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to view list of employee: " + e.getMessage());
         }
     }
 }

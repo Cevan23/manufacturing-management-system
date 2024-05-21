@@ -17,5 +17,6 @@ public interface IUsersServices {
     UsersEntity findUserbyRole(String roleName);
     List<UsersEntity> findAllSignUpRequest(long id);
     UsersEntity updateRoleId(String email, UsersDTO usersDto);
+    List<UsersEntity> findAllEmployee(long id);
 }
 

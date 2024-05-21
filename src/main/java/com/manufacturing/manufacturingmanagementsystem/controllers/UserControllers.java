@@ -26,6 +26,20 @@ public class UserControllers {
 
     RoleMapper roleMapper;
 
+    @PostMapping("/create")
+    public ResponseEntity<?> insertUser(@Valid @RequestBody UsersDTO userDto) {
+        try {
+            Map<String, Object> newUser = userService.insertUser(userDto);
+            return ResponseEntity.ok(ResponseObject.builder()
+                    .data(newUser)
+                    .message("Add user successfully")
+                    .status(HttpStatus.OK)
+                    .build());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     @GetMapping("/getAllRoles")
 //    @PreAuthorize("hasAnyAuthority('SCOPE_CHAIRMAN', 'SCOPE_ACCOUNTANT', 'SCOPE_PRODUCT_MANAGER')")
     @PreAuthorize("hasAnyAuthority('SCOPE_CHAIRMAN')")
@@ -106,13 +120,13 @@ public class UserControllers {
                         .build());
     }
 
-    @GetMapping("/getSignUpRequest/{roleID}")
-    public ResponseEntity<?> getSignUpRequest(@PathVariable Long roleID) {
+    @GetMapping("/getSignUpRequest/{id}")
+    public ResponseEntity<?> getSignUpRequest(@PathVariable Long id) {
         try {
-            List<UsersEntity> usersEntityList = userService.findAllSignUpRequest(roleID);
+            List<UsersEntity> usersEntityList = userService.findAllSignUpRequest(id);
             return ResponseEntity.ok(ResponseObject.builder()
                     .data(usersEntityList)
-                    .message("Update password successfully")
+                    .message("Get all sign up request successfully")
                     .status(HttpStatus.OK)
                     .build());
         } catch (Exception e) {
@@ -127,6 +141,20 @@ public class UserControllers {
             return ResponseEntity.ok().body(ApiResponse.builder()
                     .message("Accept new signup successfully")
                     .result(userEntity)
+                    .build());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/getAllEmployee/{id}")
+    public ResponseEntity<?> getAllEmployee(@PathVariable Long id) {
+        try {
+            List<UsersEntity> usersEntityList = userService.findAllEmployee(id);
+            return ResponseEntity.ok(ResponseObject.builder()
+                    .data(usersEntityList)
+                    .message("Get all employee successfully")
+                    .status(HttpStatus.OK)
                     .build());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
