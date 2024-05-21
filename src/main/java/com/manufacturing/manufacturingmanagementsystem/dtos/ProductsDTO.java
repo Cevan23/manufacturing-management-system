@@ -24,6 +24,9 @@ public class ProductsDTO {
     @JsonProperty("price")
     private Double price;
 
+    @JsonProperty("sell_price")
+    private Double sellPrice;
+
     @JsonProperty("volume")
     private Double volume;
 

@@ -10,6 +10,7 @@ import com.manufacturing.manufacturingmanagementsystem.repositories.SaleForecast
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.*;
@@ -144,6 +145,15 @@ public class SaleForecastDetailsServices implements ISaleForecastDetailsServices
             saleForecastDetailsRepository.deleteById(compositeId);
         } catch (Exception e) {
             throw new RuntimeException("Failed to delete sale forecast detail: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public List<Object[]> findQuantityAndSaleForecastIdByProductIdAndMonthYear(Long productId, Date startDate, Date endDate) {
+        try {
+            return saleForecastDetailsRepository.findQuantityAndSaleForecastIdByProductIdAndMonthYear(productId, startDate, endDate);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to find quantity and sale forecast id by product id and month year: " + e.getMessage());
         }
     }
 }

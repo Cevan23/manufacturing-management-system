@@ -3,6 +3,7 @@ package com.manufacturing.manufacturingmanagementsystem.service.MasterProduction
 import com.manufacturing.manufacturingmanagementsystem.dtos.MasterProductionSchedulesDTO;
 import com.manufacturing.manufacturingmanagementsystem.dtos.requests.MPS.MPSRequest;
 import com.manufacturing.manufacturingmanagementsystem.dtos.requests.MPS.MPSUpdateRequest;
+import com.manufacturing.manufacturingmanagementsystem.dtos.responses.MPS.MPSSuggestionMonthlyResponse;
 import com.manufacturing.manufacturingmanagementsystem.exceptions.AppException;
 import com.manufacturing.manufacturingmanagementsystem.exceptions.ErrorCode;
 import com.manufacturing.manufacturingmanagementsystem.models.MasterProductionSchedulesEntity;
@@ -10,12 +11,15 @@ import com.manufacturing.manufacturingmanagementsystem.models.ProductsEntity;
 import com.manufacturing.manufacturingmanagementsystem.models.UsersEntity;
 import com.manufacturing.manufacturingmanagementsystem.repositories.MasterProductionSchedulesRepository;
 import com.manufacturing.manufacturingmanagementsystem.repositories.ProductsRepository;
+import com.manufacturing.manufacturingmanagementsystem.repositories.SaleForecastDetailsRepository;
 import com.manufacturing.manufacturingmanagementsystem.repositories.UsersRepository;
 import com.manufacturing.manufacturingmanagementsystem.service.Users.UsersServices;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.hibernate.sql.exec.ExecutionException;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -27,6 +31,7 @@ public class MasterProductionSchedulesServices implements IMasterProductionSched
     private final MasterProductionSchedulesRepository masterProductionSchedulesRepository;
     private final UsersRepository usersRepository;
     private final ProductsRepository productsRepository;
+    private final SaleForecastDetailsRepository saleForecastDetailsRepository;
 
     @Override
     public void createMPS(MPSRequest mpsRequest) {
@@ -100,6 +105,13 @@ public class MasterProductionSchedulesServices implements IMasterProductionSched
             Optional<MasterProductionSchedulesEntity> mps = masterProductionSchedulesRepository.findById(id);
             mps.ifPresent(masterProductionSchedulesRepository::delete);
         }
+    }
+
+    @Override
+    public MPSSuggestionMonthlyResponse suggestMPSMonthly(Long productId, Date month){
+
+        
+        return null;
     }
 
     public MasterProductionSchedulesEntity findMPSbyID(Long id) {

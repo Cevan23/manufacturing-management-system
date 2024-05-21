@@ -12,5 +12,7 @@ public interface ISaleForecastsServices {
     SaleForecastsEntity findSaleForecastById(Long id);
     public List<Map<String, Object>> getAllSaleForecast();
     public Map<String, Object> updateSaleForecast(Long id, Date dateStart, Date dateEnd);
+
+
 }
 

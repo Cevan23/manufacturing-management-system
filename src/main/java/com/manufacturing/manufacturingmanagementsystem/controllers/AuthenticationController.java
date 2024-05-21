@@ -1,10 +1,12 @@
 package com.manufacturing.manufacturingmanagementsystem.controllers;
+import com.manufacturing.manufacturingmanagementsystem.dtos.UsersDTO;
 import com.manufacturing.manufacturingmanagementsystem.dtos.requests.IntrospectRequest;
 import com.manufacturing.manufacturingmanagementsystem.dtos.requests.LoginRequest;
 import com.manufacturing.manufacturingmanagementsystem.dtos.requests.RecoverPasswordRequest;
 import com.manufacturing.manufacturingmanagementsystem.dtos.responses.*;
 import com.manufacturing.manufacturingmanagementsystem.models.UsersEntity;
 import com.manufacturing.manufacturingmanagementsystem.service.AuthenticationService;
+import com.manufacturing.manufacturingmanagementsystem.service.Users.UsersServices;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +14,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class AuthenticationController {
-
+    private final UsersServices userService;
     @Autowired
     private AuthenticationService authenticationService;
 
@@ -60,6 +64,20 @@ public class AuthenticationController {
                     .status(HttpStatus.OK)
                     .build());
         }catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<?> insertUser(@Valid @RequestBody UsersDTO userDto) {
+        try {
+            Map<String, Object> newUser = userService.insertUser(userDto);
+            return ResponseEntity.ok(ResponseObject.builder()
+                                 .data(newUser)
+                                 .message("Add user successfully")
+                                 .status(HttpStatus.OK)
+                                .build());
+        } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
