@@ -7,6 +7,7 @@ import com.manufacturing.manufacturingmanagementsystem.models.CategoriesEntity;
 import com.manufacturing.manufacturingmanagementsystem.models.ProductsEntity;
 import com.manufacturing.manufacturingmanagementsystem.models.SaleForecastDetailsEntity;
 import com.manufacturing.manufacturingmanagementsystem.repositories.*;
+import com.manufacturing.manufacturingmanagementsystem.service.OrderProductDetails.OrderProductDetailsServices;
 import com.manufacturing.manufacturingmanagementsystem.service.SaleForecastDetails.SaleForecastDetailsServices;
 import io.micrometer.common.util.StringUtils;
 import lombok.AllArgsConstructor;
@@ -23,6 +24,7 @@ public class ProductsServices implements iProductsServices {
     private final CategoriesRepository categoriesRepository;
     private final BOMsRepository bomsRepository;
     private final SaleForecastDetailsServices saleForecastDetailsServices;
+    private final OrderProductDetailsServices orderProductDetailsServices;
 
     @Override
     public ProductsEntity findProductbyName(String name) {
@@ -80,6 +82,37 @@ public class ProductsServices implements iProductsServices {
         }
         return productMap;
     }
+
+    @Override
+    public List<Map<String, Object>> getProductForOrderProductById(Long id) {
+        List<ProductsEntity> productsEntityList = productsRepository.findAll();
+        List<Map<String, Object>> listOrderProductDetail = orderProductDetailsServices.findOrderProductDetailById(id);
+        List<Map<String, Object>> productMap = new ArrayList<>();
+        if (listOrderProductDetail.isEmpty()) {
+            for (ProductsEntity product : productsEntityList) {
+                Map<String, Object> productInfo = new HashMap<>();
+                productInfo.put("id", product.getId());
+                productInfo.put("name", product.getName());
+                productInfo.put("price", product.getPrice());
+                productInfo.put("sellPrice", product.getSellPrice());
+                productMap.add(productInfo);
+            }
+        } else {
+            Set<Long> orderProductDetailProductIds = listOrderProductDetail.stream()
+                    .map(detail -> (Long) detail.get("product_id"))
+                    .collect(Collectors.toSet());
+            for (ProductsEntity product : productsEntityList) {
+                if (!orderProductDetailProductIds.contains(product.getId())) {
+                    Map<String, Object> productInfo = new HashMap<>();
+                    productInfo.put("id", product.getId());
+                    productInfo.put("name", product.getName());
+                    productInfo.put("price", product.getPrice());
+                    productInfo.put("sellPrice", product.getSellPrice());
+                    productMap.add(productInfo);
+                }
+            }
+        }
+        return productMap;
 
     @Override
     public List<ProductsEntity> getAllProducts() {

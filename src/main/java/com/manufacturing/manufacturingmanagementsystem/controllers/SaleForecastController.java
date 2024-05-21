@@ -37,7 +37,6 @@ public class SaleForecastController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteSaleForecast(@PathVariable Long id) {
-
         try {
             saleForecastsServices.deleteSaleForecast(id);
             return ResponseEntity.ok().body(ApiResponse.builder()

@@ -4,6 +4,7 @@ import com.manufacturing.manufacturingmanagementsystem.dtos.MaterialsDTO;
 import com.manufacturing.manufacturingmanagementsystem.models.MaterialsEntity;
 
 import java.util.List;
+import java.util.Map;
 
 public interface IMaterialsServices {
 
@@ -20,5 +21,6 @@ public interface IMaterialsServices {
     MaterialsEntity findMaterialByName(String name);
 
     MaterialsDTO findMaterialById(Long id);
+    List<Map<String, Object>> getMaterialForOrderMaterialById(Long id);
 }
 

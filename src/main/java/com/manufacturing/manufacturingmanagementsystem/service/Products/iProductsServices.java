@@ -12,7 +12,10 @@ public interface iProductsServices {
     ProductsEntity findProductbyName(String name);
 
     void insertProduct(ProductsDTO product, Long bomID, Long categoryID);
+
     public List<Map<String, Object>> getProductForSaleForecastById(Long id);
+
+    List<Map<String, Object>> getProductForOrderProductById(Long id);
 
     public List<ProductsEntity> getAllProducts();
 }
