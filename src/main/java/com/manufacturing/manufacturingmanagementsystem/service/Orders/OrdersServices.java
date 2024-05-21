@@ -1,31 +1,26 @@
 package com.manufacturing.manufacturingmanagementsystem.service.Orders;
 
-import com.manufacturing.manufacturingmanagementsystem.dtos.UsersDTO;
 import com.manufacturing.manufacturingmanagementsystem.dtos.requests.Order.OrderRequest;
+import com.manufacturing.manufacturingmanagementsystem.dtos.requests.Order.OrderUpdateRequest;
 import com.manufacturing.manufacturingmanagementsystem.dtos.responses.Customer.CustomerResponse;
 import com.manufacturing.manufacturingmanagementsystem.models.CustomersEntity;
 import com.manufacturing.manufacturingmanagementsystem.models.OrdersEntity;
-import com.manufacturing.manufacturingmanagementsystem.models.SaleForecastsEntity;
 import com.manufacturing.manufacturingmanagementsystem.repositories.CustomersRepository;
 import com.manufacturing.manufacturingmanagementsystem.repositories.OrdersRepository;
 import com.manufacturing.manufacturingmanagementsystem.repositories.UsersRepository;
 import com.manufacturing.manufacturingmanagementsystem.service.Customers.CustomersServices;
-import com.manufacturing.manufacturingmanagementsystem.service.OrderDetails.OrderDetailsServices;
+import com.manufacturing.manufacturingmanagementsystem.service.OrderProductDetails.OrderProductDetailsServices;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.*;
-
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @Service
 @AllArgsConstructor
 public class OrdersServices implements IOrdersServices {
 
     private final OrdersRepository ordersRepository;
-    private final OrderDetailsServices orderDetailsServices;
+    private final OrderProductDetailsServices orderDetailsServices;
     private final CustomersRepository customersRepository;
     private final CustomersServices customersServices;
     private final UsersRepository usersRepository;
@@ -80,15 +75,32 @@ public class OrdersServices implements IOrdersServices {
             throw new RuntimeException("Failed to insert order: " + e.getMessage());
         }
     }
-//
-//    @Override
-//    public OrdersEntity updateOrder(long id, UsersDTO userForm) {
-//        return null;
-//    }
-//
-//    @Override
-//    public void deleteOrder(Long id) {
-//
-//    }
+
+    @Override
+    public OrdersEntity updateOrder(OrderUpdateRequest orderUpdateRequest) {
+        try {
+            Optional<OrdersEntity> ordersEntity = ordersRepository.findById(orderUpdateRequest.getId());
+            if(!ordersEntity.isPresent()){
+                throw new RuntimeException("Failed to find order: ");
+            }
+            ordersEntity.get().setOrderStatus(orderUpdateRequest.getOrderStatus());
+            ordersEntity.get().setDateStart(orderUpdateRequest.getDateStart());
+            ordersEntity.get().setDateEnd(orderUpdateRequest.getDateEnd());
+            ordersRepository.save(ordersEntity.get());
+            return ordersEntity.get();
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to update order: " + e.getMessage());
+        }
+
+    }
+
+    @Override
+    public void deleteOrder(Long id) {
+        try {
+            ordersRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to delete order: " + e.getMessage());
+        }
+    }
 }
 

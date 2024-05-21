@@ -6,9 +6,14 @@ import com.manufacturing.manufacturingmanagementsystem.exceptions.AppException;
 import com.manufacturing.manufacturingmanagementsystem.exceptions.ErrorCode;
 import com.manufacturing.manufacturingmanagementsystem.models.MaterialsEntity;
 import com.manufacturing.manufacturingmanagementsystem.service.Materials.MaterialsServices;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/material")
@@ -177,6 +182,22 @@ public class MaterialController {
         }
 
     }
-
-
+    @GetMapping("/forOrderMaterial/{id}")
+    public ResponseEntity<ApiResponse> getMaterialsForOrderMaterialById(
+            @Valid @PathVariable Long id) {
+        try {
+            List<Map<String, Object>> listMaterials = materialsServices.getMaterialForOrderMaterialById(id);
+            return ResponseEntity.ok()
+                    .body(ApiResponse.builder()
+                            .message("Get materials successfully")
+                            .result(listMaterials)
+                            .build());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(ApiResponse.builder()
+                            .message("An error occurred: " + e.getMessage())
+                            .result(null)
+                            .build());
+        }
+    }
 }

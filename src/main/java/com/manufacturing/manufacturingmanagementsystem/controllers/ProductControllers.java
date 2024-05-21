@@ -84,4 +84,22 @@ public class ProductControllers {
                             .build());
         }
     }
+    @GetMapping("/forOrderProduct/{id}")
+    public ResponseEntity<ApiResponse> getProductsForOrderProductById(
+            @Valid @PathVariable Long id) {
+        try {
+            List<Map<String, Object>> listProducts = productsService.getProductForOrderProductById(id);
+            return ResponseEntity.ok()
+                    .body(ApiResponse.builder()
+                            .message("Get products successfully")
+                            .result(listProducts)
+                            .build());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(ApiResponse.builder()
+                            .message("An error occurred: " + e.getMessage())
+                            .result(null)
+                            .build());
+        }
+    }
 }

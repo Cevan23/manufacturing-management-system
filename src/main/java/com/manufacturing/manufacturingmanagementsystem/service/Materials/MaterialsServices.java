@@ -3,17 +3,19 @@ package com.manufacturing.manufacturingmanagementsystem.service.Materials;
 import com.manufacturing.manufacturingmanagementsystem.dtos.MaterialsDTO;
 import com.manufacturing.manufacturingmanagementsystem.models.MaterialsEntity;
 import com.manufacturing.manufacturingmanagementsystem.repositories.MaterialsRepository;
+import com.manufacturing.manufacturingmanagementsystem.service.OrderMaterialDetails.OrderMaterialDetailsServices;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class MaterialsServices implements IMaterialsServices {
 
     private final MaterialsRepository materialsRepository;
+    private final OrderMaterialDetailsServices orderMaterialDetailsServices;
 
     @Override
     public void createMaterial(MaterialsDTO materialDto)  {
@@ -86,6 +88,35 @@ public class MaterialsServices implements IMaterialsServices {
         materialDto.setVolume(materialEntity.getVolume());
 
         return materialDto;
+    }
+    @Override
+    public List<Map<String, Object>> getMaterialForOrderMaterialById(Long id) {
+        List<MaterialsEntity> materialsEntities = materialsRepository.findAll();
+        List<Map<String, Object>> listOrderMaterialDetail = orderMaterialDetailsServices.findOrderMaterialDetailById(id);
+        List<Map<String, Object>> materialMap = new ArrayList<>();
+        if (listOrderMaterialDetail.isEmpty()) {
+            for (MaterialsEntity material : materialsEntities) {
+                Map<String, Object> materialInfo = new HashMap<>();
+                materialInfo.put("id", material.getId());
+                materialInfo.put("name", material.getName());
+                materialInfo.put("price", material.getPrice());
+                materialMap.add(materialInfo);
+            }
+        } else {
+            Set<Long> ordermaterialDetailmaterialIds = listOrderMaterialDetail.stream()
+                    .map(detail -> (Long) detail.get("material_id"))
+                    .collect(Collectors.toSet());
+            for (MaterialsEntity material : materialsEntities) {
+                if (!ordermaterialDetailmaterialIds.contains(material.getId())) {
+                    Map<String, Object> materialInfo = new HashMap<>();
+                    materialInfo.put("id", material.getId());
+                    materialInfo.put("name", material.getName());
+                    materialInfo.put("price", material.getPrice());
+                    materialMap.add(materialInfo);
+                }
+            }
+        }
+        return materialMap;
     }
 
 
