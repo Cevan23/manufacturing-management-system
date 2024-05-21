@@ -100,8 +100,8 @@ public class MPSController {
                         .build());
     }
 
-    @GetMapping("/getAllMPSofPM")
-    public ResponseEntity<ApiResponse> getAllMPSofPM(@RequestParam Long pmID) {
+    @GetMapping("/getAllMPSofPM/{pmID}")
+    public ResponseEntity<ApiResponse> getAllMPSofPM(@PathVariable Long pmID) {
         if (pmID == null) {
             return ResponseEntity.badRequest()
                     .body(ApiResponse.builder()
@@ -129,6 +129,7 @@ public class MPSController {
     @GetMapping("/getAll")
     public ResponseEntity<ApiResponse> getAll() {
         try {
+
             return ResponseEntity.ok()
                     .body(ApiResponse.builder()
                             .message("MPS retrieved successfully")
