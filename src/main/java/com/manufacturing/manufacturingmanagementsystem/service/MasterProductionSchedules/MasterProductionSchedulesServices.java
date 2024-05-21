@@ -3,6 +3,7 @@ package com.manufacturing.manufacturingmanagementsystem.service.MasterProduction
 import com.manufacturing.manufacturingmanagementsystem.dtos.MasterProductionSchedulesDTO;
 import com.manufacturing.manufacturingmanagementsystem.dtos.requests.MPS.MPSRequest;
 import com.manufacturing.manufacturingmanagementsystem.dtos.requests.MPS.MPSUpdateRequest;
+import com.manufacturing.manufacturingmanagementsystem.dtos.responses.MPS.MPSResponse;
 import com.manufacturing.manufacturingmanagementsystem.dtos.responses.MPS.MPSSuggestionMonthlyResponse;
 import com.manufacturing.manufacturingmanagementsystem.exceptions.AppException;
 import com.manufacturing.manufacturingmanagementsystem.exceptions.ErrorCode;
@@ -80,18 +81,56 @@ public class MasterProductionSchedulesServices implements IMasterProductionSched
     }
 
     @Override
-    public  List<MasterProductionSchedulesEntity> getAllMPSofPM(Long pmID){
+    public  List<MPSResponse> getAllMPSofPM(Long pmID){
         try {
-            return masterProductionSchedulesRepository.findAllByProductManager_Id(pmID);
+            List<MasterProductionSchedulesEntity> mps = masterProductionSchedulesRepository.findAllByProductManager_Id(pmID);
+            List<MPSResponse> mpsResponses = new ArrayList<>();
+            for (MasterProductionSchedulesEntity m : mps) {
+                MPSResponse mpsResponse = MPSResponse.builder()
+                        .mpsID(m.getId())
+                        .product_manager_ID(m.getProductManager().getId())
+                        .productManagerName(m.getProductManager().getFullName())
+                        .productName(m.getProducts().getName())
+                        .productId(m.getProducts().getId())
+                        .dateStart(m.getDateStart())
+                        .dateEnd(m.getDateEnd())
+                        .quantity(m.getQuantity())
+                        .requireTime(m.getRequireTime())
+                        .durationHour(m.getDurationHour())
+                        .effortHour(m.getEffortHour())
+                        .in_progress(m.getIn_progress())
+                        .build();
+                mpsResponses.add(mpsResponse);
+            }
+            return mpsResponses;
         } catch (Exception e) {
             return null;
         }
     }
 
     @Override
-    public  List<MasterProductionSchedulesEntity> getALl(){
+    public  List<MPSResponse> getALl(){
         try {
-            return masterProductionSchedulesRepository.findAll();
+            List<MasterProductionSchedulesEntity> mps = masterProductionSchedulesRepository.findAll();
+            List<MPSResponse> mpsResponses = new ArrayList<>();
+            for (MasterProductionSchedulesEntity m : mps) {
+                MPSResponse mpsResponse = MPSResponse.builder()
+                        .mpsID(m.getId())
+                        .product_manager_ID(m.getProductManager().getId())
+                        .productManagerName(m.getProductManager().getFullName())
+                        .productName(m.getProducts().getName())
+                        .productId(m.getProducts().getId())
+                        .dateStart(m.getDateStart())
+                        .dateEnd(m.getDateEnd())
+                        .quantity(m.getQuantity())
+                        .requireTime(m.getRequireTime())
+                        .durationHour(m.getDurationHour())
+                        .effortHour(m.getEffortHour())
+                        .in_progress(m.getIn_progress())
+                        .build();
+                mpsResponses.add(mpsResponse);
+            }
+            return mpsResponses;
         } catch (Exception e) {
             return null;
         }

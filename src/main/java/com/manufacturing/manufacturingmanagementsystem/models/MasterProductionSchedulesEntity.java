@@ -19,7 +19,7 @@ public class MasterProductionSchedulesEntity extends Auditable<String> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private ProductsEntity products;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
