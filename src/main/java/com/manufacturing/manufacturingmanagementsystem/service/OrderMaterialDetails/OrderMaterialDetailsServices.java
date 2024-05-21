@@ -1,6 +1,7 @@
 package com.manufacturing.manufacturingmanagementsystem.service.OrderMaterialDetails;
 
 import com.manufacturing.manufacturingmanagementsystem.models.OrderMaterialDetailsEntity;
+import com.manufacturing.manufacturingmanagementsystem.models.OrderProductDetailsEntity;
 import com.manufacturing.manufacturingmanagementsystem.models.OrdersEntity;
 import com.manufacturing.manufacturingmanagementsystem.models.MaterialsEntity;
 import com.manufacturing.manufacturingmanagementsystem.repositories.ID.OrderMaterialDetailEntityId;
@@ -8,6 +9,7 @@ import com.manufacturing.manufacturingmanagementsystem.repositories.OrderMateria
 import com.manufacturing.manufacturingmanagementsystem.repositories.OrdersRepository;
 import com.manufacturing.manufacturingmanagementsystem.repositories.MaterialsRepository;
 import lombok.AllArgsConstructor;
+import org.hibernate.query.Order;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -45,6 +47,8 @@ public class OrderMaterialDetailsServices implements IOrderMaterialDetailsServic
                 orderMaterialDetailsEntity.setTotalUnitPrice(((float) (quantity * Material.get().getPrice())));
 
                 orderMaterialDetailsEntities.add(orderMaterialDetailsEntity);
+                ordersEntity.setTotalPrice(ordersEntity.getTotalPrice()+orderMaterialDetailsEntity.getTotalUnitPrice());
+                ordersRepository.save(ordersEntity);
 
                 orderMaterialDetailsEntry.put("name", orderMaterialDetailsEntity.getMaterial().getName());
                 orderMaterialDetailsEntry.put("quantity", orderMaterialDetailsEntity.getQuantity());
@@ -112,6 +116,10 @@ public class OrderMaterialDetailsServices implements IOrderMaterialDetailsServic
             }
 
             orderMaterialDetailsRepository.save(orderMaterialDetailsEntity);
+            OrdersEntity ordersEntity = ordersRepository.findById(oid)
+                    .orElseThrow(() -> new RuntimeException("Order not found with id: " + oid));
+            ordersEntity.setTotalPrice(ordersEntity.getTotalPrice()+orderMaterialDetailsEntity.getTotalUnitPrice());
+            ordersRepository.save(ordersEntity);
             orderMaterialMap.put("material_id", orderMaterialDetailsEntity.getMaterial().getId());
             orderMaterialMap.put("name", orderMaterialDetailsEntity.getMaterial().getName());
             orderMaterialMap.put("quantity", orderMaterialDetailsEntity.getQuantity());
@@ -128,6 +136,12 @@ public class OrderMaterialDetailsServices implements IOrderMaterialDetailsServic
     public void deleteOrderMaterialDetail(Long mid, Long oid) {
         try {
             OrderMaterialDetailEntityId compositeId = new OrderMaterialDetailEntityId(mid, oid);
+            Optional<OrderMaterialDetailsEntity> orderMaterialDetailsEntity = orderMaterialDetailsRepository.findById(compositeId);
+
+            OrdersEntity ordersEntity = ordersRepository.findById(oid)
+                    .orElseThrow(() -> new RuntimeException("Order not found with id: " + oid));
+            ordersEntity.setTotalPrice(ordersEntity.getTotalPrice()-orderMaterialDetailsEntity.get().getTotalUnitPrice());
+            ordersRepository.save(ordersEntity);
             orderMaterialDetailsRepository.deleteById(compositeId);
         } catch (Exception e) {
             throw new RuntimeException("Failed to delete material order detail: " + e.getMessage());
