@@ -86,7 +86,7 @@ public class AuthenticationService {
                 String encodedPassword = passwordEncoder.encode(randomPassword);
                 userEntity.setPassword(encodedPassword);
                 usersRepository.save(userEntity);
-                sendEmail(recoverPasswordRequest.getEmail(), randomPassword);
+                sendEmailPasswordRecovery(recoverPasswordRequest.getEmail(), randomPassword);
 
                 return userEntity;
             } else {
@@ -108,7 +108,7 @@ public class AuthenticationService {
         return sb.toString();
     }
 
-    private void sendEmail(String to, String newPassword) {
+    private void sendEmailPasswordRecovery(String to, String newPassword) {
         try {
             SimpleMailMessage message = new SimpleMailMessage();
             message.setTo(to);
