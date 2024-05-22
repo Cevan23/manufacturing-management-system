@@ -11,6 +11,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Embeddable
 public class InventoryMaterialDetailEntityId implements Serializable {
+
     private Long inventoryId;
     private Long materialId;
+
 }
