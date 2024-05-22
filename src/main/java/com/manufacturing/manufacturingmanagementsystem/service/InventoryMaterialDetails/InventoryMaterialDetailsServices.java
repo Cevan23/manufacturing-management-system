@@ -3,7 +3,6 @@ package com.manufacturing.manufacturingmanagementsystem.service.InventoryMateria
 import com.manufacturing.manufacturingmanagementsystem.dtos.InventoryMaterialDetailsDTO;
 import com.manufacturing.manufacturingmanagementsystem.models.*;
 import com.manufacturing.manufacturingmanagementsystem.repositories.ID.InventoryMaterialDetailEntityId;
-import com.manufacturing.manufacturingmanagementsystem.repositories.ID.InventoryProductDetailEntityId;
 import com.manufacturing.manufacturingmanagementsystem.repositories.InventoriesRepository;
 import com.manufacturing.manufacturingmanagementsystem.repositories.InventoryMaterialDetailsRepository;
 import com.manufacturing.manufacturingmanagementsystem.repositories.MaterialsRepository;
@@ -54,6 +53,42 @@ public class InventoryMaterialDetailsServices implements IInventoryMaterialDetai
     @Override
     public List<InventoryMaterialDetailsEntity> getAllInventoryMaterial() {
         return inventoryMaterialDetailsRepository.findAll();
+    }
+
+    @Override
+    public InventoryMaterialDetailsEntity updateInventoryMaterial(InventoryMaterialDetailsDTO inventoryMaterialDetailsDTO) throws Exception {
+
+        Optional<InventoryMaterialDetailsEntity>
+                optionalInventoryMaterial =
+                inventoryMaterialDetailsRepository
+                        .findById(new InventoryMaterialDetailEntityId(inventoryMaterialDetailsDTO.getMaterialId(),
+                                inventoryMaterialDetailsDTO.getInventoryId()));
+
+        if(optionalInventoryMaterial.isPresent()) {
+            InventoryMaterialDetailsEntity existingInventoryMaterial = optionalInventoryMaterial.get();
+
+            if(inventoryMaterialDetailsDTO.getQuantity() != null) {
+                existingInventoryMaterial.setQuantity(inventoryMaterialDetailsDTO.getQuantity());
+            }
+
+            if(inventoryMaterialDetailsDTO.getSafetyStockAmount() != null) {
+                existingInventoryMaterial.setQuantity(inventoryMaterialDetailsDTO.getSafetyStockAmount());
+            }
+
+            return inventoryMaterialDetailsRepository.save(existingInventoryMaterial);
+        } else {
+            throw new Exception("Cannot find Inventory Material");
+        }
+
+    }
+
+    @Override
+    public void deleteInventoryMaterial(long materialId, long inventoryId) throws Exception {
+
+        Optional<InventoryMaterialDetailsEntity> optionalInventoryMaterial
+                = inventoryMaterialDetailsRepository.findById(new InventoryMaterialDetailEntityId(materialId, inventoryId));
+
+        optionalInventoryMaterial.ifPresent(inventoryMaterialDetailsRepository::delete);
     }
 
     // Các phương thức service khác cần thiết
