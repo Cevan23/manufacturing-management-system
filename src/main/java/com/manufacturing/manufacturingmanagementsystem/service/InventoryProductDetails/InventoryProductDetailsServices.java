@@ -55,6 +55,11 @@ public class InventoryProductDetailsServices implements IInventoryProductDetails
         return inventoryProductDetailsRepository.findAll();
     }
 
+    @Override
+    public InventoryProductDetailsEntity updateInventoryProduct(long id, InventoryProductDetailsDTO inventoryProductDetailsDTO) {
+        return null;
+    }
+
     // Các phương thức service khác cần thiết
 }
 

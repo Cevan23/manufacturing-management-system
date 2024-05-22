@@ -14,5 +14,8 @@ public interface IInventoryProductDetailsServices {
 
     List<InventoryProductDetailsEntity> getAllInventoryProduct();
 
+
+    InventoryProductDetailsEntity updateInventoryProduct(long id, InventoryProductDetailsDTO inventoryProductDetailsDTO);
+
 }
 

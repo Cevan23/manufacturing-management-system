@@ -13,6 +13,8 @@ public interface IInventoryMaterialDetailsServices {
 
     List<InventoryMaterialDetailsEntity> getAllInventoryMaterial();
 
+    InventoryMaterialDetailsEntity updateInventoryMaterial(long id, InventoryMaterialDetailsDTO inventoryMaterialDetailsDTO);
+
 }
 
 

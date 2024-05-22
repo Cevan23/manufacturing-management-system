@@ -13,5 +13,6 @@ public interface IInventoriesServices {
 
     InventoriesEntity updateInventory(InventoryDTO inventoryDTO, long id) throws Exception;
 
+
 }
 

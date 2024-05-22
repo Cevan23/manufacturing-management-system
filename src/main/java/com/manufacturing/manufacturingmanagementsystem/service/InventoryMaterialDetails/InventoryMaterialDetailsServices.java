@@ -56,5 +56,10 @@ public class InventoryMaterialDetailsServices implements IInventoryMaterialDetai
         return inventoryMaterialDetailsRepository.findAll();
     }
 
+    @Override
+    public InventoryMaterialDetailsEntity updateInventoryMaterial(long id, InventoryMaterialDetailsDTO inventoryMaterialDetailsDTO) {
+        return null;
+    }
+
     // Các phương thức service khác cần thiết
 }
