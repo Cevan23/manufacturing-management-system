@@ -12,9 +12,19 @@ import java.util.TimeZone;
 
 @Slf4j
 public class DateUtils {
-    public static final String FORMAT_DATE_DAY_DOT_MONTH_DOT_YEAR = "dd.MM.yyyy HH:mm:ss";
+    private static DateUtils instance;
+    public static final String FORMAT_DATE_DAY_MONTH_YEAR = "dd-MM-yyyy HH:mm:ss";
+    public static final String FORMAT_DATE_DAY_MONTH_YEAR_ONLY = "dd-MM-yyyy";
 
     private DateUtils() {
+    }
+
+    // Static method to get the singleton instance
+    public static DateUtils getInstance() {
+        if (instance == null) {
+            instance = new DateUtils();
+        }
+        return instance;
     }
 
     public static Date convertToDateViaInstant(LocalDate dateToConvert) {
@@ -24,14 +34,14 @@ public class DateUtils {
     }
 
     public static String formatDate(Date date) {
-        SimpleDateFormat format = new SimpleDateFormat(SocialNetworkingConstant.DATE_TIME_FORMAT);
-        return format.format(date);
+        return formatDate(date, FORMAT_DATE_DAY_MONTH_YEAR);
     }
 
     public static String formatDate(Date date, String format) {
         SimpleDateFormat fm = new SimpleDateFormat(format);
         return fm.format(date);
     }
+
 
     public static Date converDate(String date, String format) {
 
@@ -120,12 +130,12 @@ public class DateUtils {
     public static Date startOfDayUTC(Date sourceDate, TimeZone timeZone) throws ParseException {
         SimpleDateFormat simpleDateFormatUtc = new SimpleDateFormat("dd.MM.yyyy");
 
-        SimpleDateFormat targetTimezoneFormat = new SimpleDateFormat(FORMAT_DATE_DAY_DOT_MONTH_DOT_YEAR);
+        SimpleDateFormat targetTimezoneFormat = new SimpleDateFormat(FORMAT_DATE_DAY_MONTH_YEAR);
         targetTimezoneFormat.setTimeZone(timeZone);
 
         //parser date utc truoc, vi tren he thong dang set gio utc
         String dateSource = simpleDateFormatUtc.format(sourceDate) + " 00:00:00";
-        simpleDateFormatUtc.applyPattern(FORMAT_DATE_DAY_DOT_MONTH_DOT_YEAR);
+        simpleDateFormatUtc.applyPattern(FORMAT_DATE_DAY_MONTH_YEAR);
 
 
         Calendar calendar = new GregorianCalendar();
@@ -151,12 +161,12 @@ public class DateUtils {
     public static Date endOfDayUTC(Date sourceDate, TimeZone timeZone) throws ParseException {
         SimpleDateFormat simpleDateFormatUtc = new SimpleDateFormat("dd.MM.yyyy");
 
-        SimpleDateFormat targetTimezoneFormat = new SimpleDateFormat(FORMAT_DATE_DAY_DOT_MONTH_DOT_YEAR);
+        SimpleDateFormat targetTimezoneFormat = new SimpleDateFormat(FORMAT_DATE_DAY_MONTH_YEAR);
         targetTimezoneFormat.setTimeZone(timeZone);
 
         //parser date utc truoc, vi tren he thong dang set gio utc
         String dateSource = simpleDateFormatUtc.format(sourceDate) + " 23:59:59";
-        simpleDateFormatUtc.applyPattern(FORMAT_DATE_DAY_DOT_MONTH_DOT_YEAR);
+        simpleDateFormatUtc.applyPattern(FORMAT_DATE_DAY_MONTH_YEAR);
 
 
         Calendar calendar = new GregorianCalendar();
@@ -180,11 +190,11 @@ public class DateUtils {
     public static Date getCurrentStoreDate(TimeZone timeZone) throws ParseException {
         Date utcDate = new Date();
 
-        SimpleDateFormat targetTimezoneFormat = new SimpleDateFormat(FORMAT_DATE_DAY_DOT_MONTH_DOT_YEAR);
+        SimpleDateFormat targetTimezoneFormat = new SimpleDateFormat(FORMAT_DATE_DAY_MONTH_YEAR);
         targetTimezoneFormat.setTimeZone(timeZone);
         String targetDate = targetTimezoneFormat.format(utcDate);
 
-        SimpleDateFormat simpleDateFormatUtc = new SimpleDateFormat(FORMAT_DATE_DAY_DOT_MONTH_DOT_YEAR);
+        SimpleDateFormat simpleDateFormatUtc = new SimpleDateFormat(FORMAT_DATE_DAY_MONTH_YEAR);
         return simpleDateFormatUtc.parse(targetDate);
     }
 
