@@ -7,9 +7,9 @@ import lombok.*;
 @NoArgsConstructor
 public class InventoryMaterialDetailsDTO {
 
-    private String inventoryId;
+    private long inventoryId;
 
-    private String materialId;
+    private long materialId;
 
     private Integer quantity;
 
