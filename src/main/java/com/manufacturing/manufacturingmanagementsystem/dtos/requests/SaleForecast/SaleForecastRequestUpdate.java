@@ -10,7 +10,7 @@ import java.util.Date;
 @Builder
 @Getter
 @Setter
-public class SFRequestUpdate {
+public class SaleForecastRequestUpdate {
     private Date dateStart;
     private Date dateEnd;
 }

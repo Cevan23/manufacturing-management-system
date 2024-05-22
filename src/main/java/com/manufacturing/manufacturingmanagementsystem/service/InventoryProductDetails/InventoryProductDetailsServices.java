@@ -1,8 +1,9 @@
-package com.manufacturing.manufacturingmanagementsystem.service.InventoryProducts;
+package com.manufacturing.manufacturingmanagementsystem.service.InventoryProductDetails;
 
 import com.manufacturing.manufacturingmanagementsystem.dtos.InventoryProductDetailsDTO;
 import com.manufacturing.manufacturingmanagementsystem.models.*;
 import com.manufacturing.manufacturingmanagementsystem.repositories.ID.InventoryProductDetailEntityId;
+import com.manufacturing.manufacturingmanagementsystem.repositories.ID.WorkOrderDetailEntityId;
 import com.manufacturing.manufacturingmanagementsystem.repositories.InventoriesRepository;
 import com.manufacturing.manufacturingmanagementsystem.repositories.InventoryProductDetailsRepository;
 import com.manufacturing.manufacturingmanagementsystem.repositories.ProductsRepository;
@@ -13,7 +14,7 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class InventoryProductsServices implements IInventoryProductsServices {
+public class InventoryProductDetailsServices implements IInventoryProductDetailsServices {
 
     private final InventoryProductDetailsRepository inventoryProductDetailsRepository;
 

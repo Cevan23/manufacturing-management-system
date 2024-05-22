@@ -10,7 +10,7 @@ import java.util.List;
 @Builder
 @Getter
 @Setter
-public class SFDInsertRequest {
+public class SaleForecastDetailsInsertRequest {
     private Long sid;
     private List<Long> pids;
     private List<Integer> quantities;

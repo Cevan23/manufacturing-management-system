@@ -1,11 +1,14 @@
 package com.manufacturing.manufacturingmanagementsystem.controllers;
 
+import com.manufacturing.manufacturingmanagementsystem.dtos.InventoryDTO;
 import com.manufacturing.manufacturingmanagementsystem.dtos.InventoryMaterialDetailsDTO;
 import com.manufacturing.manufacturingmanagementsystem.dtos.responses.ApiResponse;
 import com.manufacturing.manufacturingmanagementsystem.exceptions.AppException;
 import com.manufacturing.manufacturingmanagementsystem.exceptions.ErrorCode;
+import com.manufacturing.manufacturingmanagementsystem.models.InventoriesEntity;
 import com.manufacturing.manufacturingmanagementsystem.models.InventoryMaterialDetailsEntity;
-import com.manufacturing.manufacturingmanagementsystem.service.InventoryMaterials.IInventoryMaterialsServices;
+import com.manufacturing.manufacturingmanagementsystem.service.Inventories.IInventoriesServices;
+import com.manufacturing.manufacturingmanagementsystem.service.InventoryMaterialDetails.IInventoryMaterialDetailsServices;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class InventoryMaterialController {
 
-    private final IInventoryMaterialsServices inventoryMaterialDetailsServices;
+    private final IInventoryMaterialDetailsServices inventoryMaterialDetailsServices;
 
     @PostMapping("/create")
     public ResponseEntity<ApiResponse> createInventory(@RequestBody InventoryMaterialDetailsDTO inventoryMaterialDetailsDTO) {

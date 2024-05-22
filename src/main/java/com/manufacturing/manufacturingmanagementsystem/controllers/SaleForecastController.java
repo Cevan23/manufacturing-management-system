@@ -1,6 +1,6 @@
 package com.manufacturing.manufacturingmanagementsystem.controllers;
 
-import com.manufacturing.manufacturingmanagementsystem.dtos.requests.SaleForecast.SFRequestUpdate;
+import com.manufacturing.manufacturingmanagementsystem.dtos.requests.SaleForecast.SaleForecastRequestUpdate;
 import com.manufacturing.manufacturingmanagementsystem.dtos.responses.ApiResponse;
 import com.manufacturing.manufacturingmanagementsystem.models.SaleForecastsEntity;
 import com.manufacturing.manufacturingmanagementsystem.service.SaleForecasts.SaleForecastsServices;
@@ -59,7 +59,7 @@ public class SaleForecastController {
     }
     @PutMapping("/{id}")
     public ResponseEntity<?> updateSaleForecast(@PathVariable Long id,
-                                                @Valid @RequestBody SFRequestUpdate saleForecastRequestUpdate) {
+                                                @Valid @RequestBody SaleForecastRequestUpdate saleForecastRequestUpdate) {
         try {
             Map<String, Object> saleForecast = saleForecastsServices.updateSaleForecast(id,saleForecastRequestUpdate.getDateStart(),saleForecastRequestUpdate.getDateEnd());
             return ResponseEntity.ok().body(ApiResponse.builder()

@@ -8,7 +8,7 @@ import lombok.*;
 @Builder
 @Getter
 @Setter
-public class SFDUpdateRequest {
+public class SaleForecastDetailsUpdateRequest {
     private Long sid;
     private Long pid;
     private Integer quantity;

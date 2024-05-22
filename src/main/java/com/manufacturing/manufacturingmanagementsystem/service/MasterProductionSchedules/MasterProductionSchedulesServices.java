@@ -1,5 +1,6 @@
 package com.manufacturing.manufacturingmanagementsystem.service.MasterProductionSchedules;
 
+import com.manufacturing.manufacturingmanagementsystem.dtos.MasterProductionSchedulesDTO;
 import com.manufacturing.manufacturingmanagementsystem.dtos.requests.MPS.MPSRequest;
 import com.manufacturing.manufacturingmanagementsystem.dtos.requests.MPS.MPSUpdateRequest;
 import com.manufacturing.manufacturingmanagementsystem.exceptions.AppException;
@@ -10,15 +11,18 @@ import com.manufacturing.manufacturingmanagementsystem.models.UsersEntity;
 import com.manufacturing.manufacturingmanagementsystem.repositories.MasterProductionSchedulesRepository;
 import com.manufacturing.manufacturingmanagementsystem.repositories.ProductsRepository;
 import com.manufacturing.manufacturingmanagementsystem.repositories.UsersRepository;
+import com.manufacturing.manufacturingmanagementsystem.service.Users.UsersServices;
 import lombok.AllArgsConstructor;
+import org.hibernate.sql.exec.ExecutionException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class MPSServices implements IMPSServices {
+public class MasterProductionSchedulesServices implements IMasterProductionSchedulesServices {
 
     private final MasterProductionSchedulesRepository masterProductionSchedulesRepository;
     private final UsersRepository usersRepository;

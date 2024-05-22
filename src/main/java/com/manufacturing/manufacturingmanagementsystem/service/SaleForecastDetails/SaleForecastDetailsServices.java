@@ -10,11 +10,13 @@ import com.manufacturing.manufacturingmanagementsystem.repositories.SaleForecast
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 
 @Service
 @AllArgsConstructor
-public class SFDServices implements ISFDServices {
+public class SaleForecastDetailsServices implements ISaleForecastDetailsServices {
 
     private final SaleForecastDetailsRepository saleForecastDetailsRepository;
     private final SaleForecastsRepository saleForecastsRepository;

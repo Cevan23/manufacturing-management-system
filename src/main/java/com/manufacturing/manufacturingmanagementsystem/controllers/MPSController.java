@@ -4,7 +4,7 @@ import com.manufacturing.manufacturingmanagementsystem.dtos.requests.MPS.MPSRequ
 import com.manufacturing.manufacturingmanagementsystem.dtos.requests.MPS.MPSUpdateRequest;
 import com.manufacturing.manufacturingmanagementsystem.dtos.responses.ApiResponse;
 import com.manufacturing.manufacturingmanagementsystem.exceptions.ErrorCode;
-import com.manufacturing.manufacturingmanagementsystem.service.MasterProductionSchedules.MPSServices;
+import com.manufacturing.manufacturingmanagementsystem.service.MasterProductionSchedules.MasterProductionSchedulesServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/MPS")
 public class MPSController {
 
-    private final MPSServices masterProductionSchedulesServices;
+    private final MasterProductionSchedulesServices masterProductionSchedulesServices;
 
     @Autowired
-    public MPSController(MPSServices masterProductionSchedulesServices) {
+    public MPSController(MasterProductionSchedulesServices masterProductionSchedulesServices) {
         this.masterProductionSchedulesServices = masterProductionSchedulesServices;
     }
 

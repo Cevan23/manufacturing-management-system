@@ -1,11 +1,13 @@
 package com.manufacturing.manufacturingmanagementsystem.service.Products;
 
 import com.manufacturing.manufacturingmanagementsystem.dtos.ProductsDTO;
+import com.manufacturing.manufacturingmanagementsystem.dtos.requests.Product.CreateProductRequest;
 import com.manufacturing.manufacturingmanagementsystem.models.BOMsEntity;
 import com.manufacturing.manufacturingmanagementsystem.models.CategoriesEntity;
 import com.manufacturing.manufacturingmanagementsystem.models.ProductsEntity;
+import com.manufacturing.manufacturingmanagementsystem.models.SaleForecastDetailsEntity;
 import com.manufacturing.manufacturingmanagementsystem.repositories.*;
-import com.manufacturing.manufacturingmanagementsystem.service.SaleForecastDetails.SFDServices;
+import com.manufacturing.manufacturingmanagementsystem.service.SaleForecastDetails.SaleForecastDetailsServices;
 import io.micrometer.common.util.StringUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,7 +22,7 @@ public class ProductsServices implements iProductsServices {
     private final ProductsRepository productsRepository;
     private final CategoriesRepository categoriesRepository;
     private final BOMsRepository bomsRepository;
-    private final SFDServices saleForecastDetailsServices;
+    private final SaleForecastDetailsServices saleForecastDetailsServices;
 
     @Override
     public ProductsEntity findProductbyName(String name) {

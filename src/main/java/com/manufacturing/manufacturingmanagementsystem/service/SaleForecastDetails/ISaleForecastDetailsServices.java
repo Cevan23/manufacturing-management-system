@@ -5,7 +5,7 @@ import com.manufacturing.manufacturingmanagementsystem.models.SaleForecastDetail
 import java.util.List;
 import java.util.Map;
 
-public interface ISFDServices {
+public interface ISaleForecastDetailsServices {
     List<Map<String, Object>> insertSaleForecastDetail(Long sale_id, List<Long> pids, List<Integer> quantities);
     List<Map<String, Object>> findSaleForecastDetailById(Long id);
     public SaleForecastDetailsEntity findSaleForecastDetailByPid_SaleID(Long pid, Long sale_id);
