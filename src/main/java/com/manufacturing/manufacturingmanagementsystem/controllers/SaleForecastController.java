@@ -1,15 +1,11 @@
 package com.manufacturing.manufacturingmanagementsystem.controllers;
 
-import com.manufacturing.manufacturingmanagementsystem.dtos.UsersDTO;
 import com.manufacturing.manufacturingmanagementsystem.dtos.requests.SaleForecast.SaleForecastRequestUpdate;
-import com.manufacturing.manufacturingmanagementsystem.dtos.requests.SaleForecastDetail.SaleForecastDetailUpdateRequest;
 import com.manufacturing.manufacturingmanagementsystem.dtos.responses.ApiResponse;
-import com.manufacturing.manufacturingmanagementsystem.dtos.responses.ResponseObject;
 import com.manufacturing.manufacturingmanagementsystem.models.SaleForecastsEntity;
 import com.manufacturing.manufacturingmanagementsystem.service.SaleForecasts.SaleForecastsServices;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

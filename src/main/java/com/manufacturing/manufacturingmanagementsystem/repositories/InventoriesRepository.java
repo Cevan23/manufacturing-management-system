@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface InventoriesRepository extends JpaRepository<InventoriesEntity, Long> {
-    // Add custom query methods if needed
+
 }

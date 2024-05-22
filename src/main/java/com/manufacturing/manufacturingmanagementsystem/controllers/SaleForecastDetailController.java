@@ -1,14 +1,11 @@
 package com.manufacturing.manufacturingmanagementsystem.controllers;
 
-import com.manufacturing.manufacturingmanagementsystem.dtos.requests.SaleForecastDetail.SaleForecastDetailInsertRequest;
-import com.manufacturing.manufacturingmanagementsystem.dtos.requests.SaleForecastDetail.SaleForecastDetailUpdateRequest;
+import com.manufacturing.manufacturingmanagementsystem.dtos.requests.SaleForecastDetail.SaleForecastDetailsInsertRequest;
+import com.manufacturing.manufacturingmanagementsystem.dtos.requests.SaleForecastDetail.SaleForecastDetailsUpdateRequest;
 import com.manufacturing.manufacturingmanagementsystem.dtos.responses.ApiResponse;
-import com.manufacturing.manufacturingmanagementsystem.dtos.responses.ResponseObject;
-import com.manufacturing.manufacturingmanagementsystem.repositories.ID.SaleForecastDetailEntityId;
 import com.manufacturing.manufacturingmanagementsystem.service.SaleForecastDetails.SaleForecastDetailsServices;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +18,7 @@ import java.util.Map;
 public class SaleForecastDetailController {
     private final SaleForecastDetailsServices saleForecastDetailsServices;
     @PostMapping("/create")
-    public ResponseEntity<?> insertSaleForecastDetail(@Valid @RequestBody SaleForecastDetailInsertRequest saleForecastDetailInsertRequest) {
+    public ResponseEntity<?> insertSaleForecastDetail(@Valid @RequestBody SaleForecastDetailsInsertRequest saleForecastDetailInsertRequest) {
         try {
 
             List<Map<String, Object>> list_sale_forecast_detail = saleForecastDetailsServices.insertSaleForecastDetail(saleForecastDetailInsertRequest.getSid(),saleForecastDetailInsertRequest.getPids(),saleForecastDetailInsertRequest.getQuantities());
@@ -35,7 +32,7 @@ public class SaleForecastDetailController {
         }
     }
     @PutMapping("")
-    public ResponseEntity<?> updateSaleForecastDetail(@Valid @RequestBody SaleForecastDetailUpdateRequest saleForecastDetailUpdateRequest) {
+    public ResponseEntity<?> updateSaleForecastDetail(@Valid @RequestBody SaleForecastDetailsUpdateRequest saleForecastDetailUpdateRequest) {
         try {
 
             Map<String, Object> sale_forecast_detail = saleForecastDetailsServices.updateSaleForecastDetail(saleForecastDetailUpdateRequest.getSid(),saleForecastDetailUpdateRequest.getPid(),saleForecastDetailUpdateRequest.getQuantity(),saleForecastDetailUpdateRequest.getTotalPrice(),saleForecastDetailUpdateRequest.getTotalSalePrice());
