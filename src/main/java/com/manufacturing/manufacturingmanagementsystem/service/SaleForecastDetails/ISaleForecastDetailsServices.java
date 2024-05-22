@@ -2,6 +2,7 @@ package com.manufacturing.manufacturingmanagementsystem.service.SaleForecastDeta
 
 import com.manufacturing.manufacturingmanagementsystem.models.SaleForecastDetailsEntity;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -11,5 +12,6 @@ public interface ISaleForecastDetailsServices {
     public SaleForecastDetailsEntity findSaleForecastDetailByPid_SaleID(Long pid, Long sale_id);
     public void deleteSaleForecastDetail(Long pid, Long sale_id);
     public Map<String, Object> updateSaleForecastDetail(Long sale_id, Long pid, Integer quantity,float totalPrice,float totalSaleprice);
+    public List< Object[]> findQuantityAndSaleForecastIdByProductIdAndMonthYear(Long productId, Date startDate, Date endDate);
 }
 

@@ -72,5 +72,4 @@ public class SaleForecastDetailController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
 }

@@ -26,6 +26,10 @@ public interface UsersRepository extends JpaRepository<UsersEntity, Long> {
     @Query("SELECT u FROM UsersEntity u WHERE u.role.roleName = :roleName")
     UsersEntity findByRole(@Param("roleName") String roleName);
 
+    @Query("SELECT u FROM UsersEntity u WHERE u.role.id is null")
+    List<UsersEntity> findNullRoleId();
 
+    @Query("SELECT u FROM UsersEntity u WHERE u.role.id is not null")
+    List<UsersEntity> findNotNullRoleId();
 
 }

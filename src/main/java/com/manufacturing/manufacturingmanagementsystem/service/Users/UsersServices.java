@@ -65,6 +65,7 @@ public class UsersServices implements IUsersServices {
             System.out.println("Role find: " + rolesServices.getRoleByRoleName(userDto.getRoleName()));
             userEntity.setRole(rolesServices.getRoleByRoleName(userDto.getRoleName()));
             usersRepository.save(userEntity);
+
             Map<String, Object> userMap = new HashMap<>();
             System.out.println("Role map: " + userEntity.getRole());
             userMap.put("role", userEntity.getRole());
@@ -75,13 +76,12 @@ public class UsersServices implements IUsersServices {
             userMap.put("address", userEntity.getAddress());
             return userMap;
         } catch (Exception e) {
-            // Xử lý lỗi và ném ra ngoại lệ mới hoặc trả về null (tùy thuộc vào yêu cầu)
             throw new RuntimeException("Failed to insert user: " + e.getMessage());
         }
     }
 
     @Override
-    public Map<String, Object> updateUser(long id,UsersDTO userDto) {
+    public Map<String, Object> updateUser(long id, UsersDTO userDto) {
         try {
             Optional<UsersEntity> userEntityOptional  = usersRepository.findById(id);
             if (userEntityOptional.isPresent()) {
@@ -182,6 +182,55 @@ public class UsersServices implements IUsersServices {
         return userResponse;
     }
 
+    @Override
+    public List<UsersEntity> findAllSignUpRequest(long id) {
+        try {
+            Optional<UsersEntity> userEntityOptional = usersRepository.findById(id);
+            if (userEntityOptional.isPresent()){
+                return usersRepository.findNullRoleId();
+            }
+            else {
+                throw new RuntimeException("Only chairman can accept signup request");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to accept signup request: " + e.getMessage());
+        }
+    }
 
+    @Override
+    public UsersEntity updateRoleId(String email, UsersDTO usersDTO) {
+        try {
+            Optional<UsersEntity> userEntityOptional = usersRepository.findByEmail(email);
+            System.out.println(email);
+            if (userEntityOptional.isPresent()){
+                UsersEntity userEntity = userEntityOptional.get();
+                userEntity.setRole(rolesServices.getRoleByRoleName(usersDTO.getRoleName()));
+                System.out.println(email);
+                System.out.println(rolesServices.getRoleByRoleName(usersDTO.getRoleName()));
+                usersRepository.save(userEntity);
+                return userEntity;
+            }
+            else {
+                throw new RuntimeException("No signup request has email: " + email);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to update role for signup: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public List<UsersEntity> findAllEmployee(long id) {
+        try {
+            Optional<UsersEntity> userEntityOptional = usersRepository.findById(id);
+            if (userEntityOptional.isPresent()){
+                return usersRepository.findNotNullRoleId();
+            }
+            else {
+                throw new RuntimeException("Only chairman can view list of employee");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to view list of employee: " + e.getMessage());
+        }
+    }
 }
 

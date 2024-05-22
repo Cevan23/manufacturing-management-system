@@ -2,6 +2,7 @@ package com.manufacturing.manufacturingmanagementsystem.controllers;
 
 import com.manufacturing.manufacturingmanagementsystem.dtos.requests.MPS.MPSRequest;
 import com.manufacturing.manufacturingmanagementsystem.dtos.requests.MPS.MPSUpdateRequest;
+import com.manufacturing.manufacturingmanagementsystem.dtos.requests.MPS.SuggestMPSMonthlyRequest;
 import com.manufacturing.manufacturingmanagementsystem.dtos.responses.ApiResponse;
 import com.manufacturing.manufacturingmanagementsystem.exceptions.ErrorCode;
 import com.manufacturing.manufacturingmanagementsystem.service.MasterProductionSchedules.MasterProductionSchedulesServices;
@@ -99,8 +100,8 @@ public class MPSController {
                         .build());
     }
 
-    @GetMapping("/getAllMPSofPM")
-    public ResponseEntity<ApiResponse> getAllMPSofPM(@RequestParam Long pmID) {
+    @GetMapping("/getAllMPSofPM/{pmID}")
+    public ResponseEntity<ApiResponse> getAllMPSofPM(@PathVariable Long pmID) {
         if (pmID == null) {
             return ResponseEntity.badRequest()
                     .body(ApiResponse.builder()
@@ -128,6 +129,7 @@ public class MPSController {
     @GetMapping("/getAll")
     public ResponseEntity<ApiResponse> getAll() {
         try {
+
             return ResponseEntity.ok()
                     .body(ApiResponse.builder()
                             .message("MPS retrieved successfully")
@@ -169,5 +171,32 @@ public class MPSController {
                         .result(null)
                         .build());
     }
+
+    @GetMapping("/suggestMPSMonthly")
+    public ResponseEntity<ApiResponse> suggestMPSMonthly(@RequestBody SuggestMPSMonthlyRequest request) {
+        if (request.getProductId() == null || request.getMonth() == null) {
+            return ResponseEntity.badRequest()
+                    .body(ApiResponse.builder()
+                            .code(ErrorCode.BAD_REQUEST.getCode())
+                            .message("id and time is required")
+                            .result(null)
+                            .build());
+        }
+        try {
+            return ResponseEntity.ok()
+                    .body(ApiResponse.builder()
+                            .message("MPS retrieved successfully")
+                            .result(masterProductionSchedulesServices.suggestMPSMonthly(request.getProductId(), request.getMonth()))
+                            .build());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest()
+                    .body(ApiResponse.builder()
+                            .code(ErrorCode.BAD_REQUEST.getCode())
+                            .message("Failed to retrieve MPS")
+                            .result(null)
+                            .build());
+        }
+    }
+
 
 }

@@ -26,6 +26,20 @@ public class UserControllers {
 
     RoleMapper roleMapper;
 
+    @PostMapping("/create")
+    public ResponseEntity<?> insertUser(@Valid @RequestBody UsersDTO userDto) {
+        try {
+            Map<String, Object> newUser = userService.insertUser(userDto);
+            return ResponseEntity.ok(ResponseObject.builder()
+                    .data(newUser)
+                    .message("Add user successfully")
+                    .status(HttpStatus.OK)
+                    .build());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     @GetMapping("/getAllRoles")
 //    @PreAuthorize("hasAnyAuthority('SCOPE_CHAIRMAN', 'SCOPE_ACCOUNTANT', 'SCOPE_PRODUCT_MANAGER')")
     @PreAuthorize("hasAnyAuthority('SCOPE_CHAIRMAN')")
@@ -55,24 +69,6 @@ public class UserControllers {
     @GetMapping("/getUserInformationByRole")
     public UsersEntity getUserInformationByRole(String roleName) {
         return userService.findUserbyRole(roleName);
-    }
-
-    @PostMapping("/create")
-    public ResponseEntity<?> insertUser(@Valid @RequestBody UsersDTO userDto) {
-        try {
-            Map<String, Object> newUser = userService.insertUser(userDto);
-
-            return ResponseEntity.ok(
-                    ResponseObject.builder()
-                            .data(newUser)
-                            .message("Add user successfully")
-                            .status(HttpStatus.OK)
-                            .build());
-
-        } catch (Exception e) {
-            // Xử lý lỗi và trả về phản hồi lỗi (status code 500)
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
     }
 
     @PutMapping("/{id}")
@@ -124,4 +120,44 @@ public class UserControllers {
                         .build());
     }
 
+    @GetMapping("/getSignUpRequest/{id}")
+    public ResponseEntity<?> getSignUpRequest(@PathVariable Long id) {
+        try {
+            List<UsersEntity> usersEntityList = userService.findAllSignUpRequest(id);
+            return ResponseEntity.ok(ResponseObject.builder()
+                    .data(usersEntityList)
+                    .message("Get all sign up request successfully")
+                    .status(HttpStatus.OK)
+                    .build());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/updateRoleId/{email}")
+    public ResponseEntity<?> updateRoleId(@PathVariable String email,  @Valid @RequestBody UsersDTO userDto) {
+        try {
+            UsersEntity userEntity = userService.updateRoleId(email, userDto);
+            return ResponseEntity.ok().body(ApiResponse.builder()
+                    .message("Accept new signup successfully")
+                    .result(userEntity)
+                    .build());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/getAllEmployee/{id}")
+    public ResponseEntity<?> getAllEmployee(@PathVariable Long id) {
+        try {
+            List<UsersEntity> usersEntityList = userService.findAllEmployee(id);
+            return ResponseEntity.ok(ResponseObject.builder()
+                    .data(usersEntityList)
+                    .message("Get all employee successfully")
+                    .status(HttpStatus.OK)
+                    .build());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }
