@@ -5,6 +5,9 @@ import com.manufacturing.manufacturingmanagementsystem.dtos.InventoryProductDeta
 import com.manufacturing.manufacturingmanagementsystem.models.InventoriesEntity;
 import com.manufacturing.manufacturingmanagementsystem.models.InventoryMaterialDetailsEntity;
 import com.manufacturing.manufacturingmanagementsystem.models.InventoryProductDetailsEntity;
+import com.manufacturing.manufacturingmanagementsystem.repositories.ID.InventoryMaterialDetailEntityId;
+import com.manufacturing.manufacturingmanagementsystem.repositories.ID.InventoryProductDetailEntityId;
+
 import java.util.List;
 
 public interface IInventoryProductDetailsServices {
@@ -14,8 +17,10 @@ public interface IInventoryProductDetailsServices {
 
     List<InventoryProductDetailsEntity> getAllInventoryProduct();
 
+    InventoryProductDetailsEntity updateInventoryProduct(
+            InventoryProductDetailsDTO inventoryProductDetailsDTO) throws Exception;
 
-    InventoryProductDetailsEntity updateInventoryProduct(long id, InventoryProductDetailsDTO inventoryProductDetailsDTO);
+    void deleteInventoryProduct(long productId, long inventoryId) throws Exception;
 
 }
 

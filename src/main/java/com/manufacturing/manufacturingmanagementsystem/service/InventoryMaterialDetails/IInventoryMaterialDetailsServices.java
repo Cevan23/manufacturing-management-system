@@ -4,6 +4,8 @@ import com.manufacturing.manufacturingmanagementsystem.dtos.InventoryDTO;
 import com.manufacturing.manufacturingmanagementsystem.dtos.InventoryMaterialDetailsDTO;
 import com.manufacturing.manufacturingmanagementsystem.models.InventoriesEntity;
 import com.manufacturing.manufacturingmanagementsystem.models.InventoryMaterialDetailsEntity;
+import com.manufacturing.manufacturingmanagementsystem.repositories.ID.InventoryMaterialDetailEntityId;
+
 import java.util.List;
 
 public interface IInventoryMaterialDetailsServices {
@@ -13,7 +15,9 @@ public interface IInventoryMaterialDetailsServices {
 
     List<InventoryMaterialDetailsEntity> getAllInventoryMaterial();
 
-    InventoryMaterialDetailsEntity updateInventoryMaterial(long id, InventoryMaterialDetailsDTO inventoryMaterialDetailsDTO);
+    InventoryMaterialDetailsEntity updateInventoryMaterial(InventoryMaterialDetailsDTO inventoryMaterialDetailsDTO) throws Exception;
+
+    void deleteInventoryMaterial(long materialId, long inventoryId) throws Exception;
 
 }
 
