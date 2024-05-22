@@ -36,7 +36,8 @@ public class BOMsServices implements IBOMsServices {
     private final ProductsRepository productRepository;
 
     @Override
-    public void createBOM(BOMRequest bomRequest) {
+    @Transactional
+    public BOMsEntity createBOM(BOMRequest bomRequest) {
 
         String status = bomRequest.getBOMStatus();
         if (checkIfBOMExists(bomRequest.getBOMName())) {
@@ -56,7 +57,7 @@ public class BOMsServices implements IBOMsServices {
             bom.setSellPrice(bomRequest.getSellPrice());
             bom.setProductManager(usersServices.getUserById(bomRequest.getProductManagerId()));
             bom.setDateCreation(new Date(System.currentTimeMillis()) );
-            bomsRepository.save(bom);
+            return bomsRepository.save(bom);
         } catch (Exception e) {
 
             throw new AppException(ErrorCode.BAD_REQUEST);

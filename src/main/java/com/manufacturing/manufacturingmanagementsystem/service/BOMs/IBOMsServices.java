@@ -12,7 +12,7 @@ public interface IBOMsServices {
 
     BOMsDTO getBOMById(Long id);
 
-    void createBOM(BOMRequest bomRequest);
+    BOMsEntity createBOM(BOMRequest bomRequest);
 
     BOMsEntity findBOMByName(String name);
 
