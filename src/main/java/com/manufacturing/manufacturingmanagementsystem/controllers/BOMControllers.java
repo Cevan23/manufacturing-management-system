@@ -41,9 +41,9 @@ public class BOMControllers {
 
     @PostMapping("/createBOMs")
     @PreAuthorize("hasAnyAuthority('MANAGER_BOM')")
-    public ResponseEntity<ApiResponse> createBOMs(@RequestBody List<BOMRequest> bomRequests) {
+    public ResponseEntity<ApiResponse> createBOMs(@RequestBody BOMRequest bomRequest) {
 
-        if(bomRequests == null || bomRequests.isEmpty()) {
+        if(bomRequest == null ) {
             return ResponseEntity.badRequest()
                     .body(ApiResponse.builder()
                             .code(ErrorCode.BAD_REQUEST.getCode())
@@ -52,16 +52,80 @@ public class BOMControllers {
                             .build());
         }
         try{
-            for (BOMRequest bomRequest : bomRequests) {
-                bomsServices.createBOM(bomRequest);
-//                var bom = bomsServices.findBOMByName(bomRequest.getBOMName());
-//                if(bom != null){
-//                    for (BOMDetailRequest bomDetailRequest : bomRequest.getBomDetails()) {
-//                        bomDetailsServices.createBOMDetails(bomDetailRequest);
-//                    }
-//                }
-            }
+                BOMsEntity createdBOM = bomsServices.createBOM(bomRequest);
+                Long createdBOMId = createdBOM.getId();
+                if(bomRequest.getBomDetails() != null){
+                    try {
+                        List<BOMDetailsDTO> oldBomDetails = bomDetailsServices.getBOMDetailsByBOMId(createdBOMId);
+                        for (BOMDetailRequest bomDetailRequest : bomRequest.getBomDetails()) {
+                            bomDetailRequest.setBOMId(createdBOMId);
 
+                            String newMaterialName = bomDetailRequest.getMaterial().getMaterialName();
+
+                            Optional<BOMDetailsDTO> oldBomDetailOpt = oldBomDetails.stream()
+                                    .filter(b -> {
+                                        MaterialsDTO oldMaterial = materialsServices.findMaterialById(b.getMaterialId());
+                                        return oldMaterial != null && oldMaterial.getName().equals(newMaterialName);
+                                    })
+                                    .findFirst();
+                            if (oldBomDetailOpt.isPresent()) {
+                                // Nếu bomDetail cũ tồn tại, so sánh và cập nhật nếu cần
+                                BOMDetailsDTO oldBomDetail = oldBomDetailOpt.get();
+                                if (!oldBomDetail.getQuantity().equals(bomDetailRequest.getQuantity()) ||
+                                        !oldBomDetail.getTotalUnitPrice().equals(bomDetailRequest.getTotalUnitPrice())) {
+                                    // Cập nhật bomDetail nếu có sự khác biệt
+//                            bomDetailsServices.updateBOMDetails(bomDetailRequest);
+                                    var material = materialsServices.findMaterialByName(bomDetailRequest.getMaterial().getMaterialName());
+
+                                    if (material == null || material.getReuseId() == null) {
+                                        materialsServices.createMaterial(MaterialsDTO.builder()
+                                                .name(bomDetailRequest.getMaterial().getMaterialName())
+                                                .price(bomDetailRequest.getMaterial().getMaterialPrice())
+                                                .unit(bomDetailRequest.getMaterial().getMaterialUnit())
+                                                .volume(bomDetailRequest.getMaterial().getMaterialVolume())
+                                                .build());
+                                        bomDetailsServices.createBOMDetails(bomDetailRequest);
+                                    } else {
+                                        bomDetailsServices.createBOMDetails(bomDetailRequest);
+
+                                    }
+                                }
+                            } else {
+                                // Nếu bomDetail cũ không tồn tại, thêm newBomDetail vào cơ sở dữ liệu
+                                var material = materialsServices.findMaterialByName(bomDetailRequest.getMaterial().getMaterialName());
+
+                                if (material == null || material.getReuseId() == null) {
+                                    materialsServices.createMaterial(MaterialsDTO.builder()
+                                            .name(bomDetailRequest.getMaterial().getMaterialName())
+                                            .price(bomDetailRequest.getMaterial().getMaterialPrice())
+                                            .unit(bomDetailRequest.getMaterial().getMaterialUnit())
+                                            .volume(bomDetailRequest.getMaterial().getMaterialVolume())
+                                            .build());
+                                    bomDetailsServices.createBOMDetails(bomDetailRequest);
+                                } else {
+                                    bomDetailsServices.createBOMDetails(bomDetailRequest);
+
+                                }
+                            }
+
+                            for (BOMDetailsDTO oldBomDetail : oldBomDetails) {
+                                MaterialsDTO oldMaterial = materialsServices.findMaterialById(oldBomDetail.getMaterialId());
+                                if (oldMaterial != null && bomRequest.getBomDetails().stream().noneMatch(b -> b.getMaterial().getMaterialName().equals(oldMaterial.getName()))) {
+                                    bomDetailsServices.deleteBOMDetail(createdBOMId, oldBomDetail.getMaterialId());
+                                }
+                            }
+
+
+                        }
+                    }catch (Exception e){
+                        return ResponseEntity.badRequest()
+                                .body(ApiResponse.builder()
+                                        .code(ErrorCode.BAD_REQUEST.getCode())
+                                        .message("BOM detail update have problem "+ e.getMessage())
+                                        .result(null)
+                                        .build());
+                    }
+                }
             return ResponseEntity.ok()
                     .body(ApiResponse.builder()
                             .message("BOMs created successfully")

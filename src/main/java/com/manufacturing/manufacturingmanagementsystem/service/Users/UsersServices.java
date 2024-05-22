@@ -10,6 +10,9 @@ import com.manufacturing.manufacturingmanagementsystem.models.RolesEntity;
 import com.manufacturing.manufacturingmanagementsystem.models.UsersEntity;
 import com.manufacturing.manufacturingmanagementsystem.repositories.UsersRepository;
 import com.manufacturing.manufacturingmanagementsystem.service.Roles.RolesServices;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -31,6 +34,8 @@ public class UsersServices implements IUsersServices {
     private final RolesServices rolesServices;
     private final BCryptPasswordEncoder passwordEncoder;
     private RoleMapper roleMapper;
+    @Autowired
+    private JavaMailSender javaMailSender;
 
     public UsersServices(UsersRepository usersRepository, RolesServices rolesServices, BCryptPasswordEncoder passwordEncoder) {
         this.usersRepository = usersRepository;
@@ -65,6 +70,13 @@ public class UsersServices implements IUsersServices {
             System.out.println("Role find: " + rolesServices.getRoleByRoleName(userDto.getRoleName()));
             userEntity.setRole(rolesServices.getRoleByRoleName(userDto.getRoleName()));
             usersRepository.save(userEntity);
+
+            if (userDto.getRoleName().isEmpty() || userDto.getRoleName().isBlank()){
+                sendEmailSignUp(userDto.getEmail());
+            }else{
+                sendEmailAddUserByChairman(userDto.getEmail(), userDto.getRoleName());
+            }
+
 
             Map<String, Object> userMap = new HashMap<>();
             System.out.println("Role map: " + userEntity.getRole());
@@ -183,9 +195,9 @@ public class UsersServices implements IUsersServices {
     }
 
     @Override
-    public List<UsersEntity> findAllSignUpRequest(long roleID) {
+    public List<UsersEntity> findAllSignUpRequest(long id) {
         try {
-            Optional<UsersEntity> userEntityOptional = usersRepository.findByRoleId(roleID);
+            Optional<UsersEntity> userEntityOptional = usersRepository.findById(id);
             if (userEntityOptional.isPresent()){
                 return usersRepository.findNullRoleId();
             }
@@ -193,7 +205,7 @@ public class UsersServices implements IUsersServices {
                 throw new RuntimeException("Only chairman can accept signup request");
             }
         } catch (Exception e) {
-            throw new RuntimeException("Failed to update user: " + e.getMessage());
+            throw new RuntimeException("Failed to accept signup request: " + e.getMessage());
         }
     }
 
@@ -207,6 +219,8 @@ public class UsersServices implements IUsersServices {
                 userEntity.setRole(rolesServices.getRoleByRoleName(usersDTO.getRoleName()));
                 System.out.println(email);
                 System.out.println(rolesServices.getRoleByRoleName(usersDTO.getRoleName()));
+
+                sendEmailSignUpAccept(email, usersDTO.getRoleName());
                 usersRepository.save(userEntity);
                 return userEntity;
             }
@@ -215,6 +229,67 @@ public class UsersServices implements IUsersServices {
             }
         } catch (Exception e) {
             throw new RuntimeException("Failed to update role for signup: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public List<UsersEntity> findAllEmployee(long id) {
+        try {
+            Optional<UsersEntity> userEntityOptional = usersRepository.findById(id);
+            if (userEntityOptional.isPresent()){
+                return usersRepository.findNotNullRoleId();
+            }
+            else {
+                throw new RuntimeException("Only chairman can view list of employee");
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to view list of employee: " + e.getMessage());
+        }
+    }
+
+    private void sendEmailAddUserByChairman(String to, String roleName) {
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(to);
+            message.setSubject("Welcome to Manufactorio");
+            message.setText("Thanks for choosing our company. This would be our pleasure to work with you." + "\n\n" +
+                    "Your responsibility or working role is: " + roleName + "\n\n" +
+                    "Your default password is: 123456. Please login and update it later in your personal profile." + "\n\n" +
+                    "If you have any questions about our production or services, please feel free to contact us at any time.\n\n" +
+                    "Sincerely,\nManufactorio");
+            javaMailSender.send(message);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to send email: " + e.getMessage());
+        }
+    }
+
+    private void sendEmailSignUp(String to) {
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(to);
+            message.setSubject("Welcome to Manufactorio");
+            message.setText("Thanks for choosing our company. This would be our pleasure to work with you." + "\n\n" +
+                    "To access Manufactorio mobile app, please wait for the administrator to accept your signup request." + "\n\n" +
+                    "If you have any questions about our production or services, please feel free to contact us at any time.\n\n" +
+                    "Sincerely,\nManufactorio");
+            javaMailSender.send(message);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to send email: " + e.getMessage());
+        }
+    }
+
+    private void sendEmailSignUpAccept(String to, String roleName) {
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(to);
+            message.setSubject("Welcome to Manufactorio");
+            message.setText("Your signup request has been accepted. Hope we will spend long-time together and gain more successes." + "\n\n" +
+                    "Your responsibility or working role is: " + roleName + "\n\n" +
+                    "If you have any questions about our production or services, please feel free to contact us at any time.\n\n" +
+                    "Sincerely,\nManufactorio");
+            javaMailSender.send(message);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to send email: " + e.getMessage());
         }
     }
 }
