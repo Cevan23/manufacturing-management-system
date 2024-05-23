@@ -68,6 +68,7 @@ public class OrdersServices implements IOrdersServices {
                 throw new RuntimeException("Can not find accountant");
             }
             ordersEntity.setKindOrder(orderRequest.getKindOrder());
+            ordersEntity.setTotalPrice((float) 0);
             ordersEntity.setOrderStatus("PENDING");
             ordersEntity.setCustomer(customersEntity);
             ordersEntity.setDateStart(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
