@@ -31,7 +31,21 @@ public class WorkOrderController {
                             .build());
         }
         try {
-            workOrderService.createWorkOrder(workOrderRequest);
+            Long id = workOrderService.createWorkOrder(workOrderRequest);
+            if(id == null) {
+                return ResponseEntity.badRequest()
+                        .body(ApiResponse.builder()
+                                .code(ErrorCode.BAD_REQUEST.getCode())
+                                .message("Error creating work order")
+                                .result(null)
+                                .build());
+            } else {
+                return ResponseEntity.ok()
+                        .body(ApiResponse.builder()
+                                .message("Work order created successfully")
+                                .result(id)
+                                .build());
+            }
         } catch (Exception e) {
             return ResponseEntity.badRequest()
                     .body(ApiResponse.builder()
@@ -40,11 +54,6 @@ public class WorkOrderController {
                             .result(null)
                             .build());
         }
-        return ResponseEntity.ok()
-                .body(ApiResponse.builder()
-                        .message("Work order created successfully")
-                        .result(null)
-                        .build());
     }
 
     @PutMapping("/updateWorkOrder")

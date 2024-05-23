@@ -299,8 +299,8 @@ public class BOMControllers {
 
     @GetMapping("/getAll/status")
     @PreAuthorize("hasAnyAuthority('MANAGER_BOM')")
-    public ResponseEntity<ApiResponse> getAllBOMsbyStatus(@RequestBody FillterRequest statusRequest) {
-        if (statusRequest == null || statusRequest.getStatus() == null) {
+    public ResponseEntity<ApiResponse> getAllBOMsbyStatus(@RequestParam String statusRequest) {
+        if (statusRequest == null ) {
             return ResponseEntity.badRequest()
                     .body(ApiResponse.builder()
                             .message("Status request is required.")
@@ -308,7 +308,7 @@ public class BOMControllers {
                             .build());
         }
 
-        List<BOMsEntity> boms = bomsServices.getAllBOMsbyStatus(statusRequest.getStatus());
+        List<BOMsEntity> boms = bomsServices.getAllBOMsbyStatus(statusRequest);
         List<BOMResponse> response = new ArrayList<>();
         for (var bom : boms) {
             List<BOMDetailsDTO> bomDetails = bomDetailsServices.getBOMDetailsByBOMId(bom.getId());
