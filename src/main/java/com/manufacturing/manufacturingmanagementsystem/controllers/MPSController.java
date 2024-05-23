@@ -100,6 +100,32 @@ public class MPSController {
                         .build());
     }
 
+    @GetMapping("/getById/{id}")
+    public ResponseEntity<ApiResponse> getById(@PathVariable Long id) {
+        if (id == null) {
+            return ResponseEntity.badRequest()
+                    .body(ApiResponse.builder()
+                            .code(ErrorCode.BAD_REQUEST.getCode())
+                            .message("MPS ID is required")
+                            .result(null)
+                            .build());
+        }
+        try {
+            return ResponseEntity.ok()
+                    .body(ApiResponse.builder()
+                            .message("MPS retrieved successfully")
+                            .result(masterProductionSchedulesServices.getById(id))
+                            .build());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest()
+                    .body(ApiResponse.builder()
+                            .code(ErrorCode.BAD_REQUEST.getCode())
+                            .message("Failed to retrieve MPS")
+                            .result(null)
+                            .build());
+        }
+    }
+
     @GetMapping("/getAllMPSofPM/{pmID}")
     public ResponseEntity<ApiResponse> getAllMPSofPM(@PathVariable Long pmID) {
         if (pmID == null) {
@@ -145,8 +171,8 @@ public class MPSController {
         }
     }
 
-    @DeleteMapping("/deleteMPS")
-    public ResponseEntity<ApiResponse> deleteMPS(@RequestParam Long id) {
+    @DeleteMapping("/deleteMPS/{id}")
+    public ResponseEntity<ApiResponse> deleteMPS(@PathVariable Long id) {
         if (id == null) {
             return ResponseEntity.badRequest()
                     .body(ApiResponse.builder()

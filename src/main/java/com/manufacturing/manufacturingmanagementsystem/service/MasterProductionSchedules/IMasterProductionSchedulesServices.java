@@ -15,6 +15,8 @@ public interface IMasterProductionSchedulesServices {
 
     void updateMPS(MPSUpdateRequest mpsRequest);
 
+    MPSResponse getById(Long id);
+
     List<MPSResponse> getAllMPSofPM(Long pmID);
 
     List<MPSResponse> getALl();

@@ -355,8 +355,8 @@ public class BOMControllers {
 
     @GetMapping("/getBOMsByLikeName")
     @PreAuthorize("hasAnyAuthority('MANAGER_BOM')")
-    public ResponseEntity<ApiResponse> getBOMsByLikeName(@RequestBody FillterRequest nameRequest) {
-        if (nameRequest == null || nameRequest.getName() == null) {
+    public ResponseEntity<ApiResponse> getBOMsByLikeName(@RequestParam String nameRequest) {
+        if (nameRequest == null ) {
             return ResponseEntity.badRequest()
                     .body(ApiResponse.builder()
                             .message("BOM name is required.")
@@ -364,7 +364,7 @@ public class BOMControllers {
                             .build());
         }
 
-        List<BOMsEntity> boms = bomsServices.getBOMsByLikeName(nameRequest.getName());
+        List<BOMsEntity> boms = bomsServices.getBOMsByLikeName(nameRequest);
         List<BOMResponse> response = new ArrayList<>();
         for (var bom : boms) {
             List<BOMDetailsDTO> bomDetails = bomDetailsServices.getBOMDetailsByBOMId(bom.getId());

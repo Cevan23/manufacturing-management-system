@@ -14,10 +14,7 @@ import com.manufacturing.manufacturingmanagementsystem.repositories.MasterProduc
 import com.manufacturing.manufacturingmanagementsystem.repositories.ProductsRepository;
 import com.manufacturing.manufacturingmanagementsystem.repositories.SaleForecastDetailsRepository;
 import com.manufacturing.manufacturingmanagementsystem.repositories.UsersRepository;
-import com.manufacturing.manufacturingmanagementsystem.service.Users.UsersServices;
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import org.hibernate.sql.exec.ExecutionException;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -55,28 +52,61 @@ public class MasterProductionSchedulesServices implements IMasterProductionSched
 
     @Override
     public void updateMPS(MPSUpdateRequest mpsRequest) {
+        System.out.println("mpsRequest = " + mpsRequest);
         if(mpsRequest.getMpsID() != null){
-            Optional<MasterProductionSchedulesEntity> mps = masterProductionSchedulesRepository.findById(mpsRequest.getMpsID());
+            Optional<MasterProductionSchedulesEntity> mps = masterProductionSchedulesRepository.findByMPSId(mpsRequest.getMpsID());
+            System.out.println("mps = " + mps.toString());
             if(mps.isEmpty()){
                 throw new AppException(ErrorCode.NOT_FOUND);
             } else {
               Optional<ProductsEntity> product = productsRepository.findById(mpsRequest.getProductId());
               Optional<UsersEntity> productManager = usersRepository.findById(mpsRequest.getProduct_manager_ID());
               if(product.isPresent() && productManager.isPresent()) {
+                  Date startDate = mpsRequest.getDateStart();
+                  Date endDate = mpsRequest.getDateEnd();
+                  System.out.println("startDate = " + startDate + " endDate = " + endDate);
                   mps.get().setProducts(product.get());
                   mps.get().setProductManager(productManager.get());
-                  mps.get().setDateEnd(mpsRequest.getDateEnd());
-                  mps.get().setDateStart(mpsRequest.getDateEnd());
+                  mps.get().setDateStart(startDate);
+                  mps.get().setDateEnd(endDate);
                   mps.get().setEffortHour(mpsRequest.getEffortHour());
                   mps.get().setDurationHour(mpsRequest.getDurationHour());
                   mps.get().setQuantity(mpsRequest.getQuantity());
                   mps.get().setRequireTime(mpsRequest.getRequireTime());
                   mps.get().setIn_progress(mpsRequest.getIn_progress());
+                  System.out.println("mps.get() = " + mps);
                   masterProductionSchedulesRepository.save(mps.get());
               }
             }
 
 
+        }
+    }
+
+    @Override
+    public MPSResponse getById(Long id){
+        if(id == null){
+            throw new AppException(ErrorCode.BAD_REQUEST);
+        } else {
+            Optional<MasterProductionSchedulesEntity> mps = masterProductionSchedulesRepository.findByMPSId(id);
+            if(mps.isEmpty()){
+                throw new AppException(ErrorCode.NOT_FOUND);
+            } else {
+                return MPSResponse.builder()
+                        .mpsID(mps.get().getId())
+                        .product_manager_ID(mps.get().getProductManager().getId())
+                        .productManagerName(mps.get().getProductManager().getFullName())
+                        .productName(mps.get().getProducts().getName())
+                        .productId(mps.get().getProducts().getId())
+                        .dateStart(mps.get().getDateStart())
+                        .dateEnd(mps.get().getDateEnd())
+                        .quantity(mps.get().getQuantity())
+                        .requireTime(mps.get().getRequireTime())
+                        .durationHour(mps.get().getDurationHour())
+                        .effortHour(mps.get().getEffortHour())
+                        .in_progress(mps.get().getIn_progress())
+                        .build();
+            }
         }
     }
 
