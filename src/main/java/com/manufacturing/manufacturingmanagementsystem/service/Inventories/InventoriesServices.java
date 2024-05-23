@@ -57,6 +57,11 @@ public class InventoriesServices implements IInventoriesServices {
         return inventoriesRepository.save(inventory);
     }
 
+    @Override
+    public void deleteInventory(long id) throws Exception {
+
+    }
+
     // Các phương thức service khác cần thiết
 }
 
