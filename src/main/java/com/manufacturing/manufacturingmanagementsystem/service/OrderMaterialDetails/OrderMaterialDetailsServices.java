@@ -110,14 +110,16 @@ public class OrderMaterialDetailsServices implements IOrderMaterialDetailsServic
                 throw new RuntimeException("Material not found with id: " + mid);
             }
             OrderMaterialDetailsEntity orderMaterialDetailsEntity = findOrderMaterialDetailByMid_OrderID(mid,oid);
+            OrdersEntity ordersEntity = ordersRepository.findById(oid)
+                    .orElseThrow(() -> new RuntimeException("Order not found with id: " + oid));
             if(quantity!=null){
+                ordersEntity.setTotalPrice(ordersEntity.getTotalPrice()-(float) (orderMaterialDetailsEntity.getQuantity()*Material.get().getPrice()));
                 orderMaterialDetailsEntity.setQuantity(quantity);
                 orderMaterialDetailsEntity.setTotalUnitPrice((float) (quantity*Material.get().getPrice()));
             }
 
             orderMaterialDetailsRepository.save(orderMaterialDetailsEntity);
-            OrdersEntity ordersEntity = ordersRepository.findById(oid)
-                    .orElseThrow(() -> new RuntimeException("Order not found with id: " + oid));
+
             ordersEntity.setTotalPrice(ordersEntity.getTotalPrice()+orderMaterialDetailsEntity.getTotalUnitPrice());
             ordersRepository.save(ordersEntity);
             orderMaterialMap.put("material_id", orderMaterialDetailsEntity.getMaterial().getId());
@@ -141,6 +143,9 @@ public class OrderMaterialDetailsServices implements IOrderMaterialDetailsServic
             OrdersEntity ordersEntity = ordersRepository.findById(oid)
                     .orElseThrow(() -> new RuntimeException("Order not found with id: " + oid));
             ordersEntity.setTotalPrice(ordersEntity.getTotalPrice()-orderMaterialDetailsEntity.get().getTotalUnitPrice());
+            if (ordersEntity.getTotalPrice()<0){
+                ordersEntity.setTotalPrice((float) 0);
+            }
             ordersRepository.save(ordersEntity);
             orderMaterialDetailsRepository.deleteById(compositeId);
         } catch (Exception e) {

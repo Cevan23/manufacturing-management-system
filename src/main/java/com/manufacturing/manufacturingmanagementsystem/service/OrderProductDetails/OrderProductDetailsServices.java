@@ -108,14 +108,16 @@ public class OrderProductDetailsServices implements IOrderProductDetailsServices
                 throw new RuntimeException("Product not found with id: " + pid);
             }
             OrderProductDetailsEntity orderProductDetailsEntity = findOrderProductDetailByPid_OrderID(pid,oid);
+            OrdersEntity ordersEntity = ordersRepository.findById(oid)
+                    .orElseThrow(() -> new RuntimeException("Order not found with id: " + oid));
             if(quantity!=null){
+                ordersEntity.setTotalPrice(ordersEntity.getTotalPrice()-(float) (orderProductDetailsEntity.getQuantity()*product.get().getSellPrice()));
                 orderProductDetailsEntity.setQuantity(quantity);
                 orderProductDetailsEntity.setTotalUnitPrice((float) (quantity*product.get().getSellPrice()));
             }
 
             orderProductDetailsRepository.save(orderProductDetailsEntity);
-            OrdersEntity ordersEntity = ordersRepository.findById(oid)
-                    .orElseThrow(() -> new RuntimeException("Order not found with id: " + oid));
+
             ordersEntity.setTotalPrice(ordersEntity.getTotalPrice()+orderProductDetailsEntity.getTotalUnitPrice());
             ordersRepository.save(ordersEntity);
 
@@ -139,6 +141,9 @@ public class OrderProductDetailsServices implements IOrderProductDetailsServices
             OrdersEntity ordersEntity = ordersRepository.findById(oid)
                     .orElseThrow(() -> new RuntimeException("Order not found with id: " + oid));
             ordersEntity.setTotalPrice(ordersEntity.getTotalPrice()-orderProductDetailsEntity.get().getTotalUnitPrice());
+            if(ordersEntity.getTotalPrice()<0){
+                ordersEntity.setTotalPrice((float) 0);
+            }
             ordersRepository.save(ordersEntity);
             orderProductDetailsRepository.deleteById(compositeId);
         } catch (Exception e) {
