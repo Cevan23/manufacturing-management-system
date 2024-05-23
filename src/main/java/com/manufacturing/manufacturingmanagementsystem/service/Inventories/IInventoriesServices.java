@@ -13,5 +13,7 @@ public interface IInventoriesServices {
 
     InventoriesEntity updateInventory(InventoryDTO inventoryDTO, long id) throws Exception;
 
+    void deleteInventory(long id) throws Exception;
+
 }
 
