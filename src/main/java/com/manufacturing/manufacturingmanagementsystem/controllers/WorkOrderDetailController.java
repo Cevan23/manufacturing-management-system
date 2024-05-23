@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/WorkOrderDetail")
 public class WorkOrderDetailController {
@@ -21,7 +23,7 @@ public class WorkOrderDetailController {
     }
 
     @PostMapping("/createWorkOrderDetail")
-    public ResponseEntity<ApiResponse> createWorkOrderDetail(@RequestBody WorkOrderDetailRequest workOrderDetailRequest) {
+    public ResponseEntity<ApiResponse> createWorkOrderDetail(@RequestBody List<WorkOrderDetailRequest> workOrderDetailRequest) {
         if (workOrderDetailRequest == null) {
             return ResponseEntity.badRequest()
                     .body(ApiResponse.builder()
@@ -31,7 +33,9 @@ public class WorkOrderDetailController {
                             .build());
         }
         try {
-            workOrderDetailService.createWorkOrderDetails(workOrderDetailRequest);
+            for (WorkOrderDetailRequest workOrderDetail : workOrderDetailRequest) {
+                workOrderDetailService.createWorkOrderDetails(workOrderDetail);
+            }
         } catch (Exception e) {
             return ResponseEntity.badRequest()
                     .body(ApiResponse.builder()

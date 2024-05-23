@@ -20,5 +20,5 @@ public class WorkOrderRequest {
 
     private Date dateEnd;
 
-    private String workOrderstatus;
+    private String workOrderStatus;
 }

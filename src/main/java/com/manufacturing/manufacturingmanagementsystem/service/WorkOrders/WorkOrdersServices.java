@@ -10,7 +10,9 @@ import com.manufacturing.manufacturingmanagementsystem.repositories.WorkOrdersRe
 import com.manufacturing.manufacturingmanagementsystem.service.WorkOrderDetails.WorkOrderDetailsServices;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,18 +25,22 @@ public class WorkOrdersServices implements IWorkOrdersServices {
     private final WorkOrderDetailsServices workOrderDetailsServices;
 
     @Override
-    public void createWorkOrder(WorkOrderRequest workOrderRequest) {
+    @Transactional
+    public Long createWorkOrder(WorkOrderRequest workOrderRequest) {
         if(workOrderRequest.getProductManagerID() == null) {
-            return;
+            return null;
         }
         var productManager = usersRepository.findById(workOrderRequest.getProductManagerID()).orElseThrow();
+        Date dateStart = workOrderRequest.getDateStart();
+        Date dateEnd = workOrderRequest.getDateEnd();
         WorkOrdersEntity workOrder = WorkOrdersEntity.builder()
                 .productManager(productManager)
-                .dateStart(workOrderRequest.getDateStart())
-                .dateEnd(workOrderRequest.getDateEnd())
-                .workOrderStatus(workOrderRequest.getWorkOrderstatus())
+                .dateStart(dateStart)
+                .dateEnd(dateEnd)
+                .workOrderStatus(workOrderRequest.getWorkOrderStatus())
                 .build();
-        workOrdersRepository.save(workOrder);
+        WorkOrdersEntity workOrderNew  = workOrdersRepository.save(workOrder);
+        return workOrderNew.getId();
     }
 
     @Override
@@ -56,7 +62,7 @@ public class WorkOrdersServices implements IWorkOrdersServices {
             }
             workOrder.get().setDateStart(workOrderRequest.getDateStart());
             workOrder.get().setDateEnd(workOrderRequest.getDateEnd());
-            workOrder.get().setWorkOrderStatus(workOrderRequest.getWorkOrderstatus());
+            workOrder.get().setWorkOrderStatus(workOrderRequest.getWorkOrderStatus());
             workOrdersRepository.save(workOrder.get());
         }
 

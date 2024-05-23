@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface IWorkOrdersServices {
 
-    void createWorkOrder(WorkOrderRequest workOrderRequest);
+    Long createWorkOrder(WorkOrderRequest workOrderRequest);
 
     void updateWorkOrder(WorkOrderRequest workOrderRequest);
 
