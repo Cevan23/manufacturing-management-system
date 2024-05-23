@@ -13,6 +13,8 @@ import com.manufacturing.manufacturingmanagementsystem.service.OrderProductDetai
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 
 @Service
@@ -34,6 +36,7 @@ public class OrdersServices implements IOrdersServices {
 
             for (OrdersEntity order : orders) {
                 Map<String, Object> orderEntry = new HashMap<>();
+                orderEntry.put("id", order.getId());
                 orderEntry.put("dateStart", order.getDateStart());
                 orderEntry.put("dateEnd", order.getDateEnd());
                 orderEntry.put("kindOrder", order.getKindOrder());
@@ -67,7 +70,7 @@ public class OrdersServices implements IOrdersServices {
             ordersEntity.setKindOrder(orderRequest.getKindOrder());
             ordersEntity.setOrderStatus("PENDING");
             ordersEntity.setCustomer(customersEntity);
-            ordersEntity.setDateStart(orderRequest.getDateStart());
+            ordersEntity.setDateStart(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
             ordersEntity.setDateEnd(orderRequest.getDateEnd());
             ordersRepository.save(ordersEntity);
             return ordersEntity;
