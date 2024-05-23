@@ -27,6 +27,13 @@ public class InventoryMaterialDetailsServices implements IInventoryMaterialDetai
         long inventoryId = inventoryMaterialDetailsDTO.getInventoryId();
         long materialId = inventoryMaterialDetailsDTO.getMaterialId();
 
+        Optional<InventoryMaterialDetailsEntity> optionalInventoryMaterial
+                = inventoryMaterialDetailsRepository.findById(new InventoryMaterialDetailEntityId(materialId, inventoryId));
+
+        if(optionalInventoryMaterial.isPresent()) {
+            throw new Exception("Inventory Material Already Exists");
+        }
+
         Optional<InventoriesEntity> optionalInventory = inventoriesRepository.findById(inventoryId);
         Optional<MaterialsEntity> optionalMaterial = materialsRepository.findById(materialId);
 

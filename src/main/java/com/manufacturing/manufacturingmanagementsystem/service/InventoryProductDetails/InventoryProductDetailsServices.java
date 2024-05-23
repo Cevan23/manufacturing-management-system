@@ -27,6 +27,13 @@ public class InventoryProductDetailsServices implements IInventoryProductDetails
         long inventoryId = inventoryProductDetailsDTO.getInventoryId();
         long productId = inventoryProductDetailsDTO.getProductId();
 
+        Optional<InventoryProductDetailsEntity> optionalInventoryProduct
+                = inventoryProductDetailsRepository.findById(new InventoryProductDetailEntityId(productId, inventoryId));
+
+        if(optionalInventoryProduct.isPresent()) {
+            throw new Exception("Inventory Product Already Exists");
+        }
+
         Optional<InventoriesEntity> optionalInventory = inventoriesRepository.findById(inventoryId);
         Optional<ProductsEntity> optionalProduct = productsRepository.findById(productId);
 
