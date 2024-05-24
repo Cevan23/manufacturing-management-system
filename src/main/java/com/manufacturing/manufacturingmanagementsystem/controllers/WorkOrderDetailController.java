@@ -34,6 +34,7 @@ public class WorkOrderDetailController {
         }
         try {
             for (WorkOrderDetailRequest workOrderDetail : workOrderDetailRequest) {
+                System.out.println("WO detail: "+ workOrderDetail);
                 workOrderDetailService.createWorkOrderDetails(workOrderDetail);
             }
         } catch (Exception e) {
@@ -52,7 +53,7 @@ public class WorkOrderDetailController {
     }
 
     @PutMapping("/updateWorkOrderDetail")
-    public ResponseEntity<ApiResponse> updateWorkOrderDetail(@RequestBody WorkOrderDetailRequest workOrderDetailRequest) {
+    public ResponseEntity<ApiResponse> updateWorkOrderDetail(@RequestBody List<WorkOrderDetailRequest> workOrderDetailRequest) {
         if (workOrderDetailRequest == null) {
             return ResponseEntity.badRequest()
                     .body(ApiResponse.builder()
@@ -62,7 +63,11 @@ public class WorkOrderDetailController {
                             .build());
         }
         try {
-            workOrderDetailService.updateWorkOrderDetails(workOrderDetailRequest);
+            for (WorkOrderDetailRequest workOrderDetail : workOrderDetailRequest) {
+
+                workOrderDetailService.updateWorkOrderDetails(workOrderDetail);
+            }
+
         } catch (Exception e) {
             return ResponseEntity.badRequest()
                     .body(ApiResponse.builder()

@@ -10,8 +10,6 @@ import lombok.*;
 @Setter
 public class WorkOrderDetailRequest {
 
-    private Long id;
-
     private Long workOrderId;
 
     private Long masterProductionScheduleId;

@@ -1,13 +1,18 @@
 package com.manufacturing.manufacturingmanagementsystem.controllers;
 
+import com.manufacturing.manufacturingmanagementsystem.dtos.requests.WorkOrder.WorkOrderDetailRequest;
 import com.manufacturing.manufacturingmanagementsystem.dtos.requests.WorkOrder.WorkOrderRequest;
 import com.manufacturing.manufacturingmanagementsystem.dtos.responses.ApiResponse;
+import com.manufacturing.manufacturingmanagementsystem.dtos.responses.WorkOrder.WorkOrderDetailResponse;
 import com.manufacturing.manufacturingmanagementsystem.exceptions.ErrorCode;
 import com.manufacturing.manufacturingmanagementsystem.service.WorkOrders.WorkOrdersServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/WorkOrder")
@@ -139,6 +144,24 @@ public class WorkOrderController {
                         .build());
     }
 
+    @GetMapping("/getAllWorkOrdersStartingToday")
+    public ResponseEntity<ApiResponse> getAllWorkOrdersStartingToday() {
+        try {
+            return ResponseEntity.ok()
+                    .body(ApiResponse.builder()
+                            .message("Work orders retrieved successfully")
+                            .result(workOrderService.getAllWorkOrdersStartingToday())
+                            .build());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest()
+                    .body(ApiResponse.builder()
+                            .code(ErrorCode.BAD_REQUEST.getCode())
+                            .message("Failed to retrieve work orders")
+                            .result(null)
+                            .build());
+        }
+    }
+
     @GetMapping("/getAllWorkOrders")
     public ResponseEntity<ApiResponse> getAllWorkOrders() {
         try {
@@ -194,11 +217,51 @@ public class WorkOrderController {
                             .build());
         }
         try {
+            var data = workOrderService.getWorkOrderById(id);
+            var workOrderData = data.getWorkOrder();
+
+            // Create a new WorkOrderRequest and set the properties
+            WorkOrderRequest workOrder = new WorkOrderRequest();
+            workOrder.setId(workOrderData.getId());
+            workOrder.setProductManagerID(workOrderData.getProductManager().getId());
+            workOrder.setDateStart(workOrderData.getDateStart());
+            workOrder.setDateEnd(workOrderData.getDateEnd());
+            workOrder.setWorkOrderStatus(workOrderData.getWorkOrderStatus());
+
+            var workOrderDetailsData = data.getWorkOrderDetails();
+
+            // Create a new list to hold the WorkOrderDetailRequest objects
+            List<WorkOrderDetailRequest> workOrderDetails = new ArrayList<>();
+
+            // Loop through the work order details data and create new WorkOrderDetailRequest objects
+            for (var detailData : workOrderDetailsData) {
+                WorkOrderDetailRequest detailRequest = new WorkOrderDetailRequest();
+
+                // Set the properties of the detailRequest object
+                detailRequest.setWorkOrderId(detailData.getId().getWorkOrderId());
+                detailRequest.setMasterProductionScheduleId(detailData.getId().getMasterProductionScheduleId());
+                detailRequest.setActualProduction(detailData.getActualProduction());
+                detailRequest.setActualProductionPrice(detailData.getActualProductionPrice());
+                detailRequest.setFaultyProducts(detailData.getFaultyProducts());
+                detailRequest.setFaultyProductPrice(detailData.getFaultyProductPrice());
+                detailRequest.setNote(detailData.getNote());
+                detailRequest.setProjectedProduction(detailData.getProjectedProduction());
+
+                // Add the detailRequest to the list
+                workOrderDetails.add(detailRequest);
+            }
+
+
+
+            WorkOrderDetailResponse response = WorkOrderDetailResponse.builder()
+                    .workOrder(workOrder)
+                    .workOrderDetails(workOrderDetails)
+                    .build();
 
             return ResponseEntity.ok()
                     .body(ApiResponse.builder()
                             .message("Work order details retrieved successfully")
-                            .result(workOrderService.getWorkOrderById(id))
+                            .result(response)
                             .build());
         } catch (Exception e) {
             return ResponseEntity.badRequest()

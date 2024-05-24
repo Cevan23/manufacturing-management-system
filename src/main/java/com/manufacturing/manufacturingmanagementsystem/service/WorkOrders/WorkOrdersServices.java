@@ -81,8 +81,18 @@ public class WorkOrdersServices implements IWorkOrdersServices {
 
     @Override
     public void deleteWorkOrder(Long id) {
-        if(id != null) {
-            workOrdersRepository.deleteById(id);
+        try {
+            if(id != null) {
+                List<WorkOrderDetailsEntity> workOrderDetails = workOrderDetailsServices.getWorkOrderDetailsOfWO(id);
+                if (!workOrderDetails.isEmpty()) {
+                    for (WorkOrderDetailsEntity detail : workOrderDetails) {
+                        workOrderDetailsServices.deleteWorkOrderDetails(detail.getWorkOrder().getId(), detail.getMasterProductionSchedule().getId());
+                    }
+                }
+                workOrdersRepository.deleteByWOId(id);
+            }
+        } catch (Exception e) {
+            System.out.println("Delete : " + e);
         }
     }
 
@@ -113,6 +123,11 @@ public class WorkOrdersServices implements IWorkOrdersServices {
             }
         }
         return null;
+    }
+
+    @Override
+    public List<WorkOrdersEntity> getAllWorkOrdersStartingToday() {
+        return workOrdersRepository.findAllWorkOrdersStartingToday();
     }
 }
 

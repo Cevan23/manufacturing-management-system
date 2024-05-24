@@ -21,5 +21,7 @@ public interface IWorkOrdersServices {
     List<WorkOrdersEntity> getAllWorkOrdersOfPM(Long pmID);
 
     WorkOrderResponse getWorkOrderById(Long id);
+
+    List<WorkOrdersEntity> getAllWorkOrdersStartingToday();
 }
 
