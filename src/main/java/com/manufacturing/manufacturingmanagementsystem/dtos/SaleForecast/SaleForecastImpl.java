@@ -11,8 +11,13 @@ import java.util.List;
 public class SaleForecastImpl implements ISaleForecast {
     private List<SaleForecastsEntity> saleForecastDetailsDTOList;
     private SaleForecastsRepository saleForecastsRepository;
+
+    public SaleForecastImpl(SaleForecastsRepository saleForecastsRepository) {
+        this.saleForecastsRepository = saleForecastsRepository;
+    }
+
     @Override
-    public List<SaleForecastsEntity> getAllSaleForecast(){
+    public List<SaleForecastsEntity> getAllSaleForecast(int month,int year){
         return saleForecastsRepository.findAll();
     }
 }

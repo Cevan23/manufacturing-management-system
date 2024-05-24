@@ -156,5 +156,25 @@ public class SaleForecastDetailsServices implements ISaleForecastDetailsServices
             throw new RuntimeException("Failed to find quantity and sale forecast id by product id and month year: " + e.getMessage());
         }
     }
+    @Override
+    public Map<String, Object> findSumReportSaleForecastById(Long id) {
+        try {
+            Map<String, Object> map = new HashMap<>();
+            List<SaleForecastDetailsEntity> saleForecastDetailsEntityList = saleForecastDetailsRepository.findListById(id);
+            Float totalPrice= 0f;
+            Integer totalQuantity=  0;
+            if (!saleForecastDetailsEntityList.isEmpty()) {
+                for (SaleForecastDetailsEntity saleForecastDetailsEntity : saleForecastDetailsEntityList) {
+                    totalPrice+=saleForecastDetailsEntity.getTotalSalePrice();
+                    totalQuantity+=saleForecastDetailsEntity.getQuantity();
+                }
+            }
+            map.put("total_price",totalPrice);
+            map.put("total_quantity",totalQuantity);
+            return map;
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to find: " + e.getMessage());
+        }
+    }
 }
 

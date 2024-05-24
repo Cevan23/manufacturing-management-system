@@ -13,5 +13,6 @@ public interface ISaleForecastDetailsServices {
     public void deleteSaleForecastDetail(Long pid, Long sale_id);
     public Map<String, Object> updateSaleForecastDetail(Long sale_id, Long pid, Integer quantity,float totalPrice,float totalSaleprice);
     public List< Object[]> findQuantityAndSaleForecastIdByProductIdAndMonthYear(Long productId, Date startDate, Date endDate);
+    Map<String, Object> findSumReportSaleForecastById(Long id);
 }
 

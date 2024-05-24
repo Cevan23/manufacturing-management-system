@@ -5,5 +5,5 @@ import com.manufacturing.manufacturingmanagementsystem.models.SaleForecastsEntit
 import java.util.List;
 
 public interface ISaleForecast {
-    public List<SaleForecastsEntity> getAllSaleForecast();
+    public List<SaleForecastsEntity> getAllSaleForecast(int month,int year);
 }
