@@ -9,32 +9,41 @@ import java.util.List;
 
 public class SaleForecastMonth extends SaleForecastDecorator {
 
-    public SaleForecastMonth(ISaleForecast iSaleForecast) {
-        super(iSaleForecast);
+    public SaleForecastMonth(ISaleForecast saleForecast) {
+        super(saleForecast);
     }
 
-    public List<SaleForecastsEntity> getAllSaleForecast(int month) {
-        return getAllSaleForecastByMonth(month, super.getAllSaleForecast());
+    public List<SaleForecastsEntity> getAllSaleForecast(int month, int year) {
+        List<SaleForecastsEntity> all = super.getAllSaleForecast(month, year);
+        return filterByMonthAndYear(month, year, all);
     }
 
-    private List<SaleForecastsEntity> getAllSaleForecastByMonth(int month, List<SaleForecastsEntity> forecastsEntityMonthList) {
-        List<SaleForecastsEntity> forecastsByMonth = new ArrayList<>();
-        for (SaleForecastsEntity forecast : forecastsEntityMonthList) {
-            // Assuming SaleForecastsEntity has get methods for dateStart and dateEnd
-            Date dateStart = forecast.getDateStart();
-            Date dateEnd = forecast.getDateEnd();
-
-            // Check if both dateStart and dateEnd fall within the specified month
-            if (isDateWithinMonth(dateStart, month) || isDateWithinMonth(dateEnd, month)) {
-                forecastsByMonth.add(forecast);
+    private List<SaleForecastsEntity> filterByMonthAndYear(int month, int year, List<SaleForecastsEntity> forecasts) {
+        List<SaleForecastsEntity> filteredForecasts = new ArrayList<>();
+        for (SaleForecastsEntity forecast : forecasts) {
+            if (isMonthAndYearWithinDateRange(forecast.getDateStart(), forecast.getDateEnd(), month, year)) {
+                filteredForecasts.add(forecast);
             }
         }
-        return forecastsByMonth;
+        return filteredForecasts;
     }
 
-    private boolean isDateWithinMonth(Date date, int month) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        return calendar.get(Calendar.MONTH) == month;
+    private boolean isMonthAndYearWithinDateRange(Date dateStart, Date dateEnd, int month, int year) {
+        if (dateStart == null || dateEnd == null) {
+            return false; // handle null dates
+        }
+
+        Calendar startCalendar = Calendar.getInstance();
+        startCalendar.setTime(dateStart);
+        int startMonth = startCalendar.get(Calendar.MONTH)+1;
+        int startYear = startCalendar.get(Calendar.YEAR);
+
+        Calendar endCalendar = Calendar.getInstance();
+        endCalendar.setTime(dateEnd);
+        int endMonth = endCalendar.get(Calendar.MONTH)+1;
+        int endYear = endCalendar.get(Calendar.YEAR);
+
+        // Check if the provided month and year fall within the date range of the sale forecast
+        return (startYear <= year && endYear >= year && startMonth <= month && endMonth >= month);
     }
 }

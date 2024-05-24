@@ -22,6 +22,7 @@ public class SaleForecastsServices implements ISaleForecastsServices {
         try {
             SaleForecastsEntity saleForecastsEntity = new SaleForecastsEntity();
             saleForecastsEntity.setDateStart(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
+            saleForecastsEntity.setDateEnd(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
             if (usersRepository.findById(id).isPresent()){
                 saleForecastsEntity.setAccountant(usersRepository.findById(id).get());
                 if (!saleForecastsEntity.getAccountant().getRole().getRoleName().equals("ACCOUNTANT")){

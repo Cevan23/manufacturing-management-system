@@ -8,32 +8,40 @@ import java.util.Date;
 import java.util.List;
 
 public class SaleForecastYear extends SaleForecastDecorator {
-    public SaleForecastYear(ISaleForecast iSaleForecast) {
-        super(iSaleForecast);
+
+    public SaleForecastYear(ISaleForecast saleForecast) {
+        super(saleForecast);
     }
 
-    public List<SaleForecastsEntity> getAllSaleForecast(int year) {
-        return getAllSaleForecastByYear(year, super.getAllSaleForecast());
+    public List<SaleForecastsEntity> getAllSaleForecast(int month, int year) {
+        List<SaleForecastsEntity> all = super.getAllSaleForecast(month, year);
+        return filterByYear(month, year, all);
     }
 
-    private List<SaleForecastsEntity> getAllSaleForecastByYear(int year, List<SaleForecastsEntity> forecastsEntityMonthList) {
-        List<SaleForecastsEntity> forecastsByYear = new ArrayList<>();
-        for (SaleForecastsEntity forecast : forecastsEntityMonthList) {
-            // Assuming SaleForecastsEntity has get methods for dateStart and dateEnd
-            Date dateStart = forecast.getDateStart();
-            Date dateEnd = forecast.getDateEnd();
-
-            // Check if both dateStart or dateEnd fall within the specified year
-            if (isDateWithinYear(dateStart, year) || isDateWithinYear(dateEnd, year)) {
-                forecastsByYear.add(forecast);
+    private List<SaleForecastsEntity> filterByYear(int month, int year, List<SaleForecastsEntity> forecasts) {
+        List<SaleForecastsEntity> filteredForecasts = new ArrayList<>();
+        for (SaleForecastsEntity forecast : forecasts) {
+            if (isYearWithinDateRange(forecast.getDateStart(), forecast.getDateEnd(), month, year)) {
+                filteredForecasts.add(forecast);
             }
         }
-        return forecastsByYear;
+        return filteredForecasts;
     }
 
-    private boolean isDateWithinYear(Date date, int year) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        return calendar.get(Calendar.YEAR) == year;
+    private boolean isYearWithinDateRange(Date dateStart, Date dateEnd, int month, int year) {
+        if (dateStart == null || dateEnd == null) {
+            return false; // handle null dates
+        }
+
+        Calendar startCalendar = Calendar.getInstance();
+        startCalendar.setTime(dateStart);
+        int startYear = startCalendar.get(Calendar.YEAR);
+
+        Calendar endCalendar = Calendar.getInstance();
+        endCalendar.setTime(dateEnd);
+        int endYear = endCalendar.get(Calendar.YEAR);
+
+        // Check if the provided month and year fall within the date range of the sale forecast
+        return (startYear <= year && endYear >= year);
     }
 }
