@@ -10,7 +10,7 @@ import java.util.List;
 public abstract class SaleForecastDecorator implements ISaleForecast{
     private ISaleForecast iSaleForecast;
     @Override
-    public List<SaleForecastsEntity> getAllSaleForecast(){
-        return iSaleForecast.getAllSaleForecast();
+    public List<SaleForecastsEntity> getAllSaleForecast(int month,int year){
+        return iSaleForecast.getAllSaleForecast(month,year);
     }
 }
