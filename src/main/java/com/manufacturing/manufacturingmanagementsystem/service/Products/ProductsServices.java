@@ -2,6 +2,7 @@ package com.manufacturing.manufacturingmanagementsystem.service.Products;
 
 import com.manufacturing.manufacturingmanagementsystem.dtos.ProductsDTO;
 import com.manufacturing.manufacturingmanagementsystem.dtos.requests.Product.CreateProductRequest;
+import com.manufacturing.manufacturingmanagementsystem.exceptions.ResourceNotFoundException;
 import com.manufacturing.manufacturingmanagementsystem.models.BOMsEntity;
 import com.manufacturing.manufacturingmanagementsystem.models.CategoriesEntity;
 import com.manufacturing.manufacturingmanagementsystem.models.ProductsEntity;
@@ -122,6 +123,31 @@ public class ProductsServices implements iProductsServices {
         } catch (Exception e) {
             System.out.println("Error get All product: " + e.getMessage());
             return null;
+        }
+    }
+
+    @Override
+    public void updateProduct(ProductsDTO request) {
+        Optional<ProductsEntity> productOptional = productsRepository.findById(request.getId());
+        if (productOptional.isPresent()) {
+            ProductsEntity product = productOptional.get();
+            product.setName(request.getName());
+            product.setUnit(request.getUnit());
+            product.setPrice(request.getPrice());
+            product.setSellPrice(request.getSellPrice());
+            product.setVolume(request.getVolume());
+
+            Optional<CategoriesEntity> categoryOptional = categoriesRepository.findById(request.getCategoryID());
+            Optional<BOMsEntity> bomOptional = bomsRepository.findById(request.getBomID());
+
+            if (categoryOptional.isPresent() && bomOptional.isPresent()) {
+                product.setCategory(categoryOptional.get());
+                product.setBom(bomOptional.get());
+            }
+
+            productsRepository.save(product);
+        } else {
+            throw new ResourceNotFoundException("Product with id " + request.getId() + " not found");
         }
     }
 }

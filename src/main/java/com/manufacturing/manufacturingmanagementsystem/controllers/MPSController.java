@@ -1,5 +1,6 @@
 package com.manufacturing.manufacturingmanagementsystem.controllers;
 
+import com.manufacturing.manufacturingmanagementsystem.dtos.MasterProductionSchedulesDTO;
 import com.manufacturing.manufacturingmanagementsystem.dtos.requests.MPS.MPSRequest;
 import com.manufacturing.manufacturingmanagementsystem.dtos.requests.MPS.MPSUpdateRequest;
 import com.manufacturing.manufacturingmanagementsystem.dtos.requests.MPS.SuggestMPSMonthlyRequest;
@@ -9,6 +10,8 @@ import com.manufacturing.manufacturingmanagementsystem.service.MasterProductionS
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/MPS")
@@ -223,6 +226,42 @@ public class MPSController {
                             .build());
         }
     }
+
+    @GetMapping("/getAllMPSbyInProgress")
+    public ResponseEntity<ApiResponse> getAllMPSbyInProgress(@RequestParam Float inProgress) {
+        if (inProgress == null) {
+            return ResponseEntity.badRequest()
+                    .body(ApiResponse.builder()
+                            .code(ErrorCode.BAD_REQUEST.getCode())
+                            .message("inProgress is required")
+                            .result(null)
+                            .build());
+        }
+        try {
+            List<MasterProductionSchedulesDTO> mpsList = masterProductionSchedulesServices.getAllMPSbyInProgress(inProgress);
+            if (mpsList == null || mpsList.isEmpty()) {
+                return ResponseEntity.ok()
+                        .body(ApiResponse.builder()
+                                .code(ErrorCode.NOT_FOUND.getCode())
+                                .message("No items found")
+                                .result(null)
+                                .build());
+            }
+            return ResponseEntity.ok()
+                    .body(ApiResponse.builder()
+                            .message("MPS retrieved successfully")
+                            .result(mpsList)
+                            .build());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest()
+                    .body(ApiResponse.builder()
+                            .code(ErrorCode.BAD_REQUEST.getCode())
+                            .message("Failed to retrieve MPS")
+                            .result(null)
+                            .build());
+        }
+    }
+
 
 
 }

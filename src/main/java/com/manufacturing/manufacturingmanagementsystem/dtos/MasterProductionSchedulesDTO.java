@@ -12,6 +12,7 @@ public class MasterProductionSchedulesDTO {
 
     private Long id;
     private Long productsId;
+    private Double productPrice;
     private Long productManagerId;
     private Date dateStart;
     private Date dateEnd;
@@ -19,5 +20,6 @@ public class MasterProductionSchedulesDTO {
     private Float requireTime;
     private Float durationHour;
     private Float effortHour;
+    private Float inProgress;
 
 }

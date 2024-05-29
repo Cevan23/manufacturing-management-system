@@ -21,4 +21,8 @@ public interface WorkOrderDetailsRepository extends JpaRepository<WorkOrderDetai
     @Query("DELETE FROM WorkOrderDetailsEntity w WHERE w.workOrder.id = ?1 AND w.masterProductionSchedule.id = ?2")
     void deleteByWorkOrderIdAndMasterProductionScheduleId(Long workOrderId, Long masterProductionScheduleId);
 
+    @Query("SELECT SUM(w.projectedProduction) FROM WorkOrderDetailsEntity w WHERE w.masterProductionSchedule.id = ?1")
+    Integer sumProjectedProductionByMasterProductionSchedule(Long masterProductionScheduleId);
+
+
 }

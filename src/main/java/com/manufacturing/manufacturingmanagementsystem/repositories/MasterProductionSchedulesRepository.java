@@ -15,4 +15,7 @@ public interface MasterProductionSchedulesRepository extends JpaRepository<Maste
 
     @Query("SELECT m FROM MasterProductionSchedulesEntity m WHERE m.id = ?1")
     Optional<MasterProductionSchedulesEntity> findByMPSId(Long mpsId);
+
+    @Query("SELECT m FROM MasterProductionSchedulesEntity m WHERE m.in_progress = ?1")
+    List<MasterProductionSchedulesEntity> findAllByInProgress(Float inProgress);
 }

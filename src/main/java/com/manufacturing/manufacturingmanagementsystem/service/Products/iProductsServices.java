@@ -18,4 +18,6 @@ public interface iProductsServices {
     List<Map<String, Object>> getProductForOrderProductById(Long id);
 
     List<ProductsEntity> getAllProducts();
+
+    void updateProduct(ProductsDTO request);
 }

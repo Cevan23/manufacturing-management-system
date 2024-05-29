@@ -14,6 +14,8 @@ public class WorkOrderDetailRequest {
 
     private Long masterProductionScheduleId;
 
+    private Double productPrice;
+
     private String note;
 
     private Integer projectedProduction;

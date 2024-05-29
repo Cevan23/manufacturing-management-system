@@ -16,6 +16,8 @@ public class MPSResponse {
 
     private String productName;
 
+    private Double productPrice;
+
     private Long categoryID;
 
     private String Category;

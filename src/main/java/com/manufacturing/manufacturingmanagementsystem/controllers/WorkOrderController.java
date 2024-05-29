@@ -240,6 +240,7 @@ public class WorkOrderController {
                 // Set the properties of the detailRequest object
                 detailRequest.setWorkOrderId(detailData.getId().getWorkOrderId());
                 detailRequest.setMasterProductionScheduleId(detailData.getId().getMasterProductionScheduleId());
+                detailRequest.setProductPrice(detailData.getMasterProductionSchedule().getProducts().getPrice());
                 detailRequest.setActualProduction(detailData.getActualProduction());
                 detailRequest.setActualProductionPrice(detailData.getActualProductionPrice());
                 detailRequest.setFaultyProducts(detailData.getFaultyProducts());

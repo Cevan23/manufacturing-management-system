@@ -136,5 +136,26 @@ public class WorkOrderDetailController {
                         .build());
     }
 
+    @GetMapping("/sumProjectedProductionByMasterProductionSchedule/{id}")
+    public ResponseEntity<ApiResponse> sumProjectedProductionByMasterProductionSchedule(@PathVariable Long id) {
+        if (id == null) {
+            return ResponseEntity.badRequest()
+                    .body(ApiResponse.builder()
+                            .code(ErrorCode.BAD_REQUEST.getCode())
+                            .message("Master production schedule id is required")
+                            .result(null)
+                            .build());
+        }
+        Integer sum = workOrderDetailService.sumProjectedProductionByMasterProductionSchedule(id);
+        if (sum == null) {
+            sum = 0;
+        }
+        return ResponseEntity.ok()
+                .body(ApiResponse.builder()
+                        .message("Projected production sum retrieved successfully")
+                        .result(sum)
+                        .build());
+    }
+
 
 }

@@ -83,4 +83,12 @@ public class WorkOrderDetailsServices implements IWorkOrderDetailsServices {
     public List<WorkOrderDetailsEntity> getAllWorkOrderDetails() {
         return workOrderDetailsRepository.findAll();
     }
+
+    @Override
+    public Integer sumProjectedProductionByMasterProductionSchedule(Long masterProductionScheduleId) {
+        if(masterProductionScheduleId != null) {
+            return workOrderDetailsRepository.sumProjectedProductionByMasterProductionSchedule(masterProductionScheduleId);
+        }
+        return null;
+    }
 }

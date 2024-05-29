@@ -150,6 +150,7 @@ public class MasterProductionSchedulesServices implements IMasterProductionSched
                         .productManagerName(m.getProductManager().getFullName())
                         .productName(m.getProducts().getName())
                         .productId(m.getProducts().getId())
+                        .productPrice(m.getProducts().getPrice())
                         .dateStart(m.getDateStart())
                         .dateEnd(m.getDateEnd())
                         .quantity(m.getQuantity())
@@ -196,6 +197,34 @@ public class MasterProductionSchedulesServices implements IMasterProductionSched
         }
 
         return mps;
+    }
+
+    @Override
+    public List<MasterProductionSchedulesDTO> getAllMPSbyInProgress(Float inProgress){
+        try {
+            List<MasterProductionSchedulesEntity> mps = masterProductionSchedulesRepository.findAllByInProgress(inProgress);
+            if(mps.isEmpty()){
+                return null;
+            }
+            List<MasterProductionSchedulesDTO> mpsResponses = new ArrayList<>();
+            for (MasterProductionSchedulesEntity m : mps) {
+                MasterProductionSchedulesDTO mpsResponse = new MasterProductionSchedulesDTO();
+                mpsResponse.setId(m.getId());
+                mpsResponse.setProductManagerId(m.getProductManager().getId());
+                mpsResponse.setProductsId(m.getProducts().getId());
+                mpsResponse.setDateStart(m.getDateStart());
+                mpsResponse.setDateEnd(m.getDateEnd());
+                mpsResponse.setQuantity(m.getQuantity());
+                mpsResponse.setRequireTime(m.getRequireTime());
+                mpsResponse.setDurationHour(m.getDurationHour());
+                mpsResponse.setEffortHour(m.getEffortHour());
+                mpsResponses.add(mpsResponse);
+            }
+            return mpsResponses;
+        } catch (Exception e) {
+            return null;
+        }
+
     }
 }
 

@@ -18,6 +18,6 @@ public interface IWorkOrderDetailsServices {
 
     List<WorkOrderDetailsEntity> getAllWorkOrderDetails();
 
-
+    Integer sumProjectedProductionByMasterProductionSchedule(Long masterProductionScheduleId);
 
 }

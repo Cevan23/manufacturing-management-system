@@ -24,5 +24,7 @@ public interface IMasterProductionSchedulesServices {
     void deleteMPS(Long id);
 
     MPSSuggestionMonthlyResponse suggestMPSMonthly(Long productId, Date month);
+
+    List<MasterProductionSchedulesDTO> getAllMPSbyInProgress(Float inProgress);
 }
 

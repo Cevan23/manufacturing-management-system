@@ -13,6 +13,14 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 public class ProductsDTO {
 
+    private Long id;
+
+    @JsonProperty("category_id")
+    private Long categoryID;
+
+    @JsonProperty("bom_id")
+    private Long bomID;
+
     @JsonProperty("name")
     @NotBlank(message = "Product name is required")
     private String name;

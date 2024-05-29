@@ -131,4 +131,22 @@ public class ProductControllers {
                                                         .build());
                 }
         }
+
+        @PutMapping("")
+        public ResponseEntity<ApiResponse> updateProduct(@Valid @RequestBody ProductsDTO request) {
+                try {
+                        productsService.updateProduct(request);
+                        return ResponseEntity.ok()
+                                        .body(ApiResponse.builder()
+                                                        .message("Update product successfully")
+                                                        .result(null)
+                                                        .build());
+                } catch (Exception e) {
+                        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                                        .body(ApiResponse.builder()
+                                                        .message("An error occurred: " + e.getMessage())
+                                                        .result(null)
+                                                        .build());
+                }
+        }
 }
