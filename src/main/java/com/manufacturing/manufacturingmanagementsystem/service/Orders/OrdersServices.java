@@ -17,6 +17,8 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.*;
 
+// Author: Nguyen Cao Nhan
+// This class is used to manage the services of the orders.
 @Service
 @AllArgsConstructor
 public class OrdersServices implements IOrdersServices {
@@ -27,7 +29,8 @@ public class OrdersServices implements IOrdersServices {
     private final CustomersServices customersServices;
     private final UsersRepository usersRepository;
 
-
+    // Author: Nguyen Cao Nhan
+    // This method is used to get all orders.
     @Override
     public List<Map<String, Object>> getAllOrders() {
         try {
@@ -51,6 +54,8 @@ public class OrdersServices implements IOrdersServices {
         }
     }
 
+    // Author: Nguyen Cao Nhan
+    // This method is used to get order by id.
     @Override
     public OrdersEntity insertOrder(OrderRequest orderRequest) {
         try {
@@ -80,6 +85,8 @@ public class OrdersServices implements IOrdersServices {
         }
     }
 
+    // Author: Nguyen Cao Nhan
+    // This method is used to get order by id.
     @Override
     public OrdersEntity updateOrder(OrderUpdateRequest orderUpdateRequest) {
         try {
@@ -98,6 +105,8 @@ public class OrdersServices implements IOrdersServices {
 
     }
 
+    // Author: Nguyen Cao Nhan
+    // This method is used to get order by id.
     @Override
     public void deleteOrder(Long id) {
         try {

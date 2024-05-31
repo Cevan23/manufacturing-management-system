@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.*;
 
+// Author: Nguyen Cao Nhan
 @Service
 @AllArgsConstructor
 public class SaleForecastsServices implements ISaleForecastsServices {
@@ -17,9 +18,12 @@ public class SaleForecastsServices implements ISaleForecastsServices {
     private final SaleForecastsRepository saleForecastsRepository;
     private final UsersRepository usersRepository;
 
+    // Author: Nguyen Cao Nhan
+    // Service insert SaleForecast
     @Override
     public SaleForecastsEntity insertSaleForecast(Long id) {
         try {
+            // Create new SaleForecast
             SaleForecastsEntity saleForecastsEntity = new SaleForecastsEntity();
             saleForecastsEntity.setDateStart(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
             saleForecastsEntity.setDateEnd(Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant()));
@@ -37,7 +41,8 @@ public class SaleForecastsServices implements ISaleForecastsServices {
             throw new RuntimeException("Failed to insert sale forecast: " + e.getMessage());
         }
     }
-
+    // Author: Nguyen Cao Nhan
+    // Service delete SaleForecast
     @Override
     public void deleteSaleForecast(Long id) {
         try {
@@ -47,6 +52,8 @@ public class SaleForecastsServices implements ISaleForecastsServices {
         }
     }
 
+    // Author: Nguyen Cao Nhan
+    // Service find SaleForecast by id
     @Override
     public SaleForecastsEntity findSaleForecastById(Long id) {
         try {
@@ -61,6 +68,8 @@ public class SaleForecastsServices implements ISaleForecastsServices {
         }
     }
 
+    // Author: Nguyen Cao Nhan
+    // Service get all SaleForecast
     @Override
     public List<Map<String, Object>> getAllSaleForecast() {
         try {
@@ -80,6 +89,8 @@ public class SaleForecastsServices implements ISaleForecastsServices {
         }
     }
 
+    // Author: Nguyen Cao Nhan
+    // Service update SaleForecast
     @Override
     public Map<String, Object> updateSaleForecast(Long id,Date dateStart,Date dateEnd) {
         try {

@@ -11,8 +11,12 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+// Author: Nguyen Cao Nhan
+// This interface is used to interact with the database to retrieve, insert, update, delete OrderMaterialDetailsEntity objects
 @Repository
 public interface OrderMaterialDetailsRepository extends JpaRepository<OrderMaterialDetailsEntity, OrderMaterialDetailEntityId> {
+    // Author: Nguyen Cao Nhan
+    // This method is used to find a list of OrderMaterialDetailsEntity by order id
     @Query("SELECT omd FROM OrderMaterialDetailsEntity omd WHERE omd.id.orderId = :oid")
     List<OrderMaterialDetailsEntity> findListById(@Param("oid") long oid);
 

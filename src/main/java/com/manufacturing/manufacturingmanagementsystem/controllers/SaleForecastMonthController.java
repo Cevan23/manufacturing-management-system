@@ -19,14 +19,15 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+// Author: Nguyen Cao Nhan
 @RestController
 @RequestMapping("/api/sale_forecasts/month")
 @AllArgsConstructor
 public class SaleForecastMonthController {
     private final SaleForecastsRepository saleForecastsRepository;
     private final SaleForecastDetailsServices saleForecastDetailsServices;
-
+    // Author: Nguyen Cao Nhan
+    // Get All Sale Forecasts By Month Controller
     @GetMapping("/{month}/{year}")
     public ResponseEntity<?> getAllSaleForecastsByMonth(@PathVariable int month,
                                                         @PathVariable int year) {

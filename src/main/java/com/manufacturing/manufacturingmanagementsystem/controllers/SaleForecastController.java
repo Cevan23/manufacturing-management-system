@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-
+// Author: Nguyen Cao Nhan
 @RestController
 @RequestMapping("/api/sale_forecast")
 @RequiredArgsConstructor
 public class SaleForecastController {
     private final SaleForecastsServices saleForecastsServices;
+    // Author: Nguyen Cao Nhan
+    // Insert Sale Forecast Controller
     @PostMapping("/create")
     public ResponseEntity<?> insertSaleForecast(@Valid @RequestParam("ac_id") Long ac_id) {
         try {
@@ -31,6 +33,8 @@ public class SaleForecastController {
         }
     }
 
+    // Author: Nguyen Cao Nhan
+    // Delete Sale Forecast Controller
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteSaleForecast(@PathVariable Long id) {
         try {
@@ -43,6 +47,9 @@ public class SaleForecastController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    // Author: Nguyen Cao Nhan
+    // Get All Sale Forecast Controller
     @GetMapping("")
     public ResponseEntity<?> getSaleForecast() {
         try {
@@ -56,6 +63,9 @@ public class SaleForecastController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    // Author: Nguyen Cao Nhan
+    // Update Sale Forecast Controller
     @PutMapping("/{id}")
     public ResponseEntity<?> updateSaleForecast(@PathVariable Long id,
                                                 @Valid @RequestBody SaleForecastRequestUpdate saleForecastRequestUpdate) {

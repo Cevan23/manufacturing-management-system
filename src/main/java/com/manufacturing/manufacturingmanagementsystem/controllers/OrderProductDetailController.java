@@ -12,11 +12,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
+// Author: Nguyen Cao Nhan
 @RestController
 @RequestMapping("/api/order_product_detail")
 @RequiredArgsConstructor
 public class OrderProductDetailController {
     private final OrderProductDetailsServices orderProductDetailsServices;
+    // Author: Nguyen Cao Nhan
+    // Insert Order Product Detail Controller
     @PostMapping("/create")
     public ResponseEntity<?> insertOrderProductDetail(@Valid @RequestBody OrderProductDetailRequest orderProductDetailRequest) {
         try {
@@ -31,6 +34,8 @@ public class OrderProductDetailController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    // Author: Nguyen Cao Nhan
+    // Update Order Product Detail Controller
     @PutMapping("")
     public ResponseEntity<?> updateOrderProductDetail(@Valid @RequestBody OrderProductDetailUpdateRequest orderProductDetailUpdateRequest) {
         try {
@@ -45,6 +50,9 @@ public class OrderProductDetailController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    // Author: Nguyen Cao Nhan
+    // Get Order Product Detail By Id Controller
     @GetMapping("/{id}")
     public ResponseEntity<?> getOrderProductDetailById(@PathVariable Long id) {
         try {
@@ -59,6 +67,8 @@ public class OrderProductDetailController {
         }
     }
 
+    // Author: Nguyen Cao Nhan
+    // Delete Order Product Detail Controller
     @DeleteMapping("/{oid}")
     public ResponseEntity<?> DeleteOrderProducttDetail(@PathVariable Long oid,
                                                       @Valid @RequestParam("pid") Long pid) {

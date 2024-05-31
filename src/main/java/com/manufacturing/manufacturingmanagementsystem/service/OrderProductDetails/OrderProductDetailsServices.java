@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+// Author: Nguyen Cao Nhan
+// This class is used to implement the IOrderProductDetailsServices interface
 @Service
 @AllArgsConstructor
 public class OrderProductDetailsServices implements IOrderProductDetailsServices {
@@ -19,6 +21,8 @@ public class OrderProductDetailsServices implements IOrderProductDetailsServices
     private final ProductsRepository productsRepository;
     private final OrdersRepository ordersRepository;
 
+    // Author: Nguyen Cao Nhan
+    // This method is used to insert order product detail
     @Override
     public List<Map<String, Object>> insertOrderProductDetail(Long oid, List<Long> pids, List<Integer> quantities) {
         try {
@@ -62,6 +66,8 @@ public class OrderProductDetailsServices implements IOrderProductDetailsServices
         }
     }
 
+    // Author: Nguyen Cao Nhan
+    // This method is used to find order product detail by product id and order id
     @Override
     public OrderProductDetailsEntity findOrderProductDetailByPid_OrderID(Long pid, Long oid) {
         try {
@@ -77,6 +83,8 @@ public class OrderProductDetailsServices implements IOrderProductDetailsServices
         }
     }
 
+    // Author: Nguyen Cao Nhan
+    // This method is used to find order product detail by order id
     @Override
     public List<Map<String, Object>> findOrderProductDetailById(Long id) {
         try {
@@ -98,7 +106,8 @@ public class OrderProductDetailsServices implements IOrderProductDetailsServices
         }
     }
 
-
+    // Author: Nguyen Cao Nhan
+    // This method is used to update order product detail
     @Override
     public Map<String, Object> updateOrderProductDetail(Long oid, Long pid, Integer quantity) {
         try {
@@ -132,6 +141,8 @@ public class OrderProductDetailsServices implements IOrderProductDetailsServices
         }
     }
 
+    // Author: Nguyen Cao Nhan
+    // This method is used to delete order product detail
     @Override
     public void deleteOrderProductDetail(Long pid, Long oid) {
         try {

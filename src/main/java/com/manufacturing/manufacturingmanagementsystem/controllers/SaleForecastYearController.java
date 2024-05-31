@@ -18,13 +18,15 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+// Author: Nguyen Cao Nhan
 @RestController
 @RequestMapping("/api/sale_forecasts/year")
 @AllArgsConstructor
 public class SaleForecastYearController {
     private final SaleForecastsRepository saleForecastsRepository;
     private final SaleForecastDetailsServices saleForecastDetailsServices;
-
+    // Author: Nguyen Cao Nhan
+    // Get All Sale Forecasts By Year Controller
     @GetMapping("/{year}")
     public ResponseEntity<?> getAllSaleForecastsByYear(@PathVariable int year) {
         try {
