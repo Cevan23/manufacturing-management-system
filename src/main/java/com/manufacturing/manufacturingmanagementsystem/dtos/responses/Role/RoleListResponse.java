@@ -3,7 +3,8 @@ package com.manufacturing.manufacturingmanagementsystem.dtos.responses.Role;
 import com.manufacturing.manufacturingmanagementsystem.models.RolesEntity;
 
 import java.util.List;
-
+// Author: Pham Van Cao
+// this class is used to handle the RoleList response
 public class RoleListResponse {
 
     private final List<RoleResponse> roles;

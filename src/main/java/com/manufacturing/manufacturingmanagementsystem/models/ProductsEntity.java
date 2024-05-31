@@ -3,7 +3,8 @@ import com.manufacturing.manufacturingmanagementsystem.models.audit.Auditable;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import jakarta.persistence.*;
-
+// Author: Pham Van Cao
+// this class is used to handle the ProductsEntity response
 @Entity
 @Table(name = TablePrefix.PREFIX_TABLE + "products")
 @EntityListeners(AuditingEntityListener.class)

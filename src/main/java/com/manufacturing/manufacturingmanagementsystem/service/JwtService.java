@@ -16,8 +16,9 @@ import org.springframework.stereotype.Service;
 import java.util.StringJoiner;
 import java.util.Date;
 import java.util.UUID;
-import org.springframework.util.CollectionUtils;
 
+// Author: Pham Van Cao
+// this class is used to implement the methods defined in the IJwtService interface
 @Service
 @AllArgsConstructor
 public class JwtService {
@@ -26,6 +27,8 @@ public class JwtService {
     private final String SIGNER_KEY = "Cf3X07omDRzLIp2hYuvrBmZ5vGlIcge12VEllyTdD1Q";
     private final InvalidatedTokenRepository invalidatedTokenRepository;
     private final RolesServices rolesServices;
+
+    // this method is used to generate a token
     public String generateToken(UsersEntity User) {
 
         JWSHeader header = new JWSHeader(JWSAlgorithm.HS256);
@@ -53,6 +56,7 @@ public class JwtService {
         }
     }
 
+    // this method is used to introspect a token
     public IntrospectResponse introspect(String token) throws AppException {
         boolean isValid = true;
 
@@ -67,6 +71,7 @@ public class JwtService {
                 .build();
     }
 
+    // this method is used to verify a token
     public SignedJWT verifyToken(String token) throws Exception {
         JWSVerifier verifier = new MACVerifier(SIGNER_KEY.getBytes());
 
@@ -87,6 +92,7 @@ public class JwtService {
         return signedJWT;
     }
 
+    // this method is used to invalidate a token
     private String buildScope(UsersEntity user) {
         StringJoiner stringJoiner = new StringJoiner(" ");
 
@@ -102,4 +108,5 @@ public class JwtService {
 
         return stringJoiner.toString();
     }
+
 }

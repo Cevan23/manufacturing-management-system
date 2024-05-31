@@ -5,7 +5,8 @@ import com.manufacturing.manufacturingmanagementsystem.models.WorkOrdersEntity;
 import lombok.*;
 
 import java.util.List;
-
+// Author: Pham Van Cao
+// this class is used to handle the WorkOrder response
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

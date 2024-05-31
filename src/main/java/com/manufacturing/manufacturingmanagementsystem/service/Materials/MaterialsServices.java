@@ -9,14 +9,15 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;
-
+// Author: Pham Hien Nhan
+// this class is used to handle the MaterialsServices response
 @Service
 @AllArgsConstructor
 public class MaterialsServices implements IMaterialsServices {
 
     private final MaterialsRepository materialsRepository;
     private final OrderMaterialDetailsServices orderMaterialDetailsServices;
-
+    // this service is used to create Material
     @Override
     public void createMaterial(MaterialsDTO materialDto)  {
         var materialEntity = materialsRepository.findByName(materialDto.getName());
@@ -33,7 +34,7 @@ public class MaterialsServices implements IMaterialsServices {
         // Save entity in the database
         materialsRepository.save(material);
     }
-
+    // this service is used to update Material
     @Override
     public void updateMaterial(MaterialsDTO materialDto)  {
             Optional<MaterialsEntity> material = materialsRepository.findById(materialDto.getId());
@@ -47,17 +48,17 @@ public class MaterialsServices implements IMaterialsServices {
             }
 
     }
-
+    // this service is used to delete Material
     @Override
     public void deleteMaterial(Long id)  {
         materialsRepository.deleteById(id);
     }
-
+    // this service is used to get all Materials
     @Override
     public List<MaterialsEntity> findAllMaterials() {
         return materialsRepository.findAll();
     }
-
+    // this service is used to get all Materials by name
     @Override
     public List<MaterialsEntity> findAlikeName(String name){
         if(name == null ){
@@ -67,12 +68,12 @@ public class MaterialsServices implements IMaterialsServices {
 
         return materials.orElse(null);
     }
-
+    // this service is used to get Material by name
     @Override
     public MaterialsEntity findMaterialByName(String name){
         return materialsRepository.findByName(name).orElse(null);
     }
-
+    // this service is used to get Material by id
     @Override
     public MaterialsDTO findMaterialById(Long id){
         MaterialsEntity materialEntity = materialsRepository.findById(id).orElse(null);
@@ -89,6 +90,7 @@ public class MaterialsServices implements IMaterialsServices {
 
         return materialDto;
     }
+    // this service is used to get Material for OrderMaterial by id
     @Override
     public List<Map<String, Object>> getMaterialForOrderMaterialById(Long id) {
         List<MaterialsEntity> materialsEntities = materialsRepository.findAll();
@@ -118,7 +120,6 @@ public class MaterialsServices implements IMaterialsServices {
         }
         return materialMap;
     }
-
 
 }
 

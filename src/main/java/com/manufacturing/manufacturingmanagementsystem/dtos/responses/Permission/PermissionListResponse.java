@@ -3,7 +3,8 @@ package com.manufacturing.manufacturingmanagementsystem.dtos.responses.Permissio
 import com.manufacturing.manufacturingmanagementsystem.models.PermissionsEntity;
 
 import java.util.List;
-
+// Author: Pham Van Cao
+// this class is used to handle the PermissionList response
 public class PermissionListResponse {
 
     private final List<PermissionResponse> permissions;

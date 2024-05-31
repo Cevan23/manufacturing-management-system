@@ -21,7 +21,8 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+// Author: Pham Van Cao
+// this class is used to handle the MasterProductionSchedulesServices response
 @Service
 @AllArgsConstructor
 public class MasterProductionSchedulesServices implements IMasterProductionSchedulesServices {
@@ -31,6 +32,7 @@ public class MasterProductionSchedulesServices implements IMasterProductionSched
     private final ProductsRepository productsRepository;
     private final SaleForecastDetailsRepository saleForecastDetailsRepository;
 
+    // this service is used to create MPS
     @Override
     public void createMPS(MPSRequest mpsRequest) {
         var productManager = usersRepository.findById(mpsRequest.getProduct_manager_ID()).orElseThrow();
@@ -49,7 +51,7 @@ public class MasterProductionSchedulesServices implements IMasterProductionSched
                 .build();
         masterProductionSchedulesRepository.save(mps);
     }
-
+    // this service is used to update MPS
     @Override
     public void updateMPS(MPSUpdateRequest mpsRequest) {
         System.out.println("mpsRequest = " + mpsRequest);
@@ -82,7 +84,7 @@ public class MasterProductionSchedulesServices implements IMasterProductionSched
 
         }
     }
-
+    // this service is used to get MPS by id
     @Override
     public MPSResponse getById(Long id){
         if(id == null){
@@ -109,7 +111,7 @@ public class MasterProductionSchedulesServices implements IMasterProductionSched
             }
         }
     }
-
+    // this service is used to get all MPS of PM
     @Override
     public  List<MPSResponse> getAllMPSofPM(Long pmID){
         try {
@@ -137,7 +139,7 @@ public class MasterProductionSchedulesServices implements IMasterProductionSched
             return null;
         }
     }
-
+    // this service is used to get all MPS
     @Override
     public  List<MPSResponse> getALl(){
         try {
@@ -166,7 +168,7 @@ public class MasterProductionSchedulesServices implements IMasterProductionSched
             return null;
         }
     }
-
+    // this service is used to delete MPS
     @Override
     public void deleteMPS(Long id){
         if(id == null){
@@ -176,14 +178,14 @@ public class MasterProductionSchedulesServices implements IMasterProductionSched
             mps.ifPresent(masterProductionSchedulesRepository::delete);
         }
     }
-
+    // this service is used to suggest MPS monthly
     @Override
     public MPSSuggestionMonthlyResponse suggestMPSMonthly(Long productId, Date month){
 
         
         return null;
     }
-
+    // this service is used to get all MPS by in progress
     public MasterProductionSchedulesEntity findMPSbyID(Long id) {
         MasterProductionSchedulesEntity mps = new MasterProductionSchedulesEntity();
         if(id != null){
@@ -198,7 +200,7 @@ public class MasterProductionSchedulesServices implements IMasterProductionSched
 
         return mps;
     }
-
+    // this service is used to get all MPS by in progress
     @Override
     public List<MasterProductionSchedulesDTO> getAllMPSbyInProgress(Float inProgress){
         try {

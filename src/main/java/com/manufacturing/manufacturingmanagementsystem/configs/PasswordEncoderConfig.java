@@ -6,7 +6,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import lombok.RequiredArgsConstructor;
-
+// Author: Pham Van Cao
+// this class is used to configure the password encoder
 @Configuration
 @RequiredArgsConstructor
 public class PasswordEncoderConfig {

@@ -17,14 +17,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+// Author: Pham Hien Nhan
+// this class is used to handle the request from the client side
 @RestController
 @RequestMapping("/api/inventory-material")
 @RequiredArgsConstructor
 public class InventoryMaterialController {
 
     private final IInventoryMaterialDetailsServices inventoryMaterialDetailsServices;
-
+    // this method is used to create a new inventory
     @PostMapping("/create")
     public ResponseEntity<ApiResponse> createInventory(@RequestBody InventoryMaterialDetailsDTO inventoryMaterialDetailsDTO) {
 
@@ -41,7 +42,7 @@ public class InventoryMaterialController {
             throw new AppException(ErrorCode.BAD_REQUEST);
         }
     }
-
+    // this method is used to get all the inventory
     @GetMapping("/get-all")
     public ResponseEntity<ApiResponse> getAllInventoryMaterial() {
 
@@ -58,8 +59,7 @@ public class InventoryMaterialController {
             throw new AppException(ErrorCode.BAD_REQUEST);
         }
     }
-
-
+    // this method is used to update the inventory
     @PutMapping("")
     public ResponseEntity<ApiResponse> updateInventoryMaterial(
             @RequestBody InventoryMaterialDetailsDTO inventoryMaterialDetailsDTO
@@ -78,7 +78,7 @@ public class InventoryMaterialController {
             throw new AppException(ErrorCode.BAD_REQUEST);
         }
     }
-
+    // this method is used to delete the inventory
     @DeleteMapping("/delete")
     public ResponseEntity<ApiResponse> deleteInventoryProduct(
             @Valid @RequestParam("materialId") Long materialId,

@@ -5,7 +5,8 @@ import com.manufacturing.manufacturingmanagementsystem.repositories.ID.OrderProd
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import jakarta.persistence.*;
-
+// Author: Pham Van Cao
+// this class is used to handle the OrderProductDetailsEntity response
 @Entity
 @Table(name = TablePrefix.PREFIX_TABLE + "order_product_details")
 @EntityListeners(AuditingEntityListener.class)

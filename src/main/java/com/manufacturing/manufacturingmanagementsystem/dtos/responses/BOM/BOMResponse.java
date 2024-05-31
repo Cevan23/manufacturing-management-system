@@ -5,7 +5,8 @@ import com.manufacturing.manufacturingmanagementsystem.dtos.responses.UserRespon
 import lombok.*;
 
 import java.util.List;
-
+// Author: Pham Van Cao
+// this class is used to handle the BOM response
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

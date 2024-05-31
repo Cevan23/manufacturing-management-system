@@ -5,7 +5,8 @@ import com.manufacturing.manufacturingmanagementsystem.models.MaterialsEntity;
 
 import java.util.List;
 import java.util.Map;
-
+// Author: Pham Van Cao
+// this class is used to handle the IMaterialsServices response
 public interface IMaterialsServices {
 
     void createMaterial(MaterialsDTO material);

@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
-
+// Author: Pham Van Cao
+// this class is used to handle the InvalidatedTokenEntity response
 @Getter
 @Setter
 @Entity

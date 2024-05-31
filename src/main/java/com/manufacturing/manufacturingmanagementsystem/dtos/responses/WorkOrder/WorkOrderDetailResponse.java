@@ -5,7 +5,8 @@ import com.manufacturing.manufacturingmanagementsystem.dtos.requests.WorkOrder.W
 import lombok.*;
 
 import java.util.List;
-
+// Author: Pham Van Cao
+// this class is used to handle the WorkOrderDetail response
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

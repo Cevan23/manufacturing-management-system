@@ -3,7 +3,8 @@ package com.manufacturing.manufacturingmanagementsystem.dtos.responses.Permissio
 import com.manufacturing.manufacturingmanagementsystem.models.PermissionsEntity;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
+// Author: Pham Van Cao
+// this class is used to handle the Permission response
 @Data
 @Getter
 @Setter

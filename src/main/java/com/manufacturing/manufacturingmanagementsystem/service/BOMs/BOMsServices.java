@@ -1,12 +1,7 @@
 package com.manufacturing.manufacturingmanagementsystem.service.BOMs;
 
-import com.manufacturing.manufacturingmanagementsystem.dtos.BOMDetailsDTO;
 import com.manufacturing.manufacturingmanagementsystem.dtos.BOMsDTO;
 import com.manufacturing.manufacturingmanagementsystem.dtos.requests.BOM.BOMRequest;
-import com.manufacturing.manufacturingmanagementsystem.dtos.responses.ApiResponse;
-import com.manufacturing.manufacturingmanagementsystem.dtos.responses.BOM.BOMResponse;
-import com.manufacturing.manufacturingmanagementsystem.dtos.responses.Material.MaterialResponse;
-import com.manufacturing.manufacturingmanagementsystem.dtos.responses.UserResponse;
 import com.manufacturing.manufacturingmanagementsystem.exceptions.AppException;
 import com.manufacturing.manufacturingmanagementsystem.exceptions.ErrorCode;
 import com.manufacturing.manufacturingmanagementsystem.models.BOMsEntity;
@@ -18,13 +13,14 @@ import com.manufacturing.manufacturingmanagementsystem.repositories.ProductsRepo
 import com.manufacturing.manufacturingmanagementsystem.service.Materials.MaterialsServices;
 import com.manufacturing.manufacturingmanagementsystem.service.Users.UsersServices;
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
+// Author: Pham Van Cao
+// this class is used to handle the BOMsServices response
 @Service
 @AllArgsConstructor
 public class BOMsServices implements IBOMsServices {
@@ -34,7 +30,7 @@ public class BOMsServices implements IBOMsServices {
     private UsersServices usersServices;
     private final MaterialsServices materialsServices;
     private final ProductsRepository productRepository;
-
+    // this service is used to create BOM
     @Override
     @Transactional
     public BOMsEntity createBOM(BOMRequest bomRequest) {
@@ -65,7 +61,7 @@ public class BOMsServices implements IBOMsServices {
 
 
     }
-
+    // this service is used to update BOM
     @Override
     @Transactional
     public void updateBOM(BOMRequest bomRequest, Long id) {
@@ -98,7 +94,7 @@ public class BOMsServices implements IBOMsServices {
 
 
     }
-
+    // this service is used to get BOM by id
     @Override
     public BOMsDTO getBOMById(Long id) {
         Optional<BOMsEntity> bom = bomsRepository.findById(id);
@@ -115,7 +111,7 @@ public class BOMsServices implements IBOMsServices {
                 .sellPrice(bom.get().getSellPrice())
                 .build();
     }
-
+    // this service is used to find BOM by id
     @Override
     public BOMsEntity findBOMById(Long id) {
         Optional<BOMsEntity> bom = bomsRepository.findById(id);
@@ -124,7 +120,7 @@ public class BOMsServices implements IBOMsServices {
         }
         return bom.get();
     }
-
+    // this service is used to delete BOM
     @Override
     public Boolean deleteBOM(Long id) {
         Optional<BOMsEntity> bomsEntity = bomsRepository.findById(id);
@@ -150,7 +146,7 @@ public class BOMsServices implements IBOMsServices {
         }
         return true;
     }
-
+    // this service is used to find BOM by name
     @Override
     public BOMsEntity findBOMByName(String name) {
 
@@ -160,12 +156,12 @@ public class BOMsServices implements IBOMsServices {
         }
         return bom.get();
     }
-
+    // this service is used to get all BOMs
     @Override
     public List<BOMsEntity> getBOMsByLikeName(String name) {
         return bomsRepository.findByNameLike(name);
     }
-
+    // this service is used to get all BOMs
     @Override
     public List<BOMsEntity> getAllBOMs() {
         try {
@@ -174,7 +170,7 @@ public class BOMsServices implements IBOMsServices {
             return null;
         }
     }
-
+    // this service is used to get all BOMs by status
     @Override
     public List<BOMsEntity> getAllBOMsbyStatus(String status) {
         try {
@@ -184,7 +180,7 @@ public class BOMsServices implements IBOMsServices {
 
         }
     }
-
+    // this service is used to check if BOM exists
     public boolean checkIfBOMExists(String name) {
         Optional<BOMsEntity> bom = bomsRepository.findByName(name);
         System.out.println("check : " + bom.isPresent() + bom);

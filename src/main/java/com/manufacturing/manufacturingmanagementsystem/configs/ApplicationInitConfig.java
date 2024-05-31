@@ -11,10 +11,10 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
 import java.util.Date;
-import java.util.HashSet;
 
+// Author: Pham Van Cao
+// This class is used to initialize the roles and the admin user
 @Configuration
 public class ApplicationInitConfig {
 
@@ -26,7 +26,8 @@ public class ApplicationInitConfig {
 
     @Autowired
     private RolesRepository roleRepository;
-
+    // Author: Pham Van Cao
+    // This method is used to initialize the roles and the admin user
     @Bean
     @ConditionalOnProperty(
             prefix = "spring",
@@ -38,7 +39,8 @@ public class ApplicationInitConfig {
             initAdminUser();
         };
     }
-
+    // Author: Pham Van Cao
+    // This method is used to initialize the roles
     private void initRoles() {
         if (roleRepository.findRoleByRoleName("chairman") != null) {
             RolesEntity chairmanRole = new RolesEntity();
@@ -47,7 +49,8 @@ public class ApplicationInitConfig {
             System.out.println("Role chairman has been created");
         }
     }
-
+    // Author: Pham Van Cao
+    // This method is used to initialize the admin user
     private void initAdminUser() {
         if (userRepository.findByEmail("admin@gmail.com").isEmpty()) {
             UsersEntity adminUser = new UsersEntity();

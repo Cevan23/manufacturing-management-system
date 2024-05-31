@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-
+// Author: Pham Hien Nhan
+// this class is used to handle the request from the client side
 @RestController
 @RequestMapping("/api/material")
 public class MaterialController {
@@ -25,7 +26,7 @@ public class MaterialController {
     public MaterialController(MaterialsServices materialsServices) {
         this.materialsServices = materialsServices;
     }
-
+    // this method is used to create a new material
     @PostMapping("/create")
     public ResponseEntity<ApiResponse> createMaterial(@RequestBody MaterialsDTO material) {
         if(material == null) {
@@ -56,7 +57,7 @@ public class MaterialController {
 
         }
     }
-
+    // this method is used to update the material
     @PutMapping("/update")
     public ResponseEntity<ApiResponse> updateMaterial(@RequestBody MaterialsDTO material) {
         if(material == null) {
@@ -86,7 +87,7 @@ public class MaterialController {
 
         }
     }
-
+    // this method is used to delete the material
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<ApiResponse> deleteMaterial(@PathVariable Long id) {
         if(id == null) {
@@ -109,7 +110,7 @@ public class MaterialController {
 
         }
     }
-
+    // this method is used to get all the material
     @GetMapping("/all")
     public ResponseEntity<ApiResponse> findAllMaterials() {
         return ResponseEntity.ok()
@@ -117,7 +118,7 @@ public class MaterialController {
                         .result(materialsServices.findAllMaterials())
                         .build());
     }
-
+    // this method is used to find the material by name
     @GetMapping("/find")
     public ResponseEntity<ApiResponse> findMaterialByName(@RequestBody String name) {
         if (name == null) {
@@ -138,7 +139,7 @@ public class MaterialController {
 
         }
     }
-
+    // this method is used to find the material by id
     @GetMapping("/find/{id}")
     public ResponseEntity<ApiResponse> findMaterialById(@PathVariable Long id) {
         if (id == null) {
@@ -160,7 +161,7 @@ public class MaterialController {
         }
 
     }
-
+    // this method is used to find the material by name
     @GetMapping("/findAlike")
     public ResponseEntity<ApiResponse> findAlikeName(@RequestBody String name) {
         if (name == null) {
@@ -182,6 +183,7 @@ public class MaterialController {
         }
 
     }
+    // this method is used to get all the material
     @GetMapping("/forOrderMaterial/{id}")
     public ResponseEntity<ApiResponse> getMaterialsForOrderMaterialById(
             @Valid @PathVariable Long id) {

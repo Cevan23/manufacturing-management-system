@@ -14,14 +14,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+// Author: Pham Hien Nhan
+// this class is used to handle the request from the client side
 @RestController
 @RequestMapping("/api/inventory")
 @RequiredArgsConstructor
 public class InventoryController {
 
     private final IInventoriesServices inventoriesServices;
-
+    // this method is used to create a new inventory
     @PostMapping("/create")
     public ResponseEntity<ApiResponse> createInventory(@RequestBody InventoryDTO inventoryDTO) {
 
@@ -36,7 +37,7 @@ public class InventoryController {
             throw new AppException(ErrorCode.BAD_REQUEST);
         }
     }
-
+    // this method is used to update the inventory
     @GetMapping("/get-all")
     public ResponseEntity<ApiResponse> getAllInventory() {
 

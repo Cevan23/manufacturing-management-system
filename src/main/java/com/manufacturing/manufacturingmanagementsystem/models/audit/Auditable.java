@@ -9,7 +9,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import jakarta.persistence.*;
 import java.util.Date;
-
+// Author: Pham Van Cao
+// this class is used to handle the Auditable response
 @MappedSuperclass
 @Getter
 @Setter

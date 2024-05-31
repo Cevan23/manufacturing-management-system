@@ -4,7 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import java.util.List;
-
+// Author: Pham Van Cao
+// this class is used to handle the BOM request
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

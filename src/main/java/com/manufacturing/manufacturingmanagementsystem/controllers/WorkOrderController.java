@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-
+// Author: Pham Van Cao
+// this class is used to handle the work order
 @RestController
 @RequestMapping("/api/WorkOrder")
 public class WorkOrderController {
@@ -24,7 +25,8 @@ public class WorkOrderController {
     public WorkOrderController(WorkOrdersServices workOrderService) {
         this.workOrderService = workOrderService;
     }
-
+    // Author: Pham Van Cao
+    // this method is used to create the work order
     @PostMapping("/createWorkOrder")
     public ResponseEntity<ApiResponse> createWorkOrder(@RequestBody WorkOrderRequest workOrderRequest) {
         if (workOrderRequest == null) {
@@ -60,7 +62,8 @@ public class WorkOrderController {
                             .build());
         }
     }
-
+    // Author: Pham Van Cao
+    // this method is used to update the work order
     @PutMapping("/updateWorkOrder")
     @Transactional
     public ResponseEntity<ApiResponse> updateWorkOrder(@RequestBody WorkOrderRequest workOrderRequest) {
@@ -88,7 +91,8 @@ public class WorkOrderController {
                         .result(null)
                         .build());
     }
-
+    // Author: Pham Van Cao
+    // this method is used to update the work order status
     @PutMapping("/updateWorkOrderStatus/{id}")
     @Transactional
     public ResponseEntity<ApiResponse> updateWorkOrderStatus(@PathVariable Long id, @RequestParam String status) {
@@ -116,7 +120,8 @@ public class WorkOrderController {
                         .result(null)
                         .build());
     }
-
+    // Author: Pham Van Cao
+    // this method is used to delete the work order
     @DeleteMapping("/deleteWorkOrder/{id}")
     public ResponseEntity<ApiResponse> deleteWorkOrder(@PathVariable Long id) {
         if (id == null) {
@@ -143,7 +148,8 @@ public class WorkOrderController {
                         .result(null)
                         .build());
     }
-
+    // Author: Pham Van Cao
+    // this method is used to get all the work orders starting today
     @GetMapping("/getAllWorkOrdersStartingToday")
     public ResponseEntity<ApiResponse> getAllWorkOrdersStartingToday() {
         try {
@@ -161,7 +167,8 @@ public class WorkOrderController {
                             .build());
         }
     }
-
+    // Author: Pham Van Cao
+    // this method is used to get all the work orders
     @GetMapping("/getAllWorkOrders")
     public ResponseEntity<ApiResponse> getAllWorkOrders() {
         try {
@@ -179,7 +186,8 @@ public class WorkOrderController {
                             .build());
         }
     }
-
+    // Author: Pham Van Cao
+    // this method is used to get all the work orders of the product manager
     @GetMapping("/getAllWorkOrdersOfPM")
     public ResponseEntity<ApiResponse> getAllWorkOrdersOfPM(@RequestParam Long pmID) {
         if (pmID == null) {
@@ -205,7 +213,8 @@ public class WorkOrderController {
                             .build());
         }
     }
-
+    // Author: Pham Van Cao
+    // this method is used to get the work order by id
     @GetMapping("/getDetailAboutWorkOrder/{id}")
     public ResponseEntity<ApiResponse> getDetailAboutWorkOrder(@PathVariable Long id) {
         if (id == null) {

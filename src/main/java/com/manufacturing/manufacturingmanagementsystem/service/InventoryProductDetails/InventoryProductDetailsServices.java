@@ -11,7 +11,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
-
+// Author: Pham Hien Nhan
+// this class is used to implement the methods declared in the IInventoryProductDetailsServices interface
 @Service
 @AllArgsConstructor
 public class InventoryProductDetailsServices implements IInventoryProductDetailsServices {
@@ -21,6 +22,7 @@ public class InventoryProductDetailsServices implements IInventoryProductDetails
     private final InventoriesRepository inventoriesRepository;
 
     private final ProductsRepository productsRepository;
+    // this service is used to insert a new inventory product
     @Override
     public InventoryProductDetailsEntity insertInventoryProductDetail(InventoryProductDetailsDTO inventoryProductDetailsDTO) throws Exception {
 
@@ -56,12 +58,12 @@ public class InventoryProductDetailsServices implements IInventoryProductDetails
         }
 
     }
-
+    // this service is used to get all inventory products
     @Override
     public List<InventoryProductDetailsEntity> getAllInventoryProduct() {
         return inventoryProductDetailsRepository.findAll();
     }
-
+    // this service is used to update an inventory product
     @Override
     public InventoryProductDetailsEntity updateInventoryProduct(
             InventoryProductDetailsDTO inventoryProductDetailsDTO) throws Exception {
@@ -85,7 +87,7 @@ public class InventoryProductDetailsServices implements IInventoryProductDetails
             throw new Exception("Cannot find Inventory Product");
         }
     }
-
+    // this service is used to delete an inventory product
     @Override
     public void deleteInventoryProduct(long productId, long inventoryId) throws Exception {
 
@@ -96,6 +98,5 @@ public class InventoryProductDetailsServices implements IInventoryProductDetails
 
     }
 
-    // Các phương thức service khác cần thiết
 }
 

@@ -5,6 +5,8 @@ import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.id.IdentifierGenerator;
 import java.io.Serializable;
+// Author: Pham Van Cao
+// this class is used to generate id
 public class IdGenerator implements IdentifierGenerator{
     @Override
     public Serializable generate(SharedSessionContractImplementor sharedSessionContractImplementor, Object o) throws HibernateException {

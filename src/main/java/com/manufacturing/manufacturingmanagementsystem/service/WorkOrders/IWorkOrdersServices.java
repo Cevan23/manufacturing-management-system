@@ -5,7 +5,8 @@ import com.manufacturing.manufacturingmanagementsystem.dtos.responses.WorkOrder.
 import com.manufacturing.manufacturingmanagementsystem.models.WorkOrdersEntity;
 
 import java.util.List;
-
+// Author: Pham Van Cao
+// this interface is used to define the methods that will be implemented in the WorkOrdersServices class
 public interface IWorkOrdersServices {
 
     Long createWorkOrder(WorkOrderRequest workOrderRequest);

@@ -1,9 +1,10 @@
 package com.manufacturing.manufacturingmanagementsystem.dtos.responses;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.*;
-import lombok.experimental.FieldDefaults;
 
+import lombok.*;
+
+// Author: Pham Van Cao
+// this class is used to handle the ApiResponse response
 @Data
 @Builder
 @NoArgsConstructor

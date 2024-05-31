@@ -7,7 +7,8 @@ import com.manufacturing.manufacturingmanagementsystem.models.ProductsEntity;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
+// Author: Pham Hien Nhan
+// this interface is used to declare the methods that will be implemented in the ProductsServices class
 public interface iProductsServices {
     ProductsEntity findProductbyName(String name);
 

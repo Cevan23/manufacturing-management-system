@@ -3,7 +3,8 @@ package com.manufacturing.manufacturingmanagementsystem.dtos.responses.Customer;
 import com.manufacturing.manufacturingmanagementsystem.models.CustomersEntity;
 
 import java.util.List;
-
+// Author: Pham Hien Nhan
+// this class is used to handle the CustomerList response
 public class CustomerListResponse {
 
     private final List<CustomerResponse> customers;

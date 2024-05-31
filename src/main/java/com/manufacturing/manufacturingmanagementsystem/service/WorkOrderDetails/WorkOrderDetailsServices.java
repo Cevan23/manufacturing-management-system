@@ -14,7 +14,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
+// Author: Pham Van Cao
+// this class is used to implement the methods defined in IWorkOrderDetailsServices.java
 @Service
 @AllArgsConstructor
 public class WorkOrderDetailsServices implements IWorkOrderDetailsServices {
@@ -23,7 +24,7 @@ public class WorkOrderDetailsServices implements IWorkOrderDetailsServices {
     private final MasterProductionSchedulesRepository masterProductionSchedulesRepository;
     private final UsersRepository usersRepository;
     private final WorkOrdersRepository workOrdersRepository;
-
+    // this method is used to create a new work order detail
     @Override
     public void createWorkOrderDetails(WorkOrderDetailRequest workOrderDetailRequest) {
         WorkOrdersEntity workOrder = workOrdersRepository.findById(workOrderDetailRequest.getWorkOrderId()).orElse(null);
@@ -43,7 +44,7 @@ public class WorkOrderDetailsServices implements IWorkOrderDetailsServices {
                 .build();
         workOrderDetailsRepository.save(workOrderDetailsEntity);
     }
-
+    // this method is used to update a work order detail
     @Override
     public void updateWorkOrderDetails(WorkOrderDetailRequest workOrderDetailRequest) {
         WorkOrdersEntity workOrder = workOrdersRepository.findById(workOrderDetailRequest.getWorkOrderId()).orElse(null);
@@ -64,13 +65,13 @@ public class WorkOrderDetailsServices implements IWorkOrderDetailsServices {
             workOrderDetailsRepository.save(workOrderDetailsEntity.get());
         }
     }
-
+    // this method is used to delete a work order detail
     @Override
     public void deleteWorkOrderDetails(Long workOrderId, Long masterProductionScheduleId) {
 
         if(workOrderId != null && masterProductionScheduleId != null) workOrderDetailsRepository.deleteByWorkOrderIdAndMasterProductionScheduleId(workOrderId, masterProductionScheduleId);
     }
-
+    // this method is used to get all work order details of a work order
     @Override
     public List<WorkOrderDetailsEntity> getWorkOrderDetailsOfWO(Long id) {
         if(id != null) {
@@ -78,12 +79,12 @@ public class WorkOrderDetailsServices implements IWorkOrderDetailsServices {
         }
         return null;
     }
-
+    // this method is used to get all work order details
     @Override
     public List<WorkOrderDetailsEntity> getAllWorkOrderDetails() {
         return workOrderDetailsRepository.findAll();
     }
-
+    // this method is used to sum the projected production by master production schedule
     @Override
     public Integer sumProjectedProductionByMasterProductionSchedule(Long masterProductionScheduleId) {
         if(masterProductionScheduleId != null) {

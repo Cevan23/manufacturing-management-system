@@ -2,7 +2,8 @@ package com.manufacturing.manufacturingmanagementsystem.dtos;
 import lombok.*;
 
 import java.util.Date;
-
+// Author: Pham Van Cao
+// this class is used to handle the WorkOrdersDTO response
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

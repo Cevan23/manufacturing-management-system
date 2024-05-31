@@ -3,7 +3,8 @@ package com.manufacturing.manufacturingmanagementsystem.dtos.responses.Product;
 import com.manufacturing.manufacturingmanagementsystem.models.ProductsEntity;
 
 import java.util.List;
-
+// Author: Pham Van Cao
+// this class is used to handle the ProductList response
 public class ProductListResponse {
     private final List<ProductResponse> products;
 

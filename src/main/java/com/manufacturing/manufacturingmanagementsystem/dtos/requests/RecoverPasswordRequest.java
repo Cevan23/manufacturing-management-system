@@ -1,7 +1,8 @@
 package com.manufacturing.manufacturingmanagementsystem.dtos.requests;
 
 import lombok.*;
-
+// Author: Pham Hien Nhan
+// this class is used to handle the RecoverPassword request
 @Getter
 @Setter
 @AllArgsConstructor

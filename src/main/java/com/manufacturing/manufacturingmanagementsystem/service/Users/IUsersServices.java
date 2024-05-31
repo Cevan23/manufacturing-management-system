@@ -5,7 +5,8 @@ import com.manufacturing.manufacturingmanagementsystem.models.UsersEntity;
 
 import java.util.List;
 import java.util.Map;
-
+// Author: Pham Hien Nhan
+// this interface is used to declare the methods that will be implemented in the UsersServices class
 public interface IUsersServices {
     List<UsersEntity> getAllUsers();
     UsersEntity findUserbyEmail(String email);
