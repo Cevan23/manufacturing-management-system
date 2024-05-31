@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+// Author: Nguyen Cao Nhan
+// this class is used to handle the SaleForecastDecorator
 @AllArgsConstructor
 @NoArgsConstructor
 public abstract class SaleForecastDecorator implements ISaleForecast{

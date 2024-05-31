@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-// Author: Pham Van Cao
+// Author: Pham Hien Nhan
 // this class is used to handle the InventoryMaterialDetailEntityId response
 @Data
 @NoArgsConstructor

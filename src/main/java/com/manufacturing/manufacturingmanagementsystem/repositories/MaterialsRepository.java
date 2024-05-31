@@ -8,7 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-
+// Author: Pham Van Cao
+// this class is used to handle the MaterialsRepository response
 @Repository
 public interface MaterialsRepository extends JpaRepository<MaterialsEntity, Long> {
 

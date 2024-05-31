@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+// Author: Nguyen Cao Nhan
+// this class is used to handle the SaleForecastImpl
 @AllArgsConstructor
 @NoArgsConstructor
 public class SaleForecastImpl implements ISaleForecast {

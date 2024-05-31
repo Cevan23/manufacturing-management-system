@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 
 import java.util.Date;
 
-// Author: Pham Van Cao
+// Author: Nguyen Cao Nhan
 // this class is used to handle the OrdersEntity response
 @Entity
 @Table(name = TablePrefix.PREFIX_TABLE + "orders")

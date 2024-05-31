@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+// Author: Pham Hien Nhan
+// this class is used to handle the ProductsRepository response
 @Repository
 public interface ProductsRepository extends JpaRepository<ProductsEntity, Long> {
     ProductsEntity findFirstByName(String name);

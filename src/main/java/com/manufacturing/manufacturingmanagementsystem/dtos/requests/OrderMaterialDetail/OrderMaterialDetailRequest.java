@@ -3,7 +3,7 @@ package com.manufacturing.manufacturingmanagementsystem.dtos.requests.OrderMater
 import lombok.*;
 
 import java.util.List;
-// Author: Pham Van Cao
+// Author: Nguyen Cao Nhan
 // this class is used to handle the OrderMaterialDetail request
 @Data
 @NoArgsConstructor

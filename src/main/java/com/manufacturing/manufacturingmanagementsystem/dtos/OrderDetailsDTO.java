@@ -1,6 +1,6 @@
 package com.manufacturing.manufacturingmanagementsystem.dtos;
 import lombok.*;
-// Author: Pham Van Cao
+// Author: Nguyen Cao Nhan
 // this class is used to handle the OrderDetailsDTO response
 @Data
 @AllArgsConstructor

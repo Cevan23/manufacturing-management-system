@@ -5,7 +5,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import jakarta.persistence.*;
 
 import java.util.Date;
-// Author: Pham Van Cao
+// Author: Nguyen Cao Nhan
 // this class is used to handle the SaleForecastsEntity response
 @Entity
 @Table(name = TablePrefix.PREFIX_TABLE + "sale_forecasts")

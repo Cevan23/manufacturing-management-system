@@ -5,7 +5,7 @@ import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.Date;
-// Author: Pham Van Cao
+// Author: Pham Hien Nhan
 // this class is used to handle the UsersEntity response
 @Entity
 @Table(name = TablePrefix.PREFIX_TABLE + "users")

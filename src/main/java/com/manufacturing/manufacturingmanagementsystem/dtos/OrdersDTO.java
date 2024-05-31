@@ -2,7 +2,7 @@ package com.manufacturing.manufacturingmanagementsystem.dtos;
 import lombok.*;
 
 import java.util.Date;
-// Author: Pham Van Cao
+// Author: Nguyen Cao Nhan
 // this class is used to handle the OrdersDTO response
 @Data
 @AllArgsConstructor
