@@ -8,7 +8,7 @@ import jakarta.persistence.Table;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import jakarta.persistence.*;
-// Author: Pham Van Cao
+// Author: Pham Hien Nhan
 // this class is used to handle the InventoryMaterialDetailsEntity response
 @Entity
 @Table(name = TablePrefix.PREFIX_TABLE + "inventory_material_details")

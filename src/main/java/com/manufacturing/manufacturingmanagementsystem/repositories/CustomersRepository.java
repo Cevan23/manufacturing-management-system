@@ -8,7 +8,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+// Author: Pham Hien Nhan
+// this class is used to handle the CustomersRepository response
 @Repository
 public interface CustomersRepository extends JpaRepository<CustomersEntity, Long> {
     @Query("SELECT c FROM CustomersEntity c WHERE c.contact = :contact")

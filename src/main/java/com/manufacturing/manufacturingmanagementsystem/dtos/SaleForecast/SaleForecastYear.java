@@ -6,7 +6,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
+// Author: Nguyen Cao Nhan
+// this class is used to handle the SaleForecastYear
 public class SaleForecastYear extends SaleForecastDecorator {
 
     public SaleForecastYear(ISaleForecast saleForecast) {

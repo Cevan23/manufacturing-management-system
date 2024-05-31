@@ -4,7 +4,7 @@ import jakarta.persistence.Embeddable;
 import lombok.*;
 
 import java.io.Serializable;
-// Author: Pham Van Cao
+// Author: Nguyen Cao Nhan
 // this class is used to handle the SaleForecastDetailEntityId response
 @Data
 @NoArgsConstructor

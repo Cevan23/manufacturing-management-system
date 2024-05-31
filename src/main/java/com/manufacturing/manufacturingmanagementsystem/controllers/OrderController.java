@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
+// Author: Nguyen Cao Nhan
 @RestController
 @RequestMapping("/api/orders")
 @RequiredArgsConstructor
@@ -28,6 +29,8 @@ public class OrderController {
 
     private final OrdersServices ordersServices;
 
+    // Author: Nguyen Cao Nhan
+    // Get All Order Controller
     @GetMapping("")
     public ResponseEntity<?> getAllOrder() {
         try {
@@ -41,6 +44,8 @@ public class OrderController {
         }
     }
 
+    // Author: Nguyen Cao Nhan
+    // Insert Order Controller
     @PostMapping("/create")
     public ResponseEntity<?> insertOrder(@Valid @RequestBody OrderRequest orderRequest) {
         try {
@@ -57,6 +62,8 @@ public class OrderController {
         }
     }
 
+    // Author: Nguyen Cao Nhan
+    // Update Order Controller
     @PutMapping("")
     public ResponseEntity<?> updateOrder(@Valid @RequestBody OrderUpdateRequest orderUpdateRequest) {
         try {
@@ -71,6 +78,8 @@ public class OrderController {
         }
     }
 
+    // Author: Nguyen Cao Nhan
+    // Delete Order Controller
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteOrder(@PathVariable Long id) {
         try {

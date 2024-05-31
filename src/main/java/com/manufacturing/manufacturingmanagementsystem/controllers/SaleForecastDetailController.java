@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-
+// Author: Nguyen Cao Nhan
 @RestController
 @RequestMapping("/api/sale_forecast_detail")
 @RequiredArgsConstructor
 public class SaleForecastDetailController {
     private final SaleForecastDetailsServices saleForecastDetailsServices;
+    // Author: Nguyen Cao Nhan
+    // Insert Sale Forecast Detail Controller
     @PostMapping("/create")
     public ResponseEntity<?> insertSaleForecastDetail(@Valid @RequestBody SaleForecastDetailsInsertRequest saleForecastDetailInsertRequest) {
         try {
@@ -31,6 +33,8 @@ public class SaleForecastDetailController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    // Author: Nguyen Cao Nhan
+    // Update Sale Forecast Detail Controller
     @PutMapping("")
     public ResponseEntity<?> updateSaleForecastDetail(@Valid @RequestBody SaleForecastDetailsUpdateRequest saleForecastDetailUpdateRequest) {
         try {
@@ -45,6 +49,8 @@ public class SaleForecastDetailController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    // Author: Nguyen Cao Nhan
+    // Get Sale Forecast Detail By Id Controller
     @GetMapping("/{id}")
     public ResponseEntity<?> getSaleForecastDetailById(@PathVariable Long id) {
         try {
@@ -59,6 +65,8 @@ public class SaleForecastDetailController {
         }
     }
 
+    // Author: Nguyen Cao Nhan
+    // Delete Sale Forecast Detail Controller
     @DeleteMapping("/{sid}")
     public ResponseEntity<?> DeleteSaleForecastDetail(@PathVariable Long sid,
                                                       @Valid @RequestParam("pid") Long pid) {

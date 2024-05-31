@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-// Author: Pham Van Cao
+// Author: Nguyen Cao Nhan
 // this class is used to handle the Order Detail response
 @Data
 @AllArgsConstructor

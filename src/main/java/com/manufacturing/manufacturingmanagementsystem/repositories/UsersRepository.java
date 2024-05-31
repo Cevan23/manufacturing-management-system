@@ -8,7 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-
+// Author: Pham Hien Nhan
+// this class is used to handle the UsersRepository response
 @Repository
 public interface UsersRepository extends JpaRepository<UsersEntity, Long> {
 

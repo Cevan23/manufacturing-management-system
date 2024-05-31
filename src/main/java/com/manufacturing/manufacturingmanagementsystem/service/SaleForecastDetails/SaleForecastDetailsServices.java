@@ -14,7 +14,8 @@ import java.sql.Date;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.*;
-
+// Author: Nguyen Cao Nhan
+// Service SaleForecastDetails
 @Service
 @AllArgsConstructor
 public class SaleForecastDetailsServices implements ISaleForecastDetailsServices {
@@ -23,6 +24,8 @@ public class SaleForecastDetailsServices implements ISaleForecastDetailsServices
     private final SaleForecastsRepository saleForecastsRepository;
     private final ProductsRepository productsRepository;
 
+    // Author: Nguyen Cao Nhan
+    // Service insert SaleForecastDetail
     @Override
     public List<Map<String, Object>> insertSaleForecastDetail(Long sale_id, List<Long> pids, List<Integer> quantities) {
         try {
@@ -68,6 +71,8 @@ public class SaleForecastDetailsServices implements ISaleForecastDetailsServices
         }
     }
 
+    // Author: Nguyen Cao Nhan
+    // Service find SaleForecastDetail by pid and sale_id
     @Override
     public SaleForecastDetailsEntity findSaleForecastDetailByPid_SaleID(Long pid, Long sale_id) {
         try {
@@ -83,6 +88,8 @@ public class SaleForecastDetailsServices implements ISaleForecastDetailsServices
         }
     }
 
+    // Author: Nguyen Cao Nhan
+    // Service find SaleForecastDetail by id
     @Override
     public List<Map<String, Object>> findSaleForecastDetailById(Long id) {
         try {
@@ -105,7 +112,8 @@ public class SaleForecastDetailsServices implements ISaleForecastDetailsServices
         }
     }
 
-
+    // Author: Nguyen Cao Nhan
+    // Service update SaleForecastDetail
     @Override
     public Map<String, Object> updateSaleForecastDetail(Long sale_id, Long pid, Integer quantity,float totalPrice,float totalSaleprice) {
         try {
@@ -138,6 +146,8 @@ public class SaleForecastDetailsServices implements ISaleForecastDetailsServices
         }
     }
 
+    // Author: Nguyen Cao Nhan
+    // Service delete SaleForecastDetail
     @Override
     public void deleteSaleForecastDetail(Long pid, Long sale_id) {
         try {
@@ -148,6 +158,8 @@ public class SaleForecastDetailsServices implements ISaleForecastDetailsServices
         }
     }
 
+    // Author: Nguyen Cao Nhan
+    // Service get all SaleForecastDetail
     @Override
     public List<Object[]> findQuantityAndSaleForecastIdByProductIdAndMonthYear(Long productId, Date startDate, Date endDate) {
         try {
@@ -156,6 +168,9 @@ public class SaleForecastDetailsServices implements ISaleForecastDetailsServices
             throw new RuntimeException("Failed to find quantity and sale forecast id by product id and month year: " + e.getMessage());
         }
     }
+
+    // Author: Nguyen Cao Nhan
+    // Service get all SaleForecastDetail report have total price
     @Override
     public Map<String, Object> findSumReportSaleForecastById(Long id) {
         try {

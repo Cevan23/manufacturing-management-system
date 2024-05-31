@@ -6,7 +6,8 @@ import com.manufacturing.manufacturingmanagementsystem.models.MaterialsEntity;
 import com.manufacturing.manufacturingmanagementsystem.repositories.ID.InventoryMaterialDetailEntityId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
+// Author: Pham Hien Nhan
+// this class is used to handle the InventoryMaterialDetailsRepository response
 @Repository
 public interface InventoryMaterialDetailsRepository extends JpaRepository<InventoryMaterialDetailsEntity, InventoryMaterialDetailEntityId> {
     // Add custom query methods if needed

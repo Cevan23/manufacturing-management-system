@@ -3,7 +3,7 @@ package com.manufacturing.manufacturingmanagementsystem.dtos.responses.Order;
 import com.manufacturing.manufacturingmanagementsystem.models.OrdersEntity;
 
 import java.util.List;
-// Author: Pham Van Cao
+// Author: Nguyen Cao Nhan
 // this class is used to handle the OrderList response
 public class OrderListResponse {
 
