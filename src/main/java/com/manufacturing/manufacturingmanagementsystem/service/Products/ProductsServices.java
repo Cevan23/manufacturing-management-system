@@ -16,7 +16,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;
-
+// Author: Pham Hien Nhan
+// this class is used to implement the methods declared in the iProductsServices interface
 @Service
 @AllArgsConstructor
 public class ProductsServices implements iProductsServices {
@@ -27,6 +28,7 @@ public class ProductsServices implements iProductsServices {
     private final SaleForecastDetailsServices saleForecastDetailsServices;
     private final OrderProductDetailsServices orderProductDetailsServices;
 
+    // this service is used to find a product by name
     @Override
     public ProductsEntity findProductbyName(String name) {
         if (StringUtils.isEmpty(name)) {
@@ -34,7 +36,7 @@ public class ProductsServices implements iProductsServices {
         }
         return productsRepository.findFirstByName(name);
     }
-
+    // this service is used to insert a new product
     @Override
     public void insertProduct(ProductsDTO productsDTO, Long bomID, Long categoryID) {
         ProductsEntity productEntity = new ProductsEntity();
@@ -51,7 +53,7 @@ public class ProductsServices implements iProductsServices {
         }
         productsRepository.save(productEntity);
     }
-
+    // this service is used to get a product for sale forecast by id
     @Override
     public List<Map<String, Object>> getProductForSaleForecastById(Long id) {
         List<ProductsEntity> productsEntityList = productsRepository.findAll();
@@ -83,7 +85,7 @@ public class ProductsServices implements iProductsServices {
         }
         return productMap;
     }
-
+    // this service is used to get a product for order product by id
     @Override
     public List<Map<String, Object>> getProductForOrderProductById(Long id) {
         List<ProductsEntity> productsEntityList = productsRepository.findAll();
@@ -115,7 +117,7 @@ public class ProductsServices implements iProductsServices {
         }
         return productMap;
     }
-
+    // this service is used to get all products
     @Override
     public List<ProductsEntity> getAllProducts() {
         try {
@@ -125,7 +127,7 @@ public class ProductsServices implements iProductsServices {
             return null;
         }
     }
-
+    // this service is used to update a product
     @Override
     public void updateProduct(ProductsDTO request) {
         Optional<ProductsEntity> productOptional = productsRepository.findById(request.getId());

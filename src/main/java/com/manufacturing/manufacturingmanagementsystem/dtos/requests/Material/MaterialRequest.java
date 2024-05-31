@@ -1,7 +1,8 @@
 package com.manufacturing.manufacturingmanagementsystem.dtos.requests.Material;
 
 import lombok.*;
-
+// Author: Pham Van Cao
+// this class is used to handle the material request
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

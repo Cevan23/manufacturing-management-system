@@ -8,8 +8,6 @@ import com.manufacturing.manufacturingmanagementsystem.exceptions.ErrorCode;
 import com.manufacturing.manufacturingmanagementsystem.models.ProductsEntity;
 import com.manufacturing.manufacturingmanagementsystem.service.BOMs.BOMsServices;
 import com.manufacturing.manufacturingmanagementsystem.service.Products.ProductsServices;
-import com.manufacturing.manufacturingmanagementsystem.service.Products.iProductsServices;
-import jakarta.validation.Path;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
+// Author: Pham Hien Nhan
+// this class is used to handle the request from the client side
 @RestController
 @RequestMapping("/api/products")
 @RequiredArgsConstructor
@@ -31,6 +29,8 @@ public class ProductControllers {
         private final ProductsServices productsService;
         private final BOMsServices bomsService;
 
+        // Author: Pham Hien Nhan
+        // this method is used to create a new product
         @PostMapping("/createProduct")
         public ResponseEntity<ApiResponse> createProduct(
                         @Valid @RequestBody CreateProductRequest createProductRequest) {
@@ -67,7 +67,7 @@ public class ProductControllers {
                                                         .build());
                 }
         }
-
+        // this method is used to get all the products
         @GetMapping("/forSaleDetail/{id}")
         public ResponseEntity<ApiResponse> getProductsForSaleForecastById(
                         @Valid @PathVariable Long id) {
@@ -86,7 +86,7 @@ public class ProductControllers {
                                                         .build());
                 }
         }
-
+        // this method is used to get all the products
         @GetMapping("/forOrderProduct/{id}")
         public ResponseEntity<ApiResponse> getProductsForOrderProductById(
                         @Valid @PathVariable Long id) {
@@ -105,7 +105,7 @@ public class ProductControllers {
                                                         .build());
                 }
         }
-
+        // this method is used to get all the products
         @GetMapping("/all")
         public ResponseEntity<ApiResponse> getAllProducts() {
                 try {
@@ -131,7 +131,7 @@ public class ProductControllers {
                                                         .build());
                 }
         }
-
+        // this method is used to get the product by id
         @PutMapping("")
         public ResponseEntity<ApiResponse> updateProduct(@Valid @RequestBody ProductsDTO request) {
                 try {

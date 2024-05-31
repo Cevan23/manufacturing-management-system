@@ -8,12 +8,14 @@ import com.manufacturing.manufacturingmanagementsystem.repositories.PermissionRe
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+// Author: Pham Van Cao
+// this class is used to implement the methods defined in the IPermissionService interface
 @Service
 public class PermissionService {
     PermissionRepository permissionRepository;
     PermissionMapper permissionMapper;
 
+    // this method is used to create a permission
     public PermissionResponse create(PermissionRequest request){
         PermissionsEntity permission = new PermissionsEntity();
         permission.setName(request.getName());
@@ -21,11 +23,13 @@ public class PermissionService {
         return permissionMapper.toPermissionResponse(permission);
     }
 
+    // this method is used to get all permissions
     public List<PermissionResponse> getAll(){
         var permissions = permissionRepository.findAll();
         return permissions.stream().map(permissionMapper::toPermissionResponse).toList();
     }
 
+    // this method is used to get a permission by its name
     public void delete(String permission){
         permissionRepository.deleteById(permission);
     }

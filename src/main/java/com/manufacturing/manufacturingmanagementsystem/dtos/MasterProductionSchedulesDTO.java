@@ -4,7 +4,8 @@ import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+// Author: Pham Van Cao
+// this class is used to handle the MasterProductionSchedulesDTO response
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

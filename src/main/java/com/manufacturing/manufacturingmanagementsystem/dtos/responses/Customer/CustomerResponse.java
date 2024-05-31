@@ -6,7 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+// Author: Pham Hien Nhan
+// this class is used to handle the Customer response
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

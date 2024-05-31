@@ -15,7 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
-
+// Author: Pham Van Cao
+// this class is used to handle the authentication
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
@@ -24,7 +25,8 @@ public class AuthenticationController {
     private final UsersServices userService;
     @Autowired
     private AuthenticationService authenticationService;
-
+    // Author: Pham Van Cao
+    // this method is used to handle the login request
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) throws Exception {
         try {
@@ -40,7 +42,8 @@ public class AuthenticationController {
         }
 
     }
-
+    // Author: Pham Van Cao
+    // this method is used to handle the introspect request
     @PostMapping("/introspect")
     public ResponseEntity<ApiResponse> introspect(@RequestBody IntrospectRequest introspectRequest) throws Exception {
         IntrospectResponse introspectResponse = null;
@@ -52,7 +55,8 @@ public class AuthenticationController {
                 .result(introspectResponse)
                 .build());
     }
-
+    // Author: Pham Van Cao
+    // this method is used to handle the recover password request
     @PutMapping("/recover-password")
     public ResponseEntity<?> resetPassword(@RequestBody RecoverPasswordRequest recoverPasswordRequest) {
         try {
@@ -67,7 +71,8 @@ public class AuthenticationController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
+    // Author: Pham Van Cao
+    // this method is used to handle the create user request
     @PostMapping("/create")
     public ResponseEntity<?> insertUser(@Valid @RequestBody UsersDTO userDto) {
         try {

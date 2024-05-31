@@ -3,7 +3,8 @@ package com.manufacturing.manufacturingmanagementsystem.dtos.responses.MPS;
 import lombok.*;
 
 import java.sql.Date;
-
+// Author: Pham Van Cao
+// this class is used to handle the MPS Suggestion Monthly response
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

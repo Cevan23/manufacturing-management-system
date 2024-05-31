@@ -6,7 +6,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import jakarta.persistence.*;
 
 import java.sql.Date;
-
+// Author: Pham Van Cao
+// this class is used to handle the WorkOrdersEntity response
 @Entity
 @Table(name = TablePrefix.PREFIX_TABLE + "work_orders")
 @EntityListeners(AuditingEntityListener.class)

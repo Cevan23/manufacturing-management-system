@@ -5,7 +5,8 @@ import com.manufacturing.manufacturingmanagementsystem.dtos.responses.ApiRespons
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-
+// Author: Pham Van Cao
+// this class is used to handle the GlobalExceptionHandler response
 public class GlobalExceptionHandler {
     @ExceptionHandler(value = RuntimeException.class)
     ResponseEntity<ApiResponse> handlingRuntimeException(RuntimeException exception) {

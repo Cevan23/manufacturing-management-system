@@ -6,7 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-
+// Author: Pham Van Cao
+// this class is used to handle the Product request
 @Data
 @Getter
 @Setter

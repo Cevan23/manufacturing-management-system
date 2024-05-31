@@ -17,7 +17,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+// Author: Pham Van Cao
+// this class is used to handle the BOMDetailsServices response
 @Service
 @AllArgsConstructor
 public class BOMDetailsServices implements IBOMDetailsServices {
@@ -25,7 +26,7 @@ public class BOMDetailsServices implements IBOMDetailsServices {
     private final BOMDetailsRepository bomDetailsRepository;
     private final BOMsRepository bomsRepository;
     private final MaterialsRepository materialsRepository;
-
+    // this service is used to create BOM details
     @Override
     public void createBOMDetails(BOMDetailRequest bomDetails) {
         if(bomDetails.getBOMId() == null || bomDetails.getMaterial() == null) {
@@ -52,7 +53,7 @@ public class BOMDetailsServices implements IBOMDetailsServices {
         }
 
     }
-
+    // this service is used to update BOM details
     @Override
     public void deleteBOMDetailsByBOMId(Long bomId) {
         try{
@@ -61,7 +62,7 @@ public class BOMDetailsServices implements IBOMDetailsServices {
             throw new RuntimeException("Could not delete BOM details with BOM id " + bomId);
         }
     }
-
+    // this service is used to delete BOM details
     @Override
     public void deleteBOMDetail(Long bomId, Long materialId) {
         try {
@@ -71,7 +72,7 @@ public class BOMDetailsServices implements IBOMDetailsServices {
             throw new RuntimeException("Could not delete BOM detail with BOM id " + bomId + " and material id " + materialId);
         }
     }
-
+    // this service is used to get BOM details by BOM id
     @Override
     public List<BOMDetailsDTO> getBOMDetailsByBOMId(Long bomId) {
         List<BOMDetailsEntity> bomDetailsEntities = bomDetailsRepository.findByBOMId(bomId);
@@ -90,7 +91,5 @@ public class BOMDetailsServices implements IBOMDetailsServices {
 
         return bomDetailsDTOs;
     }
-
-
 
 }

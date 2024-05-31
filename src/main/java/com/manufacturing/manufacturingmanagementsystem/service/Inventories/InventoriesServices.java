@@ -7,13 +7,14 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+// Author: Pham Hien Nhan
+// this class is used to implement the methods declared in the IInventoriesServices interface
 @Service
 @AllArgsConstructor
 public class InventoriesServices implements IInventoriesServices {
 
     private final InventoriesRepository inventoriesRepository;
-
+    // this service is used to insert a new inventory
     @Override
     public InventoriesEntity insertInventory(InventoryDTO inventoryDTO) throws Exception {
 
@@ -30,12 +31,12 @@ public class InventoriesServices implements IInventoriesServices {
 
         return inventoriesRepository.save(inventory);
     }
-
+    // this service is used to get all inventories
     @Override
     public List<InventoriesEntity> getAllInventory() throws Exception {
         return inventoriesRepository.findAll();
     }
-
+    // this service is used to update an inventory
     @Override
     public InventoriesEntity updateInventory(InventoryDTO inventoryDTO, long id) throws Exception {
 
@@ -56,12 +57,11 @@ public class InventoriesServices implements IInventoriesServices {
 
         return inventoriesRepository.save(inventory);
     }
-
+    // this service is used to delete an inventory
     @Override
     public void deleteInventory(long id) throws Exception {
 
     }
 
-    // Các phương thức service khác cần thiết
 }
 

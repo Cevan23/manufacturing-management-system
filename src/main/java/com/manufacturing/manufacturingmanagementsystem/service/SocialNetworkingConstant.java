@@ -1,5 +1,7 @@
 package com.manufacturing.manufacturingmanagementsystem.service;
 
+// Author: Pham Van Cao
+// this class is used to define the constants that will be used in the project
 public class SocialNetworkingConstant {
     public static final String REGION_STATIC = "ap-southeast-1";
     public static final String OTP_SUBJECT_EMAIL = "One-Time Password (OTP) - Expire in 5 minutes!";

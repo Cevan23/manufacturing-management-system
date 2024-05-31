@@ -2,7 +2,8 @@ package com.manufacturing.manufacturingmanagementsystem.dtos.requests.BOM;
 
 import com.manufacturing.manufacturingmanagementsystem.dtos.requests.Material.MaterialRequest;
 import lombok.*;
-
+// Author: Pham Van Cao
+// this class is used to handle the BOM detail request
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

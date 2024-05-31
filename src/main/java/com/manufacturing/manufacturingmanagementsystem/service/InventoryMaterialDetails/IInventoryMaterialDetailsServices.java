@@ -7,9 +7,9 @@ import com.manufacturing.manufacturingmanagementsystem.models.InventoryMaterialD
 import com.manufacturing.manufacturingmanagementsystem.repositories.ID.InventoryMaterialDetailEntityId;
 
 import java.util.List;
-
+// Author: Pham Hien Nhan
+// this interface is used to declare the methods that will be implemented in the InventoryMaterialDetailsServices class
 public interface IInventoryMaterialDetailsServices {
-    // Khai báo các phương thức service cần thiết
 
     InventoryMaterialDetailsEntity insertInventoryMaterialDetail(InventoryMaterialDetailsDTO inventoryMaterialDetailsDTO) throws Exception;
 

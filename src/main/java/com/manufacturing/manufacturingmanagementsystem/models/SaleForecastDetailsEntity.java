@@ -5,7 +5,8 @@ import com.manufacturing.manufacturingmanagementsystem.repositories.ID.SaleForec
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
+// Author: Pham Van Cao
+// this class is used to handle the SaleForecastDetailsEntity response
 @Entity
 @Table(name = TablePrefix.PREFIX_TABLE + "sale_forecast_details")
 @EntityListeners(AuditingEntityListener.class)

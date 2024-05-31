@@ -12,11 +12,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
+// Author: Pham Van Cao
+// this class is used to handle the file download
 @RestController
 @RequestMapping("/api/file")
 public class FileDownloadController {
 
+    // Author: Pham Van Cao
+    // this method is used to download the file
     @GetMapping("/download")
     public ResponseEntity<InputStreamResource> downloadFile() throws IOException {
         // Replace with the actual file path

@@ -1,13 +1,13 @@
 package com.manufacturing.manufacturingmanagementsystem.dtos.responses.Product;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.manufacturing.manufacturingmanagementsystem.models.ProductsEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
+// Author: Pham Van Cao
+// this class is used to handle the Product response
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

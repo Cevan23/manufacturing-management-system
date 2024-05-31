@@ -2,8 +2,10 @@ package com.manufacturing.manufacturingmanagementsystem.models.audit;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-
 import java.util.Optional;
+
+// Author: Pham Van Cao
+// this class is used to handle the AuditorAwareImpl response
 public class AuditorAwareImpl implements AuditorAware<String> {
     /**
      * This method is used to get the current auditor of the application.

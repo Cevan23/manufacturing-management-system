@@ -5,7 +5,8 @@ import com.manufacturing.manufacturingmanagementsystem.models.WorkOrderDetailsEn
 import com.manufacturing.manufacturingmanagementsystem.repositories.ID.WorkOrderDetailEntityId;
 
 import java.util.List;
-
+// Author: Pham Van Cao
+// this interface is used to define the methods that will be implemented in WorkOrderDetailsServices.java
 public interface IWorkOrderDetailsServices {
 
     void createWorkOrderDetails(WorkOrderDetailRequest workOrderDetailRequest);

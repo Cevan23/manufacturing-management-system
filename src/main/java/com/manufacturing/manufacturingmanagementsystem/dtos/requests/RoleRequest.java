@@ -3,7 +3,8 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.Set;
-
+// Author: Pham Van Cao
+// this class is used to handle the Role request
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

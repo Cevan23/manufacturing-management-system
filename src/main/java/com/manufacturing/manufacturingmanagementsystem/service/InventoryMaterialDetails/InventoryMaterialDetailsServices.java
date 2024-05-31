@@ -11,7 +11,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.List;
-
+// Author: Pham Hien Nhan
+// this class is used to implement the methods declared in the IInventoryMaterialDetailsServices interface
 @Service
 @AllArgsConstructor
 public class InventoryMaterialDetailsServices implements IInventoryMaterialDetailsServices {
@@ -21,6 +22,7 @@ public class InventoryMaterialDetailsServices implements IInventoryMaterialDetai
     private final InventoriesRepository inventoriesRepository;
 
     private final MaterialsRepository materialsRepository;
+    // this service is used to insert a new inventory material
     @Override
     public InventoryMaterialDetailsEntity insertInventoryMaterialDetail(InventoryMaterialDetailsDTO inventoryMaterialDetailsDTO) throws Exception {
 
@@ -56,12 +58,12 @@ public class InventoryMaterialDetailsServices implements IInventoryMaterialDetai
         }
 
     }
-
+    // this service is used to get all inventory materials
     @Override
     public List<InventoryMaterialDetailsEntity> getAllInventoryMaterial() {
         return inventoryMaterialDetailsRepository.findAll();
     }
-
+    // this service is used to update an inventory material
     @Override
     public InventoryMaterialDetailsEntity updateInventoryMaterial(InventoryMaterialDetailsDTO inventoryMaterialDetailsDTO) throws Exception {
 
@@ -88,7 +90,7 @@ public class InventoryMaterialDetailsServices implements IInventoryMaterialDetai
         }
 
     }
-
+    // this service is used to delete an inventory material
     @Override
     public void deleteInventoryMaterial(long materialId, long inventoryId) throws Exception {
 
@@ -98,5 +100,4 @@ public class InventoryMaterialDetailsServices implements IInventoryMaterialDetai
         optionalInventoryMaterial.ifPresent(inventoryMaterialDetailsRepository::delete);
     }
 
-    // Các phương thức service khác cần thiết
 }

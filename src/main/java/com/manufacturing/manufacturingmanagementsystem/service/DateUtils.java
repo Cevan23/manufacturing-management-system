@@ -9,7 +9,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
-
+// Author: Pham Van Cao
+// this class is used to define the methods that will be used to manipulate date
 @Slf4j
 public class DateUtils {
     private static DateUtils instance;
@@ -18,31 +19,29 @@ public class DateUtils {
 
     private DateUtils() {
     }
-
-    // Static method to get the singleton instance
+    // this method is used to get the instance of the DateUtils class
     public static DateUtils getInstance() {
         if (instance == null) {
             instance = new DateUtils();
         }
         return instance;
     }
-
+    // this method is used to convert a local date to a date
     public static Date convertToDateViaInstant(LocalDate dateToConvert) {
         return Date.from(dateToConvert.atStartOfDay()
                 .atZone(ZoneId.systemDefault())
                 .toInstant());
     }
-
+    // this method is used to convert a date to a local date
     public static String formatDate(Date date) {
         return formatDate(date, FORMAT_DATE_DAY_MONTH_YEAR);
     }
-
+    // this method is used to format a date
     public static String formatDate(Date date, String format) {
         SimpleDateFormat fm = new SimpleDateFormat(format);
         return fm.format(date);
     }
-
-
+    // this method is used to convert a string to a date
     public static Date converDate(String date, String format) {
 
         try {
@@ -53,7 +52,7 @@ public class DateUtils {
         }
         return null;
     }
-
+    // this method is used to convert a string to a date
     public static Date converDate(String date) {
 
         try {
@@ -64,7 +63,7 @@ public class DateUtils {
         }
         return null;
     }
-
+    // this method is used to get the current date
     public static boolean isInRangeXMinutesAgo(Date date, int minutes) {
         Instant instant = Instant.ofEpochMilli(date.getTime());
         Instant minutesAgo = Instant.now().minus(Duration.ofMinutes(minutes));
@@ -76,7 +75,7 @@ public class DateUtils {
         }
         return false;
     }
-
+    // this method is used to check if the date is at least x seconds ago
     public static boolean isAtLeastXSecondsAgo(Date date, int seconds) {
         Instant instant = Instant.ofEpochMilli(date.getTime());
         Instant secondsAgo = Instant.now().minus(Duration.ofSeconds(seconds));
@@ -88,7 +87,7 @@ public class DateUtils {
         }
         return false;
     }
-
+    // this method is used to get the current date
     public static Date startOfDay(Date date) {
         OffsetDateTime offsetDateTime = date.toInstant()
                 .atOffset(ZoneOffset.UTC);
@@ -97,27 +96,24 @@ public class DateUtils {
         return Date.from(reallyStartOfDay.toLocalDateTime().toInstant(ZoneOffset.UTC));
 
     }
-
+    // this method is used to convert a local date to a date
     public static Date convertLocalDate2Date(LocalDate localDate) {
         ZoneId defaultZoneId = ZoneId.systemDefault();
         return Date.from(localDate.atStartOfDay(defaultZoneId).toInstant());
     }
-
+    // this method is used to convert a date to a local date
     public static LocalDate convertDate2LocalDate(Date date) {
         return date.toInstant()
                 .atZone(ZoneId.systemDefault())
                 .toLocalDate();
     }
-
+    // this method is used to get the end of the day
     public static Date endOfDay(Date date) {
         OffsetDateTime offsetDateTime = date.toInstant()
                 .atOffset(ZoneOffset.UTC);
         OffsetDateTime reallyEndOfDay = offsetDateTime.withHour(23).withMinute(59).withSecond(59).withNano(999999999);
         return Date.from(reallyEndOfDay.toLocalDateTime().toInstant(ZoneOffset.UTC));
     }
-
-
-    //system time is UTC, return date utc, sourceDate -> utc
 
     /**
      * Get start of day by timezone and date

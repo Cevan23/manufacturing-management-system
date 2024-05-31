@@ -17,7 +17,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-
+// Author: Pham Hien Nhan
+// this class is used to handle the request from the client side
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
@@ -25,7 +26,7 @@ public class UserControllers {
     private final UsersServices userService;
 
     RoleMapper roleMapper;
-
+    // this method is used to create a new user
     @PostMapping("/create")
     public ResponseEntity<?> insertUser(@Valid @RequestBody UsersDTO userDto) {
         try {
@@ -40,13 +41,14 @@ public class UserControllers {
         }
     }
 
+    // this method is used to get all the roles
     @GetMapping("/getAllRoles")
-//    @PreAuthorize("hasAnyAuthority('SCOPE_CHAIRMAN', 'SCOPE_ACCOUNTANT', 'SCOPE_PRODUCT_MANAGER')")
     @PreAuthorize("hasAnyAuthority('SCOPE_CHAIRMAN')")
     public List<UsersEntity> getAllUsers() {
         return userService.getAllUsers();
     }
 
+    // this method is used to get all the roles
     @GetMapping("/getUserInformationById/{id}")
     public ResponseEntity<?> getUserById(@PathVariable Long id) {
         try {
@@ -61,16 +63,19 @@ public class UserControllers {
         }
     }
 
+    // this method is used to get all the roles
     @GetMapping("/getUserInformationByEmail")
     public UsersEntity getUserInformationByEmail(String email) {
         return userService.findUserbyEmail(email);
     }
 
+    // this method is used to get all the roles
     @GetMapping("/getUserInformationByRole")
     public UsersEntity getUserInformationByRole(String roleName) {
         return userService.findUserbyRole(roleName);
     }
 
+    // this method is used to get all the roles
     @PutMapping("/{id}")
     public ResponseEntity<?> updateUser(@PathVariable Long id,
                                         @Valid @RequestBody UsersDTO userDto) {
@@ -89,6 +94,7 @@ public class UserControllers {
         }
     }
 
+    // this method is used to get all the roles
     @PutMapping("/reset/{id}")
     public ResponseEntity<?> resetPassword(@PathVariable Long id, @Valid @RequestBody UsersDTO userDto) {
         try {
@@ -103,12 +109,12 @@ public class UserControllers {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
+    // this method is used to get roles by id
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
     }
-
+    // this method is used to get all the roles
     @GetMapping("/getMyInfo")
     public ResponseEntity<ApiResponse> getMyInfo() {
         UserResponse userInformation = userService.getMyInfor();
@@ -120,6 +126,7 @@ public class UserControllers {
                         .build());
     }
 
+    // this method is used to get all the roles
     @GetMapping("/getSignUpRequest/{id}")
     public ResponseEntity<?> getSignUpRequest(@PathVariable Long id) {
         try {
@@ -134,6 +141,7 @@ public class UserControllers {
         }
     }
 
+    // this method is used to get all the roles
     @PutMapping("/updateRoleId/{email}")
     public ResponseEntity<?> updateRoleId(@PathVariable String email,  @Valid @RequestBody UsersDTO userDto) {
         try {
@@ -147,6 +155,7 @@ public class UserControllers {
         }
     }
 
+    // this method is used to get all the roles
     @GetMapping("/getAllEmployee/{id}")
     public ResponseEntity<?> getAllEmployee(@PathVariable Long id) {
         try {

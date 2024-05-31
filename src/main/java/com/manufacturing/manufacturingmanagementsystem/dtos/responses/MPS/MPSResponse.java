@@ -1,7 +1,8 @@
 package com.manufacturing.manufacturingmanagementsystem.dtos.responses.MPS;
 
 import lombok.*;
-
+// Author: Pham Van Cao
+// this class is used to handle the MPS response
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

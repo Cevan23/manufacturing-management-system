@@ -3,7 +3,8 @@ package com.manufacturing.manufacturingmanagementsystem.dtos.responses.Role;
 import com.manufacturing.manufacturingmanagementsystem.dtos.responses.Permission.PermissionListResponse;
 import com.manufacturing.manufacturingmanagementsystem.models.RolesEntity;
 import lombok.*;
-
+// Author: Pham Van Cao
+// this class is used to handle the Role response
 @Data
 @Getter
 @Setter

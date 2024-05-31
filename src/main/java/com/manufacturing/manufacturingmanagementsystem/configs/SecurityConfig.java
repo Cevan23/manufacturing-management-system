@@ -11,7 +11,8 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtGra
 import org.springframework.security.web.SecurityFilterChain;
 
 import lombok.RequiredArgsConstructor;
-
+// Author: Pham Van Cao
+// this class is used to configure the security
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -20,7 +21,7 @@ public class SecurityConfig {
 
     @Autowired
     private CustomJwtDecoder customJwtDecoder;
-
+    // this array is used to store the public endpoints
     private final String[] PUBLIC_ENDPOINTS = {
             "/api/public/**",
             "/api/auth/**",
@@ -29,7 +30,7 @@ public class SecurityConfig {
             "/api/roles/**",
 
     };
-
+    // this method is used to configure the security filter chain
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         // Restrict access based on roles
@@ -48,7 +49,7 @@ public class SecurityConfig {
 
         return http.build();
     }
-
+    // this method is used to configure the jwt authentication converter
     @Bean
     JwtAuthenticationConverter jwtAuthenticationConverter() {
         JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter = new JwtGrantedAuthoritiesConverter();

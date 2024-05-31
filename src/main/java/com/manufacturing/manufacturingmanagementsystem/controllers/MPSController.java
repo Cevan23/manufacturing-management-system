@@ -10,9 +10,10 @@ import com.manufacturing.manufacturingmanagementsystem.service.MasterProductionS
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
+// Author: Pham Van Cao
+// this class is used to handle the MPS request
 @RestController
 @RequestMapping("/api/MPS")
 public class MPSController {
@@ -23,7 +24,8 @@ public class MPSController {
     public MPSController(MasterProductionSchedulesServices masterProductionSchedulesServices) {
         this.masterProductionSchedulesServices = masterProductionSchedulesServices;
     }
-
+    // Author: Pham Van Cao
+    // this method is used to create the MPS
     @PostMapping("/createMPS")
     public ResponseEntity<ApiResponse> createMPS(@RequestBody MPSRequest mpsRequest) {
 
@@ -67,7 +69,8 @@ public class MPSController {
                         .result(null)
                         .build());
     }
-
+    // Author: Pham Van Cao
+    // this method is used to update the MPS
     @PutMapping("/updateMPS")
     public ResponseEntity<ApiResponse> updateMPS(@RequestBody MPSUpdateRequest request) {
         if (request == null) {
@@ -102,7 +105,8 @@ public class MPSController {
                         .result(null)
                         .build());
     }
-
+    // Author: Pham Van Cao
+    // this method is used to get the MPS by ID
     @GetMapping("/getById/{id}")
     public ResponseEntity<ApiResponse> getById(@PathVariable Long id) {
         if (id == null) {
@@ -128,7 +132,8 @@ public class MPSController {
                             .build());
         }
     }
-
+    // Author: Pham Van Cao
+    // this method is used to get all the MPS of the PM
     @GetMapping("/getAllMPSofPM/{pmID}")
     public ResponseEntity<ApiResponse> getAllMPSofPM(@PathVariable Long pmID) {
         if (pmID == null) {
@@ -154,7 +159,8 @@ public class MPSController {
                             .build());
         }
     }
-
+    // Author: Pham Van Cao
+    // this method is used to get all the MPS
     @GetMapping("/getAll")
     public ResponseEntity<ApiResponse> getAll() {
         try {
@@ -173,7 +179,8 @@ public class MPSController {
                             .build());
         }
     }
-
+    // Author: Pham Van Cao
+    // this method is used to delete the MPS
     @DeleteMapping("/deleteMPS/{id}")
     public ResponseEntity<ApiResponse> deleteMPS(@PathVariable Long id) {
         if (id == null) {
@@ -200,7 +207,8 @@ public class MPSController {
                         .result(null)
                         .build());
     }
-
+    // Author: Pham Van Cao
+    // this method is used to suggest the MPS monthly
     @GetMapping("/suggestMPSMonthly")
     public ResponseEntity<ApiResponse> suggestMPSMonthly(@RequestBody SuggestMPSMonthlyRequest request) {
         if (request.getProductId() == null || request.getMonth() == null) {
@@ -226,7 +234,8 @@ public class MPSController {
                             .build());
         }
     }
-
+    // Author: Pham Van Cao
+    // this method is used to get all the MPS by in progress
     @GetMapping("/getAllMPSbyInProgress")
     public ResponseEntity<ApiResponse> getAllMPSbyInProgress(@RequestParam Float inProgress) {
         if (inProgress == null) {

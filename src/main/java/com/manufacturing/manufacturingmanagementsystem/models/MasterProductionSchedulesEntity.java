@@ -5,7 +5,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import jakarta.persistence.*;
 
 import java.sql.Date;
-
+// Author: Pham Van Cao
+// this class is used to handle the MasterProductionSchedulesEntity response
 @Entity
 @Table(name = TablePrefix.PREFIX_TABLE + "master_production_schedules")
 @EntityListeners(AuditingEntityListener.class)

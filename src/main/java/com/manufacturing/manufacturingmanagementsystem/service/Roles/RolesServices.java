@@ -4,7 +4,6 @@ import com.manufacturing.manufacturingmanagementsystem.dtos.requests.RoleRequest
 import com.manufacturing.manufacturingmanagementsystem.dtos.responses.Permission.PermissionListResponse;
 import com.manufacturing.manufacturingmanagementsystem.dtos.responses.Permission.PermissionResponse;
 import com.manufacturing.manufacturingmanagementsystem.dtos.responses.Role.RoleResponse;
-import com.manufacturing.manufacturingmanagementsystem.mapper.RoleMapper;
 import com.manufacturing.manufacturingmanagementsystem.models.PermissionsEntity;
 import com.manufacturing.manufacturingmanagementsystem.models.RolesEntity;
 import com.manufacturing.manufacturingmanagementsystem.repositories.PermissionRepository;
@@ -15,7 +14,8 @@ import org.springframework.stereotype.Service;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
-
+// Author: Pham Van Cao
+// this class is used to update role, add permission, delete role, get role name by id, get role id by role name, get role by role name, get role by id, check if role name exists
 @Service
 public class RolesServices implements IRolesServices {
 
@@ -27,6 +27,7 @@ public class RolesServices implements IRolesServices {
         this.rolesRepository = rolesRepository;
         this.permissionRepository = permissionRepository;
     }
+    // this method is used to get or create permission
     private PermissionsEntity getOrCreatePermission(String permissionName) {
         PermissionsEntity permission = permissionRepository.findByName(permissionName);
         if (permission == null) {
@@ -39,6 +40,7 @@ public class RolesServices implements IRolesServices {
         return permission;
     }
 
+    // this method is used to update role
     public RoleResponse update(RoleRequest request){
         System.out.println("request: " + request.toString());
 
@@ -76,6 +78,7 @@ public class RolesServices implements IRolesServices {
 
     }
 
+    // this method is used to add permission
     public RoleResponse addPermission(RoleRequest request){
         RolesEntity role = rolesRepository.findRoleByRoleName(request.getRoleName());
 
@@ -104,11 +107,13 @@ public class RolesServices implements IRolesServices {
         return response;
     }
 
+    // this method is used to delete role
     public void delete(String role){
         var roleId = rolesRepository.findIdByRoleName(role);
         rolesRepository.deleteById(roleId);
     }
 
+    // this method is used to get role name by id
     @Override
     public String getRoleNameById(Long id) {
         try {
@@ -119,6 +124,7 @@ public class RolesServices implements IRolesServices {
         }
     }
 
+    // this method is used to get role id by role name
     @Override
     public Long getRoleIdByRoleName(String roleName) {
         try {
@@ -129,6 +135,7 @@ public class RolesServices implements IRolesServices {
         }
     }
 
+    // this method is used to get role by role name
     @Override
     public RolesEntity getRoleByRoleName(String roleName) {
         try {
@@ -139,6 +146,7 @@ public class RolesServices implements IRolesServices {
         }
     }
 
+    // this method is used to get role by id
     @Override
     public RolesEntity getRoleById(Long id) {
         try {
@@ -149,6 +157,7 @@ public class RolesServices implements IRolesServices {
         }
     }
 
+    // this method is used to check if role name exists
     public boolean isRoleNameExists(String roleName) {
         return rolesRepository.findRoleByRoleName(roleName) != null;
 

@@ -3,7 +3,8 @@ package com.manufacturing.manufacturingmanagementsystem.exceptions;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
-
+// Author: Pham Van Cao
+// this class is used to handle the ErrorCode response
 @Getter
 public enum ErrorCode {
     ACCESS_DENIED(8888, "Access denied, you don't have permission", HttpStatus.OK),

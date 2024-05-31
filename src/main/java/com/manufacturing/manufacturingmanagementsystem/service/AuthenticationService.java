@@ -20,7 +20,8 @@ import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
 import java.util.Optional;
-
+// Author: Pham Van Cao
+// this class is used to implement the methods defined in the IAuthenticationService interface
 @Service
 @AllArgsConstructor
 public class AuthenticationService {
@@ -31,6 +32,7 @@ public class AuthenticationService {
     @Autowired
     private JavaMailSender javaMailSender;
 
+    // this method is used to login
     public AuthResponse login(LoginRequest loginRequest) throws AppException, Exception {
         AuthResponse loginResponse = null;
         try {
@@ -61,7 +63,7 @@ public class AuthenticationService {
         return loginResponse;
     }
 
-    //    @PreAuthorize("hasRole('chairman')")
+    // this method is used to introspect
     public IntrospectResponse introspect(IntrospectRequest request) throws AppException {
         var token = request.getToken();
 
@@ -72,6 +74,7 @@ public class AuthenticationService {
         return jwtService.introspect(token);
     }
 
+    // this method is used to recover password
     public UsersEntity recoverPassword(RecoverPasswordRequest recoverPasswordRequest) {
         try {
             Optional<UsersEntity> userEntityOptional = usersRepository.findByEmail(recoverPasswordRequest.getEmail());
@@ -97,6 +100,7 @@ public class AuthenticationService {
         }
     }
 
+    // this method is used to generate random password
     private String generateRandomPassword(int length) {
         final String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()";
         SecureRandom random = new SecureRandom();
@@ -108,6 +112,7 @@ public class AuthenticationService {
         return sb.toString();
     }
 
+    // this method is used to send email password recovery
     private void sendEmailPasswordRecovery(String to, String newPassword) {
         try {
             SimpleMailMessage message = new SimpleMailMessage();

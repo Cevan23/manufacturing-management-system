@@ -3,7 +3,8 @@ package com.manufacturing.manufacturingmanagementsystem.dtos.responses;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.manufacturing.manufacturingmanagementsystem.models.ProductsEntity;
 import lombok.*;
-
+// Author: Pham Van Cao
+// this class is used to handle the Product response
 @Getter
 @Setter
 @AllArgsConstructor

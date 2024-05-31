@@ -11,7 +11,6 @@ import com.manufacturing.manufacturingmanagementsystem.dtos.responses.Material.M
 import com.manufacturing.manufacturingmanagementsystem.dtos.responses.UserResponse;
 import com.manufacturing.manufacturingmanagementsystem.exceptions.ErrorCode;
 import com.manufacturing.manufacturingmanagementsystem.models.BOMsEntity;
-import com.manufacturing.manufacturingmanagementsystem.models.MaterialsEntity;
 import com.manufacturing.manufacturingmanagementsystem.service.BOMDetails.BOMDetailsServices;
 import com.manufacturing.manufacturingmanagementsystem.service.BOMs.BOMsServices;
 import com.manufacturing.manufacturingmanagementsystem.service.Materials.MaterialsServices;
@@ -23,7 +22,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+// Author: Pham Van Cao
+// create BOM, update BOM, delete BOM, get all BOMs, get BOMs by status, get BOMs by name, get BOMs by like name, get BOM by id, delete BOM detail
 @RestController
 @RequestMapping("/api/BOMs")
 public class BOMControllers {
@@ -38,7 +38,8 @@ public class BOMControllers {
         this.materialsServices = materialsServices;
         this.bomDetailsServices = bomDetailsServices;
     }
-
+    // Author: Pham Van Cao
+    // endpoint to create a new BOM
     @PostMapping("/createBOMs")
     @PreAuthorize("hasAnyAuthority('MANAGER_BOM')")
     public ResponseEntity<ApiResponse> createBOMs(@RequestBody BOMRequest bomRequest) {
@@ -139,7 +140,8 @@ public class BOMControllers {
                             .build());
         }
     }
-
+    // Author: Pham Van Cao
+    // endpoint to update a BOM
     @PutMapping("/updateBOM/{id}")
     @PreAuthorize("hasAnyAuthority('MANAGER_BOM')")
     public ResponseEntity<ApiResponse> updateBOM( @PathVariable Long id ,@RequestBody BOMRequest bomRequest) {
@@ -250,7 +252,8 @@ public class BOMControllers {
 
 
     }
-
+    // Author: Pham Van Cao
+    // endpoint to delete a BOM
     @DeleteMapping("/delete/{id}")
     @PreAuthorize("hasAnyAuthority('MANAGER_BOM')")
     public ResponseEntity<ApiResponse> deleteBOM(@PathVariable Long id) {
@@ -277,7 +280,8 @@ public class BOMControllers {
                         .result(null)
                         .build());
     }
-
+    // Author: Pham Van Cao
+    // endpoint to get all BOMs
     @GetMapping("/getAll")
     @PreAuthorize("hasAnyAuthority('MANAGER_BOM')")
     public ResponseEntity<ApiResponse> getAllBOMs() {
@@ -296,7 +300,8 @@ public class BOMControllers {
                         .result(response)
                         .build());
     }
-
+    // Author: Pham Van Cao
+    // endpoint to get all BOMs by status
     @GetMapping("/getAll/status")
     @PreAuthorize("hasAnyAuthority('MANAGER_BOM')")
     public ResponseEntity<ApiResponse> getAllBOMsbyStatus(@RequestParam String statusRequest) {
@@ -322,7 +327,8 @@ public class BOMControllers {
                         .result(response)
                         .build());
     }
-
+    // Author: Pham Van Cao
+    // endpoint to get all BOMs by name
     @GetMapping("/getBOMsByName")
     @PreAuthorize("hasAnyAuthority('MANAGER_BOM')")
     public ResponseEntity<ApiResponse> getBOMsByName(@RequestBody FillterRequest nameRequest) {
@@ -352,7 +358,8 @@ public class BOMControllers {
                         .result(response)
                         .build());
     }
-
+    // Author: Pham Van Cao
+    // endpoint to get all BOMs by like name
     @GetMapping("/getBOMsByLikeName")
     @PreAuthorize("hasAnyAuthority('MANAGER_BOM')")
     public ResponseEntity<ApiResponse> getBOMsByLikeName(@RequestParam String nameRequest) {
@@ -378,7 +385,8 @@ public class BOMControllers {
                         .result(response)
                         .build());
     }
-
+    // Author: Pham Van Cao
+    // endpoint to get a BOM by id
     @GetMapping("/getBOMById/{id}")
     @PreAuthorize("hasAnyAuthority('MANAGER_BOM')")
     public ResponseEntity<ApiResponse> getBOMById(@PathVariable Long id) {
@@ -416,7 +424,8 @@ public class BOMControllers {
                             .build());
         }
     }
-
+    // Author: Pham Van Cao
+    // endpoint to delete a BOM detail
     @DeleteMapping("/deleteBOMDetail/{bomId}/{materialId}")
     @PreAuthorize("hasAnyAuthority('MANAGER_BOM')")
     public ResponseEntity<ApiResponse> deleteBOMDetail(@PathVariable Long bomId, @PathVariable Long materialId) {
@@ -446,7 +455,8 @@ public class BOMControllers {
                         .result(null)
                         .build());
     }
-
+    // Author: Pham Van Cao
+    // create BOM response
     private BOMResponse createBOMResponse(BOMsEntity bom, List<BOMDetailsDTO> bomDetails) {
         var response = new BOMResponse();
         response.setId(bom.getId());

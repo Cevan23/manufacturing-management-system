@@ -7,6 +7,8 @@ import org.hibernate.validator.constraints.Range;
 
 import java.net.Inet4Address;
 import java.net.UnknownHostException;
+// Author: Pham Van Cao
+// this class is used to handle the SnowFlakeIdService response
 /**
  * Twitter_Snowflake<br>
  * The structure of SnowFlake is as follows (each part is separated by -):<br>

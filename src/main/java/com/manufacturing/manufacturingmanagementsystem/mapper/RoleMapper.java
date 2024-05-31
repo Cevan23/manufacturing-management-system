@@ -6,7 +6,8 @@ import com.manufacturing.manufacturingmanagementsystem.models.RolesEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
-
+// Author: Pham Van Cao
+// this class is used to handle the RoleMapper response
 @Mapper(componentModel = "spring")
 public interface RoleMapper {
 

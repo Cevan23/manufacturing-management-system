@@ -26,9 +26,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
+// Author: Pham Hien Nhan
+// this class is used to implement the methods declared in the IUsersServices interface
 @Service
-//@AllArgsConstructor
 public class UsersServices implements IUsersServices {
     private final UsersRepository usersRepository;
     private final RolesServices rolesServices;
@@ -36,23 +36,25 @@ public class UsersServices implements IUsersServices {
     private RoleMapper roleMapper;
     @Autowired
     private JavaMailSender javaMailSender;
-
+    // Author: Pham Hien Nhan
+    // this constructor is used to inject the UsersRepository, RolesServices, BCryptPasswordEncoder dependencies
     public UsersServices(UsersRepository usersRepository, RolesServices rolesServices, BCryptPasswordEncoder passwordEncoder) {
         this.usersRepository = usersRepository;
         this.rolesServices = rolesServices;
         this.passwordEncoder = passwordEncoder;
     }
-
+    // Author: Pham Hien Nhan
+    // this service is used to get all users
     @Override
     public List<UsersEntity> getAllUsers() {
         return usersRepository.findAll();
     }
-
+    // this service is used to get a user by id
     @Override
     public UsersEntity getUserById(Long id) {
         return usersRepository.findById(id).orElse(null);
     }
-
+    // this service is used to insert a new user
     @Override
     public Map<String, Object> insertUser(UsersDTO userDto) {
         try {
@@ -91,7 +93,7 @@ public class UsersServices implements IUsersServices {
             throw new RuntimeException("Failed to insert user: " + e.getMessage());
         }
     }
-
+    // this service is used to update a user
     @Override
     public Map<String, Object> updateUser(long id, UsersDTO userDto) {
         try {
@@ -136,7 +138,7 @@ public class UsersServices implements IUsersServices {
             throw new RuntimeException("Failed to update user: " + e.getMessage());
         }
     }
-
+    // this service is used to reset a user's password
     @Override
     public UsersEntity resetPassword(long id, UsersDTO userDto) {
         try {
@@ -156,22 +158,22 @@ public class UsersServices implements IUsersServices {
             throw new RuntimeException("Failed to update user: " + e.getMessage());
         }
     }
-
+    // this service is used to find a user by email
     @Override
     public UsersEntity findUserbyEmail(String email) {
         return usersRepository.findByEmail(email).orElse(null);
     }
-
+    // this service is used to delete a user
     @Override
     public void deleteUser(Long id) {
         usersRepository.deleteById(id);
     }
-
+    // this service is used to find a user by role
     @Override
     public UsersEntity findUserbyRole(String roleName) {
         return usersRepository.findByRole(roleName);
     }
-
+    // this service is used to get the information of the current user
     public UserResponse getMyInfor() throws AppException {
         var context = SecurityContextHolder.getContext();
         String email = context.getAuthentication().getName();
@@ -193,7 +195,7 @@ public class UsersServices implements IUsersServices {
         userResponse.setAddress(user.getAddress());
         return userResponse;
     }
-
+    // this service is used to get the information of the current user
     @Override
     public List<UsersEntity> findAllSignUpRequest(long id) {
         try {
@@ -208,7 +210,7 @@ public class UsersServices implements IUsersServices {
             throw new RuntimeException("Failed to accept signup request: " + e.getMessage());
         }
     }
-
+    // this service is used to update the role of a user
     @Override
     public UsersEntity updateRoleId(String email, UsersDTO usersDTO) {
         try {
@@ -231,7 +233,7 @@ public class UsersServices implements IUsersServices {
             throw new RuntimeException("Failed to update role for signup: " + e.getMessage());
         }
     }
-
+    // this service is used to get the information of the current user
     @Override
     public List<UsersEntity> findAllEmployee(long id) {
         try {
@@ -246,7 +248,7 @@ public class UsersServices implements IUsersServices {
             throw new RuntimeException("Failed to view list of employee: " + e.getMessage());
         }
     }
-
+    // this service is used to get the information of the current user
     private void sendEmailAddUserByChairman(String to, String roleName) {
         try {
             SimpleMailMessage message = new SimpleMailMessage();
@@ -262,7 +264,7 @@ public class UsersServices implements IUsersServices {
             throw new RuntimeException("Failed to send email: " + e.getMessage());
         }
     }
-
+    // this service is used to get the information of the current user
     private void sendEmailSignUp(String to) {
         try {
             SimpleMailMessage message = new SimpleMailMessage();
@@ -277,7 +279,7 @@ public class UsersServices implements IUsersServices {
             throw new RuntimeException("Failed to send email: " + e.getMessage());
         }
     }
-
+    // this service is used to get the information of the current user
     private void sendEmailSignUpAccept(String to, String roleName) {
         try {
             SimpleMailMessage message = new SimpleMailMessage();

@@ -5,7 +5,8 @@ import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 
-
+// Author: Pham Van Cao
+// this class is used to handle the ProductsDTO response
 @Data
 @Getter
 @Setter

@@ -5,7 +5,8 @@ import com.manufacturing.manufacturingmanagementsystem.models.UsersEntity;
 import lombok.*;
 
 import java.util.Date;
-
+// Author: Pham Van Cao
+// this class is used to handle the User response
 @Data
 @Getter
 @Setter

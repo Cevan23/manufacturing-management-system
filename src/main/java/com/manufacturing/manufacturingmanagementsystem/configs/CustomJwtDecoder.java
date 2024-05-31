@@ -12,7 +12,8 @@ import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.stereotype.Component;
-
+// Author: Pham Van Cao
+// this class is used to decode the jwt token
 @Component
 public class CustomJwtDecoder implements JwtDecoder {
     private String signerKey = "Cf3X07omDRzLIp2hYuvrBmZ5vGlIcge12VEllyTdD1Q";
